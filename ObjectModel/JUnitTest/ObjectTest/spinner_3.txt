@@ -1,0 +1,6 @@
+<object id="18">
+	<dataList>
+		<item>test</item>
+	</dataList>
+	<ItemSelected>0</ItemSelected>
+</object>
