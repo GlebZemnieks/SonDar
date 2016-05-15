@@ -62,7 +62,7 @@ public class SDText extends SDMainObject {
     }
 
     @Override
-    public void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
         fileModule.write("<" + Text_textFieldTag + ">" + this.Text + "</" + Text_textFieldTag + ">\n");
     }
 

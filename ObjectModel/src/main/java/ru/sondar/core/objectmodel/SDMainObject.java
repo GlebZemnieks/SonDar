@@ -163,7 +163,7 @@ public abstract class SDMainObject {
      *
      * @param fileModule
      */
-    protected void printObjectToXML(FileModuleWriteThread fileModule) {
+    public void printObjectToXML(FileModuleWriteThread fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</object>");
@@ -174,7 +174,7 @@ public abstract class SDMainObject {
      *
      * @param fileModule
      */
-    public abstract void printCurrentObjectField(FileModuleWriteThread fileModule);
+    protected abstract void printCurrentObjectField(FileModuleWriteThread fileModule);
 
     /**
      * To string
