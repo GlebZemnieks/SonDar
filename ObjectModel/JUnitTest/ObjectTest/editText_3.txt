@@ -1,0 +1,4 @@
+<object id="18">
+	<textEdit>hello bro</textEdit>
+	<textLength>16</textLength>
+</object>
