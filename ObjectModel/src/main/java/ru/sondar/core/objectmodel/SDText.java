@@ -18,11 +18,11 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 public class SDText extends SDMainObject {
 
     /**
-     * Tag for text tag
+     * Tag for print and parse text filed
      */
     public static String Text_textFieldTag = "text";
     /**
-     * Class fields
+     * Text fields
      */
     private String Text = "";
 

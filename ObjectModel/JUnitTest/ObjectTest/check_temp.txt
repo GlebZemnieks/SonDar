@@ -1,0 +1,4 @@
+<object type="CheckBox" id="16">
+<text>test</text>
+<default>true</default>
+</object>

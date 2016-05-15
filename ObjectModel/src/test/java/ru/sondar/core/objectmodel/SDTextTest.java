@@ -8,6 +8,8 @@ package ru.sondar.core.objectmodel;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import static ru.sondar.core.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.objectmodel.exception.NoAttributeException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
@@ -23,6 +25,7 @@ public class SDTextTest {
     public void setUp() {
         this.text = new SDText();
         this.text.setText("test");
+        this.text.setID(14);
     }
 
     /**
@@ -59,13 +62,49 @@ public class SDTextTest {
     }
 
     /**
+     * 2 Test of parseCurrentObjectField method, of class SDText.
+     *
+     * @throws NoAttributeException
+     */
+    @Test
+    public void testParseCurrentObjectField2() throws ObjectStructureException {
+        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
+    }
+
+    /**
      * Test of printCurrentObjectField method, of class SDText.
      *
      * @throws NoAttributeException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp.txt");
+        this.text.printObjectToXML(fileModule);
+        fileModule.delFile();
+        fileModule.close();
+        SDText text2 = new SDText();
+        text2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        assertEquals(this.text.getText(), text2.getText());
+        assertEquals(this.text.getID(), text2.getID());
+
+    }
+
+    /**
+     * 2 Test of printCurrentObjectField method, of class SDText.
+     *
+     * @throws NoAttributeException
+     */
+    @Test
+    public void testPrintCurrentObjectField2() throws ObjectStructureException {
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp2.txt");
+        this.text.printObjectToXML(fileModule);
+        fileModule.delFile();
+        fileModule.close();
+        SDText text2 = new SDText();
+        text2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        assertEquals(this.text.getText(), text2.getText());
+        assertEquals(this.text.getID(), text2.getID());
+
     }
 
 }

@@ -138,6 +138,7 @@ public class SDMainObjectTest {
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt");
         this.object.printObjectToXML(fileModule);
+        fileModule.delFile();
         fileModule.close();
         this.object.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
         assertEquals(0, this.object.getID());
@@ -153,6 +154,7 @@ public class SDMainObjectTest {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt");
         this.object.setID(15);
         this.object.printObjectToXML(fileModule);
+        fileModule.delFile();
         fileModule.close();
         this.object.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
         assertEquals(15, this.object.getID());
