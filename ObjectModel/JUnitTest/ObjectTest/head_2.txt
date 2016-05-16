@@ -1,0 +1,6 @@
+<head>
+<documentUUID>00000000-0000-0000-0000-000000000001</documentUUID>
+<pluginUUID>00000000-0000-0000-0000-000000000002</pluginUUID>
+<creationTime>123456780</creationTime>
+<lastModificationTime>123456789</lastModificationTime>
+</head>

@@ -166,7 +166,7 @@ public abstract class SDMainObject {
     public void printObjectToXML(FileModuleWriteThread fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
-        fileModule.write("</object>");
+        fileModule.write("</" + Object_MainTag + ">\n");
     }
 
     /**
