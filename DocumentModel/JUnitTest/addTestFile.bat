@@ -1,1 +1,1 @@
-git add ObjectModel\JUnitTest\*.txt
+git add DocumentModel\JUnitTest\*.txt

@@ -1,0 +1,8 @@
+<object id="0">
+	<object type="Text" id="1">
+		<text>hello</text>
+	</object>
+	<object type="Date" id="2">
+		<date>123456789</date>
+	</object>
+</object>

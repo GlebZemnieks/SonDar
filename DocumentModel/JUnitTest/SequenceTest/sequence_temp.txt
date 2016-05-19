@@ -1,0 +1,21 @@
+<XMLSequence>
+<object type="Text" id="0">
+<text>hello</text>
+</object>
+<object type="Date" id="1">
+<date>123456789</date>
+</object>
+<object type="DivContainer" id="2">
+<object type="Text" id="3">
+<text>test</text>
+</object>
+<object type="CheckBox" id="4">
+<text>test</text>
+<default>true</default>
+</object>
+<object type="EditText" id="5">
+<textEdit>test</textEdit>
+<textLength>10</textLength>
+</object>
+</object>
+</XMLSequence>

@@ -14,4 +14,9 @@ public class Config {
     public static void Log(String tag, String msg) {
         logger.Log(tag, msg);
     }
+
+    public static void main(String[] args) {
+        int i = 5;
+        System.out.println((++i) + (++i));
+    }
 }

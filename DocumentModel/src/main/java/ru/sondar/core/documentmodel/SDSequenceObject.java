@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.core.documentmodel;
 
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
-import ru.sondar.core.objectmodel.SDText;
+import ru.sondar.core.objectmodel.*;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -44,6 +36,15 @@ public class SDSequenceObject extends SDMainObject {
      */
     public SDSequenceObject() {
         this.objectType = SDMainObjectType.DivContainer;
+    }
+
+    /**
+     * Getter for sequenceArrayLength field
+     *
+     * @return
+     */
+    public int getSequenceSize() {
+        return this.sequenceArrayLength;
     }
 
     /**
@@ -140,7 +141,7 @@ public class SDSequenceObject extends SDMainObject {
      */
     public void enumirateSequence(int startId) {
         int tempId = startId;
-        for (int count = 0; count < this.sequenceArrayLength; count++) {
+        for (int count = 0; count < this.sequenceArray.size(); count++) {
             this.sequenceArray.get(count).setID(tempId++);
             if (SDMainObjectType.DivContainer.toString().equals(this.sequenceArray.get(count).getObjectType().toString())) {
                 ((SDSequenceObject) this.sequenceArray.get(count)).enumirateSequence(tempId);
@@ -162,12 +163,14 @@ public class SDSequenceObject extends SDMainObject {
     }
 
     /**
-     * Class for parse sequence.
+     * Method for parse sequence.
      *
      * @param element
      * @throws ru.sondar.core.objectmodel.exception.ObjectStructureException
      */
     public void parseSequence(Element element) throws ObjectStructureException {
+        this.sequenceArray = new ArrayList<>();
+        this.sequenceArrayLength = 0;
         NodeList tempList = element.getChildNodes();
         for (int count = 0; count < tempList.getLength(); count++) {
             if (tempList.item(count).getNodeName().equals("object")) {
@@ -178,10 +181,11 @@ public class SDSequenceObject extends SDMainObject {
                 AddXMLObject(tempObject);
             }
         }
+        this.enumirateSequence(0);
     }
 
     /**
-     * Class for print sequence
+     * Method for print sequence
      *
      * @param fileModule
      */
@@ -201,7 +205,7 @@ public class SDSequenceObject extends SDMainObject {
     @Override
     public void printCurrentObjectField(FileModuleWriteThread fileModule) {
         for (int count = 0; count < this.sequenceArray.size(); count++) {
-            this.getXMLObject(count).printObjectToXML(fileModule);
+            this.getXMLObject(count + this.ID + 1).printObjectToXML(fileModule);
         }
     }
 
@@ -210,19 +214,22 @@ public class SDSequenceObject extends SDMainObject {
             return new SDText();
         }
         if (type == SDMainObjectType.Spinner) {
-            //return new SDSpinner();
+            return new SDSpinner();
         }
         if (type == SDMainObjectType.CheckBox) {
-            //return new SDCheckBox();
+            return new SDCheckBox();
         }
         if (type == SDMainObjectType.EndLn) {
-            //return new SDEndln();
+            return new SDEndln();
         }
         if (type == SDMainObjectType.Date) {
-            //return new SDDate();
+            return new SDDate();
         }
         if (type == SDMainObjectType.EditText) {
-            //return new SDEditText();
+            return new SDEditText();
+        }
+        if (type == SDMainObjectType.DivContainer) {
+            return new SDSequenceObject();
         }
         return null;
     }
