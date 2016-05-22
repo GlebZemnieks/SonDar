@@ -13,6 +13,10 @@ git add DocumentModel\pom.xml
 git add DocumentModel\JUnitTest\addTestFile.bat
 call DocumentModel\JUnitTest\addTestFile.bat
 
+git add fileSystem\src\main\java\*.java
+git add fileSystem\src\test\java\*.java
+git add fileSystem\pom.xml
+
 git add Core\src\main\java\*.java
 git add Core\src\test\java\*.java
 git add Core\pom.xml
