@@ -47,7 +47,6 @@ public class FileSystemActivity extends Activity {
 		Config.setLogger(new ALogging());
         this.logUUID = UUID.randomUUID();
 		Config.Log(logTag,"start");
-		prepare();
 		Config.Log(logTag,"File module prepare");
 		fileModule = new FileModule(this);
 		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
@@ -75,6 +74,7 @@ public class FileSystemActivity extends Activity {
 		LinearLayout layout = new LinearLayout(this);
 		layout.addView(getCreateNewButton(this,fileSystem, fileModule));
 		layout.addView(getOpenButton(this,fileSystem, fileModule));
+        layout.addView(getRefreshButton(this));
 		Config.Log(logTag, "set Layout");
         if(isApplicationActive) {
             Config.Log(logTag, "Application is active. Show work layout");
@@ -152,7 +152,7 @@ public class FileSystemActivity extends Activity {
 	public Button getOpenButton(final Activity oldActivity, final SonDarFileSystem fileSystem,final FileModuleInterface fileModule){
 		Button open = new Button(this);
 		open.setText("Open");
-		OnClickListener createNewOnCliclListener = new OnClickListener() {
+		OnClickListener createNewOnClickListener = new OnClickListener() {
 		       @Override
 		       public void onClick(View v) {
 		    	   Intent intent = new Intent(oldActivity, ChoiceFileFromList.class);
@@ -166,9 +166,34 @@ public class FileSystemActivity extends Activity {
 		if(work.getFileList()==null){
 			open.setEnabled(false);
 		}
-		open.setOnClickListener(createNewOnCliclListener);
+		open.setOnClickListener(createNewOnClickListener);
 		return open;
 	}
+
+    /**
+     * Create "Refresh" button
+     * @param oldActivity
+     * @return
+     */
+    public Button getRefreshButton(final Activity oldActivity){
+        Button open = new Button(this);
+        open.setText("Refresh");
+        OnClickListener createNewOnClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prepare();
+                Intent intent = new Intent(oldActivity, FileSystemActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+        SonDarFolder work = fileSystem.getFolderByName(Folder.work.toString());
+        if(work.getFileList()==null){
+            open.setEnabled(false);
+        }
+        open.setOnClickListener(createNewOnClickListener);
+        return open;
+    }
 
     /**
      * Create folder hierarchy and default file
