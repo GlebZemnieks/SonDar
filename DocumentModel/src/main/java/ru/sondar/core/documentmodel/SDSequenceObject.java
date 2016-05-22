@@ -88,6 +88,9 @@ public class SDSequenceObject extends SDMainObject {
      */
     private SDMainObject getInterval(int id) {
         int cursor = id;
+        if (cursor < 0) {
+            throw new IndexOutOfBoundsException();
+        }
         if (cursor > (this.sequenceArray.size() - 1)) {
             cursor = this.sequenceArray.size() - 1;
         }

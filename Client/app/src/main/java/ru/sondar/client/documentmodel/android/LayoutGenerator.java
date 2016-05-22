@@ -16,7 +16,7 @@ import ru.sondar.core.objectmodel.SDMainObjectType;
  */
 public class LayoutGenerator implements LayoutGeneratorInterface {
 
-	private String logTag = "LayoutGenerate";
+	private String logTag = "LayoutGenerator";
 
 	private LinearLayout domainLayout;
 	private LinearLayout nowLayout;
@@ -30,13 +30,17 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 
 	@Override
 	public LinearLayout generateLayout(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		Config.Log(logTag, "Start LayoutGenerate with parametr:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
+		Config.Log(logTag, "Start LayoutGenerate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
 		Config.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count++){			
 			if(checkSequenceOverflow(sequenceObject, count)){
-				Config.Log(logTag, "checkSequenceOwerflow = True --> break");
+				if(count == startObjectId){
+					Config.Log(logTag, "Last page. Generation will skip. Throw XMLSequenceIndexOverflowException");
+					throw new XMLSequenceIndexOverflowException("No layout update");
+				}
+				Config.Log(logTag, "checkSequenceOverflow = True --> break");
 				domainLayout.addView(nowLayout);
 				sequenceObject.setFirstIdInDomain(startObjectId);
 				sequenceObject.setLastIdInDomain(sequenceObject.getXMLObject(count-1).getID());
@@ -71,6 +75,48 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 			Config.Log(logTag, "left width = " + widthNow);
 		}		
 	}
+
+
+	@Override
+	public int reverseGenerating(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
+		Config.Log(logTag, "Start reverse Generate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
+		isEntriesCorrect(sequenceObject, startObjectId);
+		Config.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
+		prepareToGenerate(context, startObjectId, footer, sequenceObject);
+		for(int count = startObjectId;;count--){
+			if(checkSequenceOverflow(sequenceObject, count)){
+				Config.Log(logTag, "checkSequenceOverflow = True --> break");
+				domainLayout.addView(nowLayout);
+				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + 0);
+				return 0;
+			}
+			if(ifEndln(sequenceObject, count)){
+				Config.Log(logTag, "ifEndln = True --> continue");
+				prepareNewLayout(context, sequenceObject, count);
+				continue;
+			}
+			Config.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
+			View newView = prepareNewView(context, sequenceObject, count);
+			Config.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
+			if(domainCheck(footer)){
+				Config.Log(logTag, "domainLayout overflow --> break");
+				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + lastIdInString);
+				return lastIdInString;
+			}
+			if(nowLayoutCheck()){
+				Config.Log(logTag, "nowLayout overflow --> continue with decrement count");
+				prepareNewLayout(context, sequenceObject, count);
+				Config.Log(logTag, "left height = " + screenHeight);
+				//To the next time the cycle has continued to work with the current item. Do increment the iterator
+				count++;
+				continue;
+			}
+			Config.Log(logTag, "addNewView");
+			addNewView(sequenceObject, count, newView);
+			Config.Log(logTag, "left width = " + widthNow);
+		}
+	}
+
 	
 	/**
 	 * Is startObjectId correctly? Else throw OverflowException.
@@ -228,11 +274,6 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 	 */
 	private boolean ifEndln(AXMLSequenceObject sequenceObject, int count) {
 		return sequenceObject.getXMLObject(count).getObjectType() == SDMainObjectType.EndLn;
-	}
-
-	@Override
-	public int reverseGenerating(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		return 0;
 	}
 		
 	private int updateHeightNow(int heightNow, int heightNewView) {

@@ -11,21 +11,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import ru.sondar.client.ALogging;
 import ru.sondar.client.documentmodel.android.AXMLDocument;
 import ru.sondar.client.documentmodel.android.AXMLSequenceObject;
+import ru.sondar.client.documentmodel.android.XMLSequenceIndexOverflowException;
 import ru.sondar.client.filemodule.android.FileModule;
+import ru.sondar.core.Config;
 import ru.sondar.core.documentmodel.SDDOMParser;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
-import ru.sondar.core.logging.LoggerInterface;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
 public class DocumentSessionActivity extends Activity {
@@ -37,24 +36,17 @@ public class DocumentSessionActivity extends Activity {
 	private static final int buttonWidth = 72;
 	private static final int footer = 100;
 
-	LoggerInterface Logging = new ALogging();
-
-	private Button getBackButton(final Context context, final AXMLDocument sequence) {
-		OnClickListener backButtonOnCliclListener = new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				LinearLayout tempLayout = sequence.getBackLayout();
-				tempLayout.addView(getButtonLayout(context, sequence));
-				setContentView(tempLayout);
-			}
-		};
-		Button backButton = getButton("Back", backButtonOnCliclListener,
-				Gravity.LEFT);
-		return backButton;
+	private LinearLayout getButtonLayout(final Context context,
+			final AXMLDocument sequence) {
+		LinearLayout buttonLayout = new LinearLayout(this);
+		buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
+		buttonLayout.addView(getBackButton(context, sequence));
+		buttonLayout.addView(getNextButton(context, sequence));
+		return buttonLayout;
 	}
 
 	private Button getButton(String buttonName,
-			OnClickListener buttonOnCliclListener, int gravityValue) {
+							 OnClickListener buttonOnCliclListener, int gravityValue) {
 		Button tempButton = new Button(this);
 		tempButton.setText(buttonName);
 		tempButton.setWidth(buttonWidth);
@@ -65,29 +57,37 @@ public class DocumentSessionActivity extends Activity {
 		return tempButton;
 	}
 
-	private LinearLayout getButtonLayout(final Context context,
-			final AXMLDocument sequence) {
-		LinearLayout buttonLayout = new LinearLayout(this);
-		buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
-		buttonLayout.addView(getBackButton(context, sequence));
-		buttonLayout.addView(getNextButton(context, sequence));
-		return buttonLayout;
-	}
-
 	private Button getNextButton(final Context context,
-			final AXMLDocument sequence) {
-		OnClickListener nextButtonOnCliclListener = new OnClickListener() {
+			final AXMLDocument document) {
+		OnClickListener nextButtonOnClickListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.d("TEST", "Next button press");
-				LinearLayout tempLayout = sequence.getNextLayout();
-				tempLayout.addView(getButtonLayout(context, sequence));
+				try {
+					LinearLayout tempLayout = document.getNextLayout();
+					tempLayout.addView(getButtonLayout(context, document));
+					setContentView(tempLayout);
+				} catch (XMLSequenceIndexOverflowException error){
+					Config.Log(logTag, "Last page. Generation was skipped");
+				}
+			}
+		};
+		Button nextButton = getButton("Next", nextButtonOnClickListener,
+				Gravity.RIGHT);
+		return nextButton;
+	}
+
+	private Button getBackButton(final Context context, final AXMLDocument document) {
+		OnClickListener backButtonOnClickListener = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LinearLayout tempLayout = document.getBackLayout();
+				tempLayout.addView(getButtonLayout(context, document));
 				setContentView(tempLayout);
 			}
 		};
-		Button nextButton = getButton("Next", nextButtonOnCliclListener,
-				Gravity.RIGHT);
-		return nextButton;
+		Button backButton = getButton("Back", backButtonOnClickListener,
+				Gravity.LEFT);
+		return backButton;
 	}
 	
 	AXMLDocument document;
@@ -103,7 +103,7 @@ public class DocumentSessionActivity extends Activity {
 		folderName = (String) getIntent().getSerializableExtra("folderName");
 
 		fileModule = new FileModule(this);
-		Logging.Log(logTag, "MainActivity.onCreate start");
+		Config.Log(logTag, "MainActivity.onCreate start");
 
 		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		fileSystem.addFolder(Folder.temp.toString());
@@ -112,7 +112,7 @@ public class DocumentSessionActivity extends Activity {
 		fileSystem.init(fileModule);
 
 		document = new AXMLDocument(this);
-		Logging.Log(logTag, "Load Document start : " + fileName);
+		Config.Log(logTag, "Load Document start : " + fileName);
 		try {
 			document.loadDocument(
 					new SDDOMParser(fileSystem.getFolderByName(Folder.temp.toString()).getGlobalFileName(fileName)),
@@ -132,15 +132,15 @@ public class DocumentSessionActivity extends Activity {
 			e.printStackTrace();
 		}
 		fileSystem.getFolderByName(Folder.temp.toString()).setOpenFile(fileName);
-		Logging.Log(logTag, "LoadDocument done : " + fileName);
-		Logging.Log(logTag, "Create start layout");
+		Config.Log(logTag, "LoadDocument done : " + fileName);
+		Config.Log(logTag, "Create start layout");
 		LinearLayout layout = document.getStartLayout();
 
-		Logging.Log(logTag, "prepare buttonLayout");
+		Config.Log(logTag, "prepare buttonLayout");
 		layout.addView(getButtonLayout(this, document));
-		Logging.Log(logTag, "prepare buttonLayout");
+		Config.Log(logTag, "prepare buttonLayout");
 
-		Logging.Log(logTag, "set Layout");
+		Config.Log(logTag, "set Layout");
 		setContentView(layout);
 			
 
@@ -154,9 +154,9 @@ public class DocumentSessionActivity extends Activity {
 	
 	public void onPause(){
 		try{
-			Logging.Log(logTag, "onPause();");
+			Config.Log(logTag, "onPause();");
 			FileModuleWriteThreadInterface temp = fileSystem.getFolderByName(Folder.temp.toString()).saveFile(fileModule);
-			Logging.Log(logTag, "SaveDocument");
+			Config.Log(logTag, "SaveDocument");
 			document.saveDocument(temp);
 			temp.close();
 			fileSystem.moveFile(fileModule, Folder.temp.toString(), fileName, Folder.work.toString(), fileName);
@@ -165,7 +165,7 @@ public class DocumentSessionActivity extends Activity {
 			super.onPause();
 			finish();
 		}catch(Exception error){
-			Logging.Log(logTag, "Error", error); 
+			Config.Log(logTag, "Error");
 			super.onPause();
 		}
 		
@@ -213,9 +213,6 @@ public class DocumentSessionActivity extends Activity {
 	}
 	*/
 
-	public void setLogger(LoggerInterface logger) {
-		this.Logging = logger;
-	}
 
 	public static int getFooter() {
 		return footer;

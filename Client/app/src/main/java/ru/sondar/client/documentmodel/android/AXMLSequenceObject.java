@@ -30,7 +30,7 @@ public class AXMLSequenceObject extends SDSequenceObject {
      * Remove view object from domain layout for all object in sequence
      */
     public void resetView(){
-        for(int count=firstIdInDomain;count<lastIdInDomain+1;count++){
+        for(int count=0;count<this.sequenceArrayLength;count++){
             ((AXMLMainObject) this.getXMLObject(count)).resetView();
         }
     }

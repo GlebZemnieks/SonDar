@@ -69,7 +69,6 @@ public class AXMLDocument extends SDDocument {
         ((AXMLSequenceObject) sequence).updateState();
 	   	((AXMLSequenceObject) sequence).resetView();
 		startObjectId = generator.reverseGenerating(this.context, ((AXMLSequenceObject) sequence), ((AXMLSequenceObject) sequence).getFirstIdInDomain()-1, footer);
-		((AXMLSequenceObject) sequence).updateState();
 	   	((AXMLSequenceObject) sequence).resetView();
 		return generator.generateLayout(context,((AXMLSequenceObject) sequence), startObjectId, footer);
 	}
