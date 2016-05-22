@@ -7,15 +7,18 @@ import android.view.View;
 import android.widget.DatePicker;
 import ru.sondar.core.objectmodel.SDDate;
 import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
 
 public class AXMLDate extends AXMLMainObject {
 
     public AXMLDate() {
         super(new SDDate());
+        this.objectType = SDMainObjectType.Date;
     }
 
     public AXMLDate(SDMainObject sdmainObject) {
         super((SDDate)sdmainObject);
+        this.objectType = SDMainObjectType.Date;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoAttributeException;
 import ru.sondar.core.objectmodel.exception.ObjectAlreadyHaveNameException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -154,7 +154,7 @@ public abstract class SDMainObject {
      */
     protected abstract void parseCurrentObjectField(Element element) throws ObjectStructureException;
 
-    protected void printAttrivute(FileModuleWriteThread fileModule) {
+    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Object_MainTag + " type=\"" + this.objectType.toString() + "\" id=\"" + this.getID() + "\"" + this.getObjectNameTag() + ">\n");
     }
 
@@ -163,7 +163,7 @@ public abstract class SDMainObject {
      *
      * @param fileModule
      */
-    public void printObjectToXML(FileModuleWriteThread fileModule) {
+    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</" + Object_MainTag + ">\n");
@@ -174,7 +174,7 @@ public abstract class SDMainObject {
      *
      * @param fileModule
      */
-    protected abstract void printCurrentObjectField(FileModuleWriteThread fileModule);
+    protected abstract void printCurrentObjectField(FileModuleWriteThreadInterface fileModule);
 
     /**
      * To string

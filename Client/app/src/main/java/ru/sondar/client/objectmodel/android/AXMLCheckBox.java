@@ -5,15 +5,18 @@ import android.view.View;
 import android.widget.CheckBox;
 import ru.sondar.core.objectmodel.SDCheckBox;
 import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
 
 public class AXMLCheckBox extends AXMLMainObject {
 
     public AXMLCheckBox() {
         super(new SDCheckBox());
+        this.objectType = SDMainObjectType.CheckBox;
     }
 
     public AXMLCheckBox(SDMainObject sdmainobject) {
         super((SDCheckBox)sdmainobject);
+        this.objectType = SDMainObjectType.CheckBox;
     }
 
     @Override

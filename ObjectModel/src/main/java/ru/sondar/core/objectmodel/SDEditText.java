@@ -7,7 +7,7 @@ package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
@@ -97,7 +97,7 @@ public class SDEditText extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         this.Text = this.Text.replaceAll("\n", "Zzz");
         fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n"
                 + "<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");

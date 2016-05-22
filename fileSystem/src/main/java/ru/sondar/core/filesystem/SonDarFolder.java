@@ -1,6 +1,7 @@
 package ru.sondar.core.filesystem;
 
 import java.util.Arrays;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -13,8 +14,6 @@ import ru.sondar.core.filesystem.exception.FolderNotReadyException;
 import ru.sondar.core.filesystem.exception.FolderObjectNotInSystemException;
 import ru.sondar.core.filesystem.exception.MissFileInFolderException;
 import ru.sondar.core.filesystem.exception.SomeTroubleWithFolderException;
-import ru.sondar.core.logging.EmptyLogging;
-import ru.sondar.core.logging.LoggerInterface;
 
 public class SonDarFolder {
 
@@ -46,10 +45,6 @@ public class SonDarFolder {
     }
 
     /**
-     * Logging object
-     */
-    private LoggerInterface Logging = new EmptyLogging();
-    /**
      * Tag for logging
      */
     private final String logTag = "FileSystemLog";
@@ -61,8 +56,7 @@ public class SonDarFolder {
      * @param folderName
      * @param logger
      */
-    public SonDarFolder(String globalFolder, String folderName, LoggerInterface logger) {
-        this.Logging = logger;
+    public SonDarFolder(String globalFolder, String folderName) {
         this.folderName = folderName;
         this.globalFolder = globalFolder;
     }
@@ -97,7 +91,7 @@ public class SonDarFolder {
      */
     public String[] getFileList() {
         if (this.isInit != SonDarFolderState.None) {
-            Logging.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
+            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         return this.config.configFileList;
@@ -111,7 +105,7 @@ public class SonDarFolder {
      */
     public String getGlobalFileName(String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Logging.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
+            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         boolean isInFolder = false;
@@ -121,7 +115,7 @@ public class SonDarFolder {
             }
         }
         if (!isInFolder) {
-            Logging.Log(logTag, "File '" + fileName + "' not found in folder. FileList : " + Arrays.toString(this.config.configFileList));
+            Config.Log(logTag, "File '" + fileName + "' not found in folder. FileList : " + Arrays.toString(this.config.configFileList));
             throw new FileNotFoundInFolderException();
         }
         return this.globalFolder + "/" + this.folderName + "/" + fileName;
@@ -134,38 +128,38 @@ public class SonDarFolder {
      * @throws SomeTroubleWithFolderException
      */
     public void init(FileModuleInterface fileModule) throws SomeTroubleWithFolderException {
-        Logging.Log(logTag, "init folder '" + folderName + "'");
+        Config.Log(logTag, "init folder '" + folderName + "'");
         if (!isInSystem) {
-            Logging.Log(logTag, "Folder isInSystem = False");
+            Config.Log(logTag, "Folder isInSystem = False");
             throw new FolderObjectNotInSystemException();
         }
         //check config file
-        Logging.Log(logTag, "check config file in folder '" + folderName + "'");
+        Config.Log(logTag, "check config file in folder '" + folderName + "'");
         try {
-            config = new SonDarFolderConfig(fileModule, globalFolder, folderName, Logging);
+            config = new SonDarFolderConfig(fileModule, globalFolder, folderName);
         } catch (SonDarFileNotFoundException error) {
-            Logging.Log(logTag, "Config file in " + folderName + " folder not exist");
+            Config.Log(logTag, "Config file in " + folderName + " folder not exist");
             SomeTroubleWithFolderException next = new FirstFolderUseException();
             next.addSuppressed(error);
             this.isInit = SonDarFolderState.ReduildPending;
             throw next;
         } catch (ConfigFileFormatException error) {
-            Logging.Log(logTag, "Config file in " + folderName + " folder have bad format");
+            Config.Log(logTag, "Config file in " + folderName + " folder have bad format");
             SomeTroubleWithFolderException next = new SomeTroubleWithFolderException();
             next.addSuppressed(error);
             this.isInit = SonDarFolderState.ReduildPending;
             throw next;
         }
-        Logging.Log(logTag, "config file found in folder '" + folderName + "'");
-        Logging.Log(logTag, "check file consist in folder '" + folderName + "';");
+        Config.Log(logTag, "config file found in folder '" + folderName + "'");
+        Config.Log(logTag, "check file consist in folder '" + folderName + "';");
         boolean allRight = true;
         MissFileInFolderException missFileError = new MissFileInFolderException();
         for (int count = 0; (config.configFileList != null) && (count < config.configFileList.length); count++) {
-            Logging.Log(logTag, "check file : " + config.configFileList[count]);
+            Config.Log(logTag, "check file : " + config.configFileList[count]);
             try {
                 FileModuleReadThreadInterface readThread = fileModule.getReadThread(globalFolder + "/" + folderName + "/" + config.configFileList[count]);
             } catch (SonDarFileNotFoundException error) {
-                Logging.Log(logTag, "trouble with file " + config.configFileList[count], error);
+                Config.Log(logTag, "trouble with file " + config.configFileList[count]);
                 allRight = false;
                 missFileError.addSuppressed(error);
             }
@@ -186,7 +180,7 @@ public class SonDarFolder {
      */
     public FileModuleWriteThreadInterface addFile(FileModuleInterface fileModule, String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Logging.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
+            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         FileModuleWriteThreadInterface temp = fileModule.getWriteThread(globalFolder + "/" + folderName + "/" + fileName);
@@ -204,7 +198,7 @@ public class SonDarFolder {
      */
     public FileModuleReadThreadInterface getFile(FileModuleInterface fileModule, String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Logging.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
+            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         if (this.config.configFileList == null) {
@@ -225,21 +219,32 @@ public class SonDarFolder {
         return temp;
     }
 
+    /**
+     * Name opened file
+     */
     private String FileOpen = "";
+    /**
+     * Opened flag
+     */
     private boolean isOpen = false;
+
+    public void setOpenFile(String fileName) {
+        this.FileOpen = fileName;
+        this.isOpen = true;
+    }
 
     public FileModuleWriteThreadInterface saveFile(FileModuleInterface fileModule) {
         if (this.isInit != SonDarFolderState.None) {
-            Logging.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
+            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         if (this.isOpen) {
-            Logging.Log(logTag, "Save document with name : " + this.FileOpen);
+            Config.Log(logTag, "Save document with name : " + this.FileOpen);
             FileModuleWriteThreadInterface temp = fileModule.getWriteThread(getGlobalFileName(FileOpen));
             this.isOpen = false;
             return temp;
         }
-        Logging.Log(logTag, "File not opened. Throw exception : FileNotOpenedException");
+        Config.Log(logTag, "File not opened. Throw exception : FileNotOpenedException");
         throw new FileNotOpenedException();
     }
 

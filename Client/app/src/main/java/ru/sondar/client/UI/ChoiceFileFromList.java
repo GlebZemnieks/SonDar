@@ -8,30 +8,39 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import ru.sondar.client.ALogging;
 import ru.sondar.client.filemodule.android.FileModule;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
-import ru.sondar.core.logging.EmptyLogging;
-import ru.sondar.core.logging.LoggerInterface;
 
-public class ChoiseFileFromList extends ListActivity {
+public class ChoiceFileFromList extends ListActivity {
 
-	public String logTag = "SDActivity:ChoiseFileFromList";
-	LoggerInterface Logging = new EmptyLogging();
+	/**
+	 * Tag for logging
+	 */
+	public String logTag = "SDActivity:ChoiceFileFromList";
+
+	/**
+	 * File list adapter
+	 */
 	private ArrayAdapter<String> mAdapter;
-	
-	SonDarFileSystem fileSystem;
+	/**
+	 * File Module object
+	 */
 	FileModuleInterface fileModule;
+	/**
+	 * File system object
+	 */
+	SonDarFileSystem fileSystem;
+	/**
+	 * Current folder name
+	 */
 	String nowFolder;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-		Logging = new ALogging();
 		fileModule = new FileModule(this);
-		//this.Logging =  new FileLogging(fileModule, Environment.getExternalStorageDirectory()+"/sondar/log/log_" + UUID.fromString((String) getIntent().getSerializableExtra("logUUID")) + ".txt");
-		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar",Logging);
+		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		nowFolder = (String)getIntent().getSerializableExtra("folderName");
 		fileSystem.addFolder(nowFolder);
 		fileSystem.addFolder(Folder.temp.toString());
@@ -39,12 +48,14 @@ public class ChoiseFileFromList extends ListActivity {
 	    mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileSystem.getFolderByName(nowFolder).getFileList());
 	    setListAdapter(mAdapter);
 	}
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 	    super.onListItemClick(l, v, position, id);
 	    Toast.makeText(getApplicationContext(),
-	            "Вы выбрали " + l.getItemAtPosition(position).toString() + " элемент", Toast.LENGTH_SHORT).show();
+	            "Your choice is  " + l.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 	    try {
+			// TODO Why ?
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

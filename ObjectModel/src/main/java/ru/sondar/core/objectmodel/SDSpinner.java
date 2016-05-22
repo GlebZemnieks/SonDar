@@ -2,7 +2,7 @@ package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
@@ -120,7 +120,7 @@ public class SDSpinner extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Spinner_DataList + ">\n");
         for (String data : this.dataList) {
             fileModule.write("<" + Spinner_Item + ">" + data + "</" + Spinner_Item + ">\n");

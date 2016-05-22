@@ -3,7 +3,7 @@ package ru.sondar.core.objectmodel;
 import java.util.Date;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
@@ -67,7 +67,7 @@ public class SDDate extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<date>" + this.date.getTime() + "</date>\n");
     }
 

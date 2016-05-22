@@ -1,7 +1,7 @@
 package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -23,7 +23,7 @@ public class SDEndln extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
     }
 
 }

@@ -12,37 +12,45 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import ru.sondar.client.ALogging;
 import ru.sondar.client.PrepareTestDocumentOnDisk_NonReleaseCode;
+import ru.sondar.client.R;
 import ru.sondar.client.filemodule.android.FileModule;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 import ru.sondar.core.filesystem.SonDarFolder;
-import ru.sondar.core.logging.LoggerInterface;
 
 public class FileSystemActivity extends Activity {
 
+    /**
+     * Tag for logging
+     */
 	public String logTag = "SDActivity:FileSystemActivity";
-	LoggerInterface Logging = new ALogging();
+    /**
+     * File module object
+     */
 	FileModuleInterface fileModule;
+    /**
+     * File system object
+     */
 	SonDarFileSystem fileSystem;
+    /**
+     * Session UUID
+     */
 	UUID logUUID;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.Logging = new ALogging();		
-		this.Logging.Log(logTag,"start");
-		//prepare();
-		Toast.makeText(getApplicationContext(),
-			(Environment.getExternalStorageDirectory()+"/sondar/log/log-file.txt").toString(), Toast.LENGTH_SHORT).show();
-
-		this.Logging.Log(logTag,"file module prepare");
+		Config.setLogger(new ALogging());
+        this.logUUID = UUID.randomUUID();
+		Config.Log(logTag,"start");
+		prepare();
+		Config.Log(logTag,"File module prepare");
 		fileModule = new FileModule(this);
-		logUUID = UUID.randomUUID();
-		//this.Logging =  new FileLogging(fileModule, Environment.getExternalStorageDirectory()+"/sondar/log/log_" + logUUID.toString() + ".txt");
-		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar",Logging);
+		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		fileSystem.addFolder(Folder.example.toString());
 		fileSystem.addFolder(Folder.work.toString());
 		fileSystem.addFolder(Folder.temp.toString());
@@ -50,58 +58,104 @@ public class FileSystemActivity extends Activity {
 		fileSystem.addFolder(Folder.log.toString());
 		
 	}
-	
+
+    /**
+     * If here are no files in example folder block application work and show default layout
+     */
+    public boolean isApplicationActive = true;
+
+    @Override
 	public void onResume(){
 		super.onResume();
-		this.Logging.Log(logTag,"file system prepare");
+		Config.Log(logTag,"Preparing file system ...");
 		fileSystem.init(fileModule);
-		this.Logging.Log(logTag,"file system init done");
+		Config.Log(logTag,"File system init successfully");
 		isSomeDocumentInTemp(fileSystem);
-		this.Logging.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
+		Config.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
 		LinearLayout layout = new LinearLayout(this);
 		layout.addView(getCreateNewButton(this,fileSystem, fileModule));
 		layout.addView(getOpenButton(this,fileSystem, fileModule));
-		Logging.Log(logTag, "set Layout");
-		setContentView(layout);
+		Config.Log(logTag, "set Layout");
+        if(isApplicationActive) {
+            Config.Log(logTag, "Application is active. Show work layout");
+            setContentView(layout);
+        } else {
+            Config.Log(logTag, "Application is not active. Show default layout");
+            setContentView(R.layout.activity_main123);
+        }
 	}
-	
+
+    /**
+     * If we have not closed document, open it without choice
+     * @param fileSystem
+     */
 	public void isSomeDocumentInTemp(SonDarFileSystem fileSystem){
 		SonDarFolder temp = fileSystem.getFolderByName(Folder.temp.toString());
 		if(temp.getFileList()!=null){
 		    Intent intent = new Intent(this, DocumentSessionActivity.class); 
 		    intent.putExtra("fileName",temp.getFileList()[0]);
 		    intent.putExtra("logUUID",logUUID.toString());
-			this.Logging.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
+			Config.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
 		    startActivity(intent);
-			   finish();
+			finish();
 		}
 	}
-	
+
+    /**
+     * Create "Create new" button
+     * @param oldActivity
+     * @param fileSystem
+     * @param fileModule
+     * @return
+     */
 	public Button getCreateNewButton(final Activity oldActivity, final SonDarFileSystem fileSystem,final FileModuleInterface fileModule){
 		Button createNew = new Button(this);
 		createNew.setText("Create New");
 		OnClickListener createNewOnCliclListener = new OnClickListener() {
 	       @Override
 	       public void onClick(View v) {
-	    	   String newFileName = fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0].replace(".xml", "") + "_" + fileSystem.getUUID() +".xml";
-	    	   fileSystem.copyFile(fileModule, Folder.example.toString(), fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0], Folder.temp.toString(), newFileName);
-			   Intent intent = new Intent(oldActivity, DocumentSessionActivity.class); 
-			   intent.putExtra("fileName",newFileName);
-			   intent.putExtra("logUUID",logUUID.toString());
-			   startActivity(intent);
-			   finish();
-	       }
+               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().length == 1) {
+                   String newFileName = fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0].replace(".xml", "") + "_" + fileSystem.getUUID() + ".xml";
+                   fileSystem.copyFile(fileModule, Folder.example.toString(), fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0], Folder.temp.toString(), newFileName);
+                   Intent intent = new Intent(oldActivity, DocumentSessionActivity.class);
+                   intent.putExtra("fileName", newFileName);
+                   intent.putExtra("logUUID", logUUID.toString());
+                   startActivity(intent);
+                   finish();
+               }
+               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().length > 1){
+                   Intent intent = new Intent(oldActivity, ChoiceFileFromList.class);
+                   intent.putExtra("folderName",Folder.example.toString());
+                   intent.putExtra("logUUID",logUUID.toString());
+                   startActivity(intent);
+                   finish();
+               }
+
+	          }
 		};
+        SonDarFolder example = fileSystem.getFolderByName(Folder.example.toString());
+        if(example.getFileList()==null){
+            createNew.setEnabled(false);
+            this.isApplicationActive = false;
+        }
 		createNew.setOnClickListener(createNewOnCliclListener);
 		return createNew;
 	}
+
+    /**
+     * Create "Open" button
+     * @param oldActivity
+     * @param fileSystem
+     * @param fileModule
+     * @return
+     */
 	public Button getOpenButton(final Activity oldActivity, final SonDarFileSystem fileSystem,final FileModuleInterface fileModule){
 		Button open = new Button(this);
 		open.setText("Open");
 		OnClickListener createNewOnCliclListener = new OnClickListener() {
 		       @Override
 		       public void onClick(View v) {
-		    	   Intent intent = new Intent(oldActivity, ChoiseFileFromList.class); 
+		    	   Intent intent = new Intent(oldActivity, ChoiceFileFromList.class);
 				   intent.putExtra("folderName",Folder.work.toString());
 				   intent.putExtra("logUUID",logUUID.toString());
 				   startActivity(intent);
@@ -115,7 +169,10 @@ public class FileSystemActivity extends Activity {
 		open.setOnClickListener(createNewOnCliclListener);
 		return open;
 	}
-	
+
+    /**
+     * Create folder hierarchy and default file
+     */
 	public void prepare(){
 		File mainDir = new File(Environment.getExternalStorageDirectory()+"/sondar");
 		mainDir.mkdir();
@@ -133,7 +190,6 @@ public class FileSystemActivity extends Activity {
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/example/config.txt");
 			file.delete();
 			file.createNewFile();
-			Logging.Log("test","test " + file.exists());
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/done/config.txt");
 			file.delete();
 			file.createNewFile();
@@ -150,6 +206,6 @@ public class FileSystemActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new PrepareTestDocumentOnDisk_NonReleaseCode(this,Logging);
+		new PrepareTestDocumentOnDisk_NonReleaseCode(this);
 	}
 }

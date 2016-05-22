@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.client.filemodule.android;
 
 import android.content.Context;
@@ -26,7 +21,6 @@ public class FileModule implements FileModuleInterface {
      * Constructor
      *
      * @param context
-     * @param logger
      */
     public FileModule(Context context) {
         this.context = context;

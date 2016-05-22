@@ -1,14 +1,13 @@
 package ru.sondar.core.filesystem;
 
 import java.util.Arrays;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import static ru.sondar.core.filesystem.SonDarFileSystem.getTagContent;
 import ru.sondar.core.filesystem.exception.ConfigFileFormatException;
 import ru.sondar.core.filesystem.exception.FileNotFoundInFolderException;
-import ru.sondar.core.logging.EmptyLogging;
-import ru.sondar.core.logging.LoggerInterface;
 
 public class SonDarFolderConfig {
 
@@ -35,10 +34,6 @@ public class SonDarFolderConfig {
      */
     private final String configFileTag = "fileName";
     /**
-     * Logging object
-     */
-    private LoggerInterface Logging = new EmptyLogging();
-    /**
      * Tag for logging
      */
     private final String logTag = "FileSystemLog";
@@ -52,8 +47,7 @@ public class SonDarFolderConfig {
      * @param logger
      * @throws ConfigFileFormatException
      */
-    public SonDarFolderConfig(FileModuleInterface fileModule, String globalFolder, String folderName, LoggerInterface logger) throws ConfigFileFormatException {
-        this.Logging = logger;
+    public SonDarFolderConfig(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
         this.getConfigList(fileModule, globalFolder, folderName);
     }
 
@@ -85,7 +79,7 @@ public class SonDarFolderConfig {
         if (temp != null && !temp.contains(configTag)) {
             result[0] = getTagContent(temp, configFileTag);
         } else {
-            Logging.Log(logTag, "Final config list is empty");
+            Config.Log(logTag, "Final config list is empty");
             return;
         }
         temp = readThread.read();
@@ -105,7 +99,7 @@ public class SonDarFolderConfig {
         }
         readThread.close();
         configFileList = result;
-        Logging.Log(logTag, "Final config list " + Arrays.toString(configFileList));
+        Config.Log(logTag, "Final config list " + Arrays.toString(configFileList));
     }
 
     /**

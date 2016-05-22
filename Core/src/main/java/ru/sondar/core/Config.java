@@ -1,7 +1,7 @@
 package ru.sondar.core;
 
+import ru.sondar.core.logging.EmptyLogging;
 import ru.sondar.core.logging.LoggerInterface;
-import ru.sondar.core.logging.PCLogging;
 
 /**
  *
@@ -9,14 +9,27 @@ import ru.sondar.core.logging.PCLogging;
  */
 public class Config {
 
-    private static final LoggerInterface logger = new PCLogging();
+    /**
+     * Logger object
+     */
+    private static LoggerInterface logger = new EmptyLogging();
 
-    public static void Log(String tag, String msg) {
-        logger.Log(tag, msg);
+    /**
+     * Setter for logger object
+     *
+     * @param loggerInterface
+     */
+    public static void setLogger(LoggerInterface loggerInterface) {
+        logger = loggerInterface;
     }
 
-    public static void main(String[] args) {
-        int i = 5;
-        System.out.println((++i) + (++i));
+    /**
+     * Log method
+     *
+     * @param tag
+     * @param msg
+     */
+    public static void Log(String tag, String msg) {
+        logger.Log(tag, msg);
     }
 }

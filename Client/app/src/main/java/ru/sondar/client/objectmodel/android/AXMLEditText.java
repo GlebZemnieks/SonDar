@@ -5,15 +5,18 @@ import android.view.View;
 import android.widget.EditText;
 import ru.sondar.core.objectmodel.SDEditText;
 import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
 
 public class AXMLEditText extends AXMLMainObject {
 
     public AXMLEditText() {
         super(new SDEditText());
+        this.objectType = SDMainObjectType.EditText;
     }
 
     public AXMLEditText(SDMainObject sdmainObject) {
         super((SDEditText)sdmainObject);
+        this.objectType = SDMainObjectType.EditText;
     }
 
     @Override

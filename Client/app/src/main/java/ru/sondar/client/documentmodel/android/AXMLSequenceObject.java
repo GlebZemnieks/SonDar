@@ -1,8 +1,5 @@
 package ru.sondar.client.documentmodel.android;
 
-import android.content.Context;
-import android.view.View;
-
 import ru.sondar.client.objectmodel.android.*;
 import ru.sondar.core.documentmodel.SDSequenceObject;
 import ru.sondar.core.objectmodel.SDMainObject;

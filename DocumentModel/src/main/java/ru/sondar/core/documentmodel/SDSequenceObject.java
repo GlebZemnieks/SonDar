@@ -3,7 +3,7 @@ package ru.sondar.core.documentmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.*;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
@@ -193,7 +193,7 @@ public class SDSequenceObject extends SDMainObject {
      *
      * @param fileModule
      */
-    public void printSequence(FileModuleWriteThread fileModule) {
+    public void printSequence(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Sequence_MainTag + ">\n");
         for (int count = 0; count < this.sequenceArray.size(); count++) {
             this.getXMLObject(count).printObjectToXML(fileModule);
@@ -207,7 +207,7 @@ public class SDSequenceObject extends SDMainObject {
     }
 
     @Override
-    public void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         for (int count = 0; count < this.sequenceArray.size(); count++) {
             this.getXMLObject(count + this.ID + 1).printObjectToXML(fileModule);
         }

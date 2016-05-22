@@ -5,16 +5,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
 import ru.sondar.core.objectmodel.SDSpinner;
 
 public class AXMLSpinner extends AXMLMainObject {
 
     public AXMLSpinner() {
         super(new SDSpinner());
+        this.objectType = SDMainObjectType.Spinner;
     }
 
     public AXMLSpinner(SDMainObject sdmainobject) {
         super((SDSpinner)sdmainobject);
+        this.objectType = SDMainObjectType.Spinner;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package ru.sondar.client.filemodule.android;
 
 import android.content.Context;
+
+import java.io.File;
+
 import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleThreadInterface;
 
@@ -38,7 +41,10 @@ public class FileModuleThread implements FileModuleThreadInterface {
 
     @Override
     public void delFile() {
-        throw new UnsupportedOperationException("del file on android");
+        File file = new File(fileName);
+        if (file != null) {
+            file.delete();
+        }
     }
 
     @Override

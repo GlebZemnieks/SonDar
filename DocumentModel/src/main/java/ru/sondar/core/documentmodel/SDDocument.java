@@ -5,7 +5,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ru.sondar.core.documentmodel.exception.DocumentAlreadyInitException;
 import ru.sondar.core.documentmodel.exception.DocumentNotInitException;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.SDHeadPart;
 import ru.sondar.core.objectmodel.SDLogPart;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -121,7 +121,7 @@ public class SDDocument {
         parser.getLogPart(logPart);
     }
 
-    public void saveDocument(FileModuleWriteThread fileModule) {
+    public void saveDocument(FileModuleWriteThreadInterface fileModule) {
         if (this.sequence == null || this.headPart == null || this.logPart == null) {
             throw new DocumentNotInitException("");
         }

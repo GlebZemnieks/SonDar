@@ -3,7 +3,7 @@ package ru.sondar.core.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -61,12 +61,12 @@ public class SDLogPart extends SDMainObject {
     }
 
     @Override
-    protected void printAttrivute(FileModuleWriteThread fileModule) {
+    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Log_MainTag + ">\n");
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         if (this.logFileName != null) {
             for (String log : this.logFileName) {
                 fileModule.write("<log>" + log + "</log>\n");
@@ -75,7 +75,7 @@ public class SDLogPart extends SDMainObject {
     }
 
     @Override
-    public void printObjectToXML(FileModuleWriteThread fileModule) {
+    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</" + Log_MainTag + ">\n");

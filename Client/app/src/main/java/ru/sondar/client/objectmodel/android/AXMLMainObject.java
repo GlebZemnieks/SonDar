@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 import org.w3c.dom.Element;
+
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.core.objectmodel.SDMainObject;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -121,7 +123,7 @@ public abstract class AXMLMainObject extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         this.sdMainObject.printObjectToXML(fileModule);
     }
 

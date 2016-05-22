@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.w3c.dom.Element;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.core.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.objectmodel.exception.ObjectAlreadyHaveNameException;
@@ -26,7 +27,7 @@ public class SDMainObjectTest {
         }
 
         @Override
-        public void printCurrentObjectField(FileModuleWriteThread fileModule) {
+        public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         }
     }
 

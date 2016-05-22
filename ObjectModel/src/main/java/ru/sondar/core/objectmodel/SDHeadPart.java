@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -145,12 +145,12 @@ public class SDHeadPart extends SDMainObject {
     }
 
     @Override
-    public void printObjectToXML(FileModuleWriteThread fileModule) {
+    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         this.printCurrentObjectField(fileModule);
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThread fileModule) {
+    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<head>\n"
                 + "<documentUUID>" + this.uuid.toString() + "</documentUUID>\n"
                 + "<pluginUUID>" + this.plugin.toString() + "</pluginUUID>\n"

@@ -5,16 +5,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
 import ru.sondar.core.objectmodel.SDText;
 
 public class AXMLText extends AXMLMainObject {
 
     public AXMLText() {
         super(new SDText());
+        this.objectType = SDMainObjectType.Text;
     }
 
     public AXMLText(SDMainObject sdmainobject) {
         super((SDText)sdmainobject);
+        this.objectType = SDMainObjectType.Text;
     }
 
     @Override

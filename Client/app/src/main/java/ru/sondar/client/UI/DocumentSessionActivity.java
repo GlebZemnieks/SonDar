@@ -24,7 +24,6 @@ import ru.sondar.client.filemodule.android.FileModule;
 import ru.sondar.core.documentmodel.SDDOMParser;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 import ru.sondar.core.logging.LoggerInterface;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -39,7 +38,7 @@ public class DocumentSessionActivity extends Activity {
 	private static final int footer = 100;
 
 	LoggerInterface Logging = new ALogging();
-	
+
 	private Button getBackButton(final Context context, final AXMLDocument sequence) {
 		OnClickListener backButtonOnCliclListener = new OnClickListener() {
 			@Override
@@ -104,10 +103,9 @@ public class DocumentSessionActivity extends Activity {
 		folderName = (String) getIntent().getSerializableExtra("folderName");
 
 		fileModule = new FileModule(this);
-		//this.Logging =  new FileLogging(fileModule, Environment.getExternalStorageDirectory()+"/sondar/log/log_" + UUID.fromString((String) getIntent().getSerializableExtra("logUUID")) + ".txt");
 		Logging.Log(logTag, "MainActivity.onCreate start");
 
-		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar", Logging);
+		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		fileSystem.addFolder(Folder.temp.toString());
 		fileSystem.addFolder(Folder.work.toString());
 		fileSystem.addFolder(Folder.done.toString());
@@ -133,6 +131,7 @@ public class DocumentSessionActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		fileSystem.getFolderByName(Folder.temp.toString()).setOpenFile(fileName);
 		Logging.Log(logTag, "LoadDocument done : " + fileName);
 		Logging.Log(logTag, "Create start layout");
 		LinearLayout layout = document.getStartLayout();
@@ -156,7 +155,7 @@ public class DocumentSessionActivity extends Activity {
 	public void onPause(){
 		try{
 			Logging.Log(logTag, "onPause();");
-			FileModuleWriteThread temp = (FileModuleWriteThread)fileSystem.getFolderByName(Folder.temp.toString()).saveFile(fileModule);
+			FileModuleWriteThreadInterface temp = fileSystem.getFolderByName(Folder.temp.toString()).saveFile(fileModule);
 			Logging.Log(logTag, "SaveDocument");
 			document.saveDocument(temp);
 			temp.close();

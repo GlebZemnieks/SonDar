@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ru.sondar.client.objectmodel.android.AXMLMainObject;
-import ru.sondar.core.logging.EmptyLogging;
-import ru.sondar.core.logging.LoggerInterface;
+import ru.sondar.core.Config;
 import ru.sondar.core.objectmodel.SDMainObjectType;
 
 /**
@@ -17,7 +16,6 @@ import ru.sondar.core.objectmodel.SDMainObjectType;
  */
 public class LayoutGenerator implements LayoutGeneratorInterface {
 
-	LoggerInterface Logging = new EmptyLogging();
 	private String logTag = "LayoutGenerate";
 
 	private LinearLayout domainLayout;
@@ -32,55 +30,45 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 
 	@Override
 	public LinearLayout generateLayout(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		Logging.Log(logTag, "Start LayoutGenerate with parametr:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
+		Config.Log(logTag, "Start LayoutGenerate with parametr:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
-		Logging.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
+		Config.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count++){			
 			if(checkSequenceOverflow(sequenceObject, count)){
-				Logging.Log(logTag, "checkSequenceOwerflow = True --> break");
+				Config.Log(logTag, "checkSequenceOwerflow = True --> break");
 				domainLayout.addView(nowLayout);
 				sequenceObject.setFirstIdInDomain(startObjectId);
 				sequenceObject.setLastIdInDomain(sequenceObject.getXMLObject(count-1).getID());
-				Logging.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
+				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
 				return domainLayout;
 			}
 			if(ifEndln(sequenceObject, count)){
-				Logging.Log(logTag, "ifEndln = True --> continue");
+				Config.Log(logTag, "ifEndln = True --> continue");
 				prepareNewLayout(context, sequenceObject, count);
 				continue;
 			}
-			Logging.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
+			Config.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
 			View newView = prepareNewView(context, sequenceObject, count);
-			Logging.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
+			Config.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
 			if(domainCheck(footer)){
-				Logging.Log(logTag, "domainLayout overflow --> break");
+				Config.Log(logTag, "domainLayout overflow --> break");
 				sequenceObject.setLastIdInDomain(lastIdInString);
-				/*
-				if(ifDiv(sequenceObject, count)){
-					Logging.Log(logTag, "if Div(" + sequenceObject.getXMLObject(count).getDivID()+") = true ->> delete All view from domain");
-					for(int tempCount=1;ifContinueDiv(sequenceObject, count, tempCount);tempCount++){
-						Logging.Log(logTag, "resetView for object : " + sequenceObject.getXMLObject(count-tempCount).toString());
-						((AXMLMainObject) sequenceObject.getXMLObject(count-tempCount)).resetView();
-						sequenceObject.setLastIdInDomain(count-tempCount-1);
-					}
-				}
-				*/
 				sequenceObject.setFirstIdInDomain(startObjectId);
-				Logging.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
+				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
 				return domainLayout;
 			}
 			if(nowLayoutCheck()){
-				Logging.Log(logTag, "nowLayout overflow --> continue with decrement count");
+				Config.Log(logTag, "nowLayout overflow --> continue with decrement count");
 				prepareNewLayout(context, sequenceObject, count);
-				Logging.Log(logTag, "left height = " + screenHeight);
+				Config.Log(logTag, "left height = " + screenHeight);
 				//To the next time the cycle has continued to work with the current item. Do decrement the iterator
 				count--;
 				continue;
 			}
-			Logging.Log(logTag, "addNewView");
+			Config.Log(logTag, "addNewView");
 			addNewView(sequenceObject, count, newView);
-			Logging.Log(logTag, "left width = " + widthNow);
+			Config.Log(logTag, "left width = " + widthNow);
 		}		
 	}
 	
@@ -92,7 +80,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 	 */
 	private void isEntriesCorrect(AXMLSequenceObject sequenceObject, int startObjectId) throws XMLSequenceIndexOverflowException {
 		if(startObjectId>=sequenceObject.sequenceArray.size()&&startObjectId<0){
-			Logging.Log(Log.ERROR,logTag, "!!!!throw XMLSequenceIndexOverflowException!!!!");
+			Config.Log(logTag, "!!!!throw XMLSequenceIndexOverflowException!!!!");
 			throw new XMLSequenceIndexOverflowException();
 		}
 	}
@@ -110,7 +98,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 		nowLayout = getNowLayout(context);
 		screenWidth = getScreenWidth(context);
 		screenHeight = getScreenHeight(context) - footer;
-		Logging.Log(logTag, "Start screenWidth = " + screenWidth + ";screenHeight = " + screenHeight);
+		Config.Log(logTag, "Start screenWidth = " + screenWidth + ";screenHeight = " + screenHeight);
 		heightNow = 0;
 		widthNow = screenWidth;
 		lastIdInString = 0;
@@ -244,59 +232,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 
 	@Override
 	public int reverseGenerating(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		try { 
-			isEntriesCorrect(sequenceObject, startObjectId);
-		} catch (XMLSequenceIndexOverflowException e) {
-			e.printStackTrace();
-		}
-		Logging.Log(logTag, "Start reverseGenerating with parametr:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
-		Logging.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
-		prepareToGenerate(context, startObjectId, footer, sequenceObject);
-		for(int count = startObjectId;;count--){			
-			if(checkSequenceOverflow(sequenceObject, count)){
-				Logging.Log(logTag, "checkSequenceOwerflow = True --> break");
-				domainLayout.addView(nowLayout);
-				sequenceObject.setLastIdInDomain(sequenceObject.getXMLObject(count+1).getID());
-				Logging.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
-				break;
-			}
-			if(ifEndln(sequenceObject, count)){
-				Logging.Log(logTag, "ifEndln = True --> continue");
-				this.prepareNewLayout(context, sequenceObject, count);
-				continue;
-			}
-			Logging.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
-			View newView = prepareNewView(context, sequenceObject, count);
-			Logging.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
-			if(domainCheck(footer)){
-				Logging.Log(logTag, "domainLayout overflow --> break");
-				sequenceObject.setLastIdInDomain(lastIdInString);
-				/*
-				if(ifDiv(sequenceObject, count)){
-					Logging.Log(logTag, "if Div(" + sequenceObject.getXMLObject(count).getDivID()+") = true ->> delete All view from domain");
-					for(int tempCount=1;ifContinueDiv(sequenceObject, count, tempCount);tempCount++){
-						Logging.Log(logTag, "resetView for object : " + sequenceObject.getXMLObject(count+tempCount).toString());
-						((AXMLMainObject) sequenceObject.getXMLObject(count+tempCount)).resetView();
-						sequenceObject.setLastIdInDomain(count+tempCount+1);
-					}
-				}
-				*/
-				Logging.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
-				break;
-			}
-			if(nowLayoutCheck()){
-				Logging.Log(logTag, "nowLayout overflow --> continue with increment count");
-				prepareNewLayout(context, sequenceObject, count);
-				Logging.Log(logTag, "left height = " + screenHeight);
-				//To the next time the cycle has continued to work with the current item. Do decrement the iterator
-				count++;
-				continue;
-			}
-			Logging.Log(logTag, "addNewView");
-			addNewView(sequenceObject, count, newView);
-			Logging.Log(logTag, "left width = " + widthNow);
-		}		
-		return sequenceObject.getLastIdInDomain();
+		return 0;
 	}
 		
 	private int updateHeightNow(int heightNow, int heightNewView) {
