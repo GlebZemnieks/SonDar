@@ -1,0 +1,87 @@
+package ru.sondar.client.documentmodel.android;
+
+import android.content.Context;
+import android.view.View;
+
+import ru.sondar.client.objectmodel.android.*;
+import ru.sondar.core.documentmodel.SDSequenceObject;
+import ru.sondar.core.objectmodel.SDMainObject;
+import ru.sondar.core.objectmodel.SDMainObjectType;
+
+/**
+ * Overwriting sequence object for supporting android objects
+ */
+public class AXMLSequenceObject extends SDSequenceObject {
+
+	private int lastIdInDomain = 0;
+	private int firstIdInDomain = 0;
+
+	public int getFirstIdInDomain() {
+		return firstIdInDomain;
+	}
+	public int getLastIdInDomain() {
+		return lastIdInDomain;
+	}
+    public void setFirstIdInDomain(int firstIdInDomain) {
+        this.firstIdInDomain = firstIdInDomain;
+    }
+    public void setLastIdInDomain(int lastIdInDomain) {
+        this.lastIdInDomain = lastIdInDomain;
+    }
+
+    /**
+     * Remove view object from domain layout for all object in sequence
+     */
+    public void resetView(){
+        for(int count=firstIdInDomain;count<lastIdInDomain+1;count++){
+            ((AXMLMainObject) this.getXMLObject(count)).resetView();
+        }
+    }
+
+    /**
+     * Update fields from view for all objects
+     */
+	public void updateState(){
+		for(int count=firstIdInDomain;count<lastIdInDomain+1;count++){
+			((AXMLMainObject)this.getXMLObject(count)).updateState();
+		}
+	}
+
+    public void AddXMLObject(SDMainObject newObject) {
+        super.AddXMLObject((AXMLMainObject)newObject);
+    }
+
+    public SDMainObject getXMLObject(int id) {
+        return (AXMLMainObject)super.getXMLObject(id);
+    }
+
+    /**
+     * Overwriting factory for android objects
+     * @param type
+     * @return
+     */
+    public SDMainObject getObjectByType(SDMainObjectType type) {
+        if (type == SDMainObjectType.Text) {
+            return new AXMLText();
+        }
+        if (type == SDMainObjectType.Spinner) {
+            return new AXMLSpinner();
+        }
+        if (type == SDMainObjectType.CheckBox) {
+            return new AXMLCheckBox();
+        }
+        if (type == SDMainObjectType.EndLn) {
+            return new AXMLEndln();
+        }
+        if (type == SDMainObjectType.Date) {
+            return new AXMLDate();
+        }
+        if (type == SDMainObjectType.EditText) {
+            return new AXMLEditText();
+        }
+        if (type == SDMainObjectType.DivContainer) {
+            return new AXMLSequenceObject();
+        }
+        return null;
+    }
+}

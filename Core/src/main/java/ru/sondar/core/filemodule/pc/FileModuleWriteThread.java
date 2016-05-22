@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.logging.LoggerInterface;
 
 /**
  * Main write thread for PC

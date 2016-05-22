@@ -1,0 +1,33 @@
+package ru.sondar.client.objectmodel.android;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
+import ru.sondar.core.objectmodel.SDCheckBox;
+import ru.sondar.core.objectmodel.SDMainObject;
+
+public class AXMLCheckBox extends AXMLMainObject {
+
+    public AXMLCheckBox() {
+        super(new SDCheckBox());
+    }
+
+    public AXMLCheckBox(SDMainObject sdmainobject) {
+        super((SDCheckBox)sdmainobject);
+    }
+
+    @Override
+    protected View prepareView(Context context) {
+        CheckBox temp = new CheckBox(context);
+        temp.setEnabled(true);
+        temp.setChecked(((SDCheckBox) this.sdMainObject).getChecked());
+        temp.setText(((SDCheckBox) this.sdMainObject).getText());
+        return temp;
+    }
+
+    @Override
+    public void updateState() {
+        ((SDCheckBox) this.sdMainObject).setChecked(((CheckBox) this.getView()).isChecked());
+    }
+
+}

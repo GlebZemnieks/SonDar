@@ -1,11 +1,9 @@
 package ru.sondar.core.filemodule.pc;
 
 import ru.sondar.core.Config;
-import ru.sondar.core.logging.EmptyLogging;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.logging.LoggerInterface;
 
 /**
  * File module for PC

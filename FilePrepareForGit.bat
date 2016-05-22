@@ -21,6 +21,16 @@ git add Core\src\main\java\*.java
 git add Core\src\test\java\*.java
 git add Core\pom.xml
 
+git add Client\app\src\main\*.java
+git add Client\app\src\main\*.xml
+git add Client/settings.gradle
+git add Client/build.gradle
+git add Client/gradle.properties
+git add Client/gradle/.
+git add Client/gradlew
+git add Client/gradlew.bat
+git add Client/settings.gradle
+
 git add FilePrepareForGit.bat
 
 echo ___________________________

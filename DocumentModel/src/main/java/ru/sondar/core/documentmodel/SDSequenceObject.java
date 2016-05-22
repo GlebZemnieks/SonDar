@@ -95,7 +95,11 @@ public class SDSequenceObject extends SDMainObject {
             return this.sequenceArray.get(cursor);
         }
         if (id > this.sequenceArray.get(cursor).getID()) {
-            return ((SDSequenceObject) this.sequenceArray.get(cursor)).getXMLObject(id);
+            if (this.sequenceArray.get(cursor).getObjectType() == SDMainObjectType.DivContainer) {
+                return ((SDSequenceObject) this.sequenceArray.get(cursor)).getXMLObject(id);
+            } else {
+                throw new IndexOutOfBoundsException();
+            }
         }
         int max = cursor;
         cursor = 2 * cursor - this.sequenceArray.get(cursor).getID();
@@ -143,7 +147,7 @@ public class SDSequenceObject extends SDMainObject {
         int tempId = startId;
         for (int count = 0; count < this.sequenceArray.size(); count++) {
             this.sequenceArray.get(count).setID(tempId++);
-            if (SDMainObjectType.DivContainer.toString().equals(this.sequenceArray.get(count).getObjectType().toString())) {
+            if (SDMainObjectType.DivContainer == this.sequenceArray.get(count).getObjectType()) {
                 ((SDSequenceObject) this.sequenceArray.get(count)).enumirateSequence(tempId);
             }
         }
@@ -155,7 +159,7 @@ public class SDSequenceObject extends SDMainObject {
      * @param newObject
      */
     public void AddXMLObject(SDMainObject newObject) {
-        if (newObject.getObjectType().toString().equals(SDMainObjectType.DivContainer.toString())) {
+        if (newObject.getObjectType() == SDMainObjectType.DivContainer) {
             this.sequenceArrayLength += ((SDSequenceObject) newObject).sequenceArrayLength;
         }
         this.sequenceArrayLength++;
