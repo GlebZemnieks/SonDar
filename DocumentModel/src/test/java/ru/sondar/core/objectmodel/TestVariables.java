@@ -20,7 +20,7 @@ public class TestVariables {
     /**
      * Path to folder with testing data
      */
-    public static String testFolder = "E:\\Development\\SonDar\\ObjectModel\\JUnitTest\\";
+    public static String testFolder = "E:\\Development\\SonDar\\DocumentModel\\JUnitTest\\";
 
     public static Element getRootElementByFile(String fileName) {
         return getRootElementByFile("", fileName);
