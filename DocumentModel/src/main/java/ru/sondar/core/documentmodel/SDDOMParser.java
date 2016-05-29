@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import ru.sondar.core.DOMParser;
 import ru.sondar.core.objectmodel.SDHeadPart;
 import ru.sondar.core.objectmodel.SDLogPart;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -18,41 +19,10 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
  *
  * @author GlebZemnieks
  */
-public class SDDOMParser {
+public class SDDOMParser extends DOMParser {
 
-    /**
-     * Tag to search activity this object in logging file
-     */
-    String logTag = "Parser";
-
-    /**
-     * Object of document model in DOM
-     */
-    private final Document document;
-
-    /**
-     * Constructor. Object of parser must to use once and should be created for
-     * one file
-     *
-     * @param fileName
-     * @throws SAXException
-     * @throws IOException
-     * @throws ParserConfigurationException
-     */
     public SDDOMParser(String fileName) throws SAXException, IOException, ParserConfigurationException {
-        File inputFile = new File(fileName);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        document = builder.parse(inputFile);
-    }
-
-    /**
-     * Get root element of file in document
-     *
-     * @return
-     */
-    public Element getRootElement() {
-        return document.getDocumentElement();
+        super(fileName);
     }
 
     /**
