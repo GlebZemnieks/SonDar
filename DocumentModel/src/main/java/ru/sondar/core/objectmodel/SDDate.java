@@ -3,6 +3,7 @@ package ru.sondar.core.objectmodel;
 import java.util.Date;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -12,7 +13,7 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
  *
  * @author GlebZemnieks
  */
-public class SDDate extends SDMainObject {
+public class SDDate extends SDMainObject implements SupportDependencyInterface{
 
     /**
      * Tag to print and parse date field
@@ -54,6 +55,16 @@ public class SDDate extends SDMainObject {
      */
     public SDDate() {
         this.objectType = SDMainObjectType.Date;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.date.getTime();
+    }
+
+    @Override
+    public void setValue(Object object) {
+        this.date = new Date(Long.parseLong((String)object));
     }
 
     @Override

@@ -44,7 +44,7 @@ public class SDLogPart extends SDMainObject {
     public void addLogFile(String fileName) {
         this.logFileName.add(fileName);
     }
-
+    
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList tempList = element.getElementsByTagName("log");

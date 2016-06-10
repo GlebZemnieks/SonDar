@@ -2,6 +2,7 @@ package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -11,7 +12,7 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
  *
  * @author GlebZemnieks
  */
-public class SDSpinner extends SDMainObject {
+public class SDSpinner extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag for print and parse dataList filed
@@ -86,6 +87,21 @@ public class SDSpinner extends SDMainObject {
      */
     public SDSpinner() {
         this.objectType = SDMainObjectType.Spinner;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.defaultItemSelected;
+    }
+
+    @Override
+    public void setValue(Object object) {
+        int value = Integer.parseInt((String) object);
+        if (value >= 0 && value < this.dataList.length) {
+            this.defaultItemSelected = value;
+        } else {
+            throw new IllegalArgumentException("Try to set \"" + value + "\" to list with length \"" + this.dataList.length + "\"");
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -15,7 +16,7 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
  *
  * @author GlebZemnieks
  */
-public class SDEditText extends SDMainObject {
+public class SDEditText extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag for print and parse text filed
@@ -77,6 +78,16 @@ public class SDEditText extends SDMainObject {
      */
     public SDEditText() {
         this.objectType = SDMainObjectType.EditText;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.Text;
+    }
+
+    @Override
+    public void setValue(Object object) {
+        this.Text = (String) object;
     }
 
     @Override

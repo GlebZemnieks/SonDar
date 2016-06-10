@@ -1,6 +1,7 @@
 package ru.sondar.core.documentmodel;
 
 import java.io.IOException;
+import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ru.sondar.core.dependencymodel.DependencyPart;
@@ -72,6 +73,15 @@ public class SDDocument {
     }
 
     /**
+     * Return document UUID from head part
+     *
+     * @return
+     */
+    public UUID getDocumentUUID() {
+        return this.headPart.getUUID();
+    }
+
+    /**
      * Setter for log object. Throw DocumentAlreadyInitException if log already
      * exist
      *
@@ -95,6 +105,10 @@ public class SDDocument {
             throw new DocumentAlreadyInitException("Trying to reinitialize document part \"dependency\". Denied!");
         }
         this.dependency = dependency;
+    }
+
+    public DependencyPart getDependencyPart() {
+        return this.dependency;
     }
 
     /**

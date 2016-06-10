@@ -2,6 +2,7 @@ package ru.sondar.core.objectmodel;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.exception.NoFieldException;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -10,7 +11,7 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
  *
  * @author GlebZemnieks
  */
-public class SDCheckBox extends SDMainObject {
+public class SDCheckBox extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag to print and parse text field
@@ -71,6 +72,16 @@ public class SDCheckBox extends SDMainObject {
      */
     public SDCheckBox() {
         this.objectType = SDMainObjectType.CheckBox;
+    }
+
+    @Override
+    public Object getValue() {
+        return String.valueOf(this.checked);
+    }
+
+    @Override
+    public void setValue(Object object) {
+        this.checked = Boolean.valueOf((String) object);
     }
 
     @Override

@@ -60,6 +60,18 @@ public class SDCheckBoxTest {
     }
 
     /**
+     * Test of getSelectedItem method, of class SDSpinner.
+     */
+    @Test
+    public void testSupportDependencyInterface() {
+        assertEquals("true", this.box.getValue());
+        this.box.setValue("False");
+        assertEquals("false", this.box.getValue());
+        this.box.setValue("True");
+        assertEquals("true", this.box.getValue());
+    }
+
+    /**
      * Test of parseCurrentObjectField method, of class SDCheckBox.
      *
      * @throws java.lang.Exception
@@ -101,10 +113,10 @@ public class SDCheckBoxTest {
         assertEquals("testtest", box.getText());
         assertEquals(18, box.getID());
     }
-    
 
     /**
      * Test of printCurrentObjectField method, of class SDCheckBox.
+     *
      * @throws ru.sondar.core.objectmodel.exception.ObjectStructureException
      */
     @Test

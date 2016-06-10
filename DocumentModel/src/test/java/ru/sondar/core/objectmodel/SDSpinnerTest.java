@@ -80,6 +80,24 @@ public class SDSpinnerTest {
     }
 
     /**
+     * Test of getSelectedItem method, of class SDSpinner.
+     */
+    @Test
+    public void testSupportDependencyInterface() {
+        assertEquals(1, this.spinner.getValue());
+        this.spinner.setValue("0");
+        assertEquals(0, this.spinner.getValue());
+        this.spinner.setValue("1");
+        assertEquals(1, this.spinner.getValue());
+        try {
+            this.spinner.setValue("2");
+        } catch (IllegalArgumentException errException) {
+            return;
+        }
+        fail("No exception");
+    }
+
+    /**
      * Test of parseCurrentObjectField method, of class SDSpinner.
      *
      * @throws java.lang.Exception
