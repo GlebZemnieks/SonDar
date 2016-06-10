@@ -25,6 +25,14 @@ public class DependencyItem {
      * Cell Id
      */
     public int cellId;
+    
+    public DependencyItem() {
+    }
+
+    public DependencyItem(String objectName, int cellId) {
+        this.objectName = objectName;
+        this.cellId = cellId;
+    }
 
     public void parseItemFromXML(Element element) {
         if (!"".equals(element.getAttribute("objectName"))) {

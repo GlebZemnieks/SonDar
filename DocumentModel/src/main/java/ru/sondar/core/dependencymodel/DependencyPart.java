@@ -39,6 +39,10 @@ public class DependencyPart implements Iterable<DependencyItem> {
         }
     }
 
+    public void addDependencyItem(String name, int cellId) {
+        this.dependencyList.add(new DependencyItem(name, cellId));
+    }
+
     /**
      * Method for print item to XML
      *

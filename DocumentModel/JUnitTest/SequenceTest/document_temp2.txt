@@ -2,8 +2,8 @@
 <head>
 <documentUUID>00000000-0000-0000-0000-000000000000</documentUUID>
 <pluginUUID>00000000-0000-0000-0000-000000000000</pluginUUID>
-<creationTime>1464444744159</creationTime>
-<lastModificationTime>1464444744159</lastModificationTime>
+<creationTime>1465588035197</creationTime>
+<lastModificationTime>1465588035197</lastModificationTime>
 </head>
 <XMLSequence>
 <object type="Text" id="0">
@@ -26,6 +26,10 @@
 </object>
 </object>
 </XMLSequence>
+<DependencyPart>
+<link objectName="test" cellId="0"></link>
+<link objectName="test2" cellId="1"></link>
+</DependencyPart>
 <Log>
 </Log>
 </Document>

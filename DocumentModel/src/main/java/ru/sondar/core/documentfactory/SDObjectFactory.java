@@ -3,6 +3,7 @@ package ru.sondar.core.documentfactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+import ru.sondar.core.dependencymodel.DependencyPart;
 import ru.sondar.core.objectmodel.*;
 
 /**
@@ -134,5 +135,9 @@ public class SDObjectFactory {
         SDText text = new SDText();
         text.setText(newText);
         return (SDText) returnObject(text);
+    }
+
+    public static DependencyPart getDependency() {
+        return new DependencyPart();
     }
 }

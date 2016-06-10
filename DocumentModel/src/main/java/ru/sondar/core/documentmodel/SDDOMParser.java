@@ -1,15 +1,12 @@
 package ru.sondar.core.documentmodel;
 
-import java.io.File;
 import java.io.IOException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.sondar.core.DOMParser;
+import ru.sondar.core.dependencymodel.DependencyPart;
 import ru.sondar.core.objectmodel.SDHeadPart;
 import ru.sondar.core.objectmodel.SDLogPart;
 import ru.sondar.core.objectmodel.exception.ObjectStructureException;
@@ -59,6 +56,18 @@ public class SDDOMParser extends DOMParser {
         NodeList nList = document.getElementsByTagName("Log");
         Element log = ((Element) nList.item(0));
         logPart.parseObjectFromXML(log);
+    }
+    
+    /**
+     * Get dependency part of document
+     *
+     * @param dependencyPart
+     * @throws ObjectStructureException
+     */
+    public void getDependencyPart(DependencyPart dependencyPart) throws ObjectStructureException {
+        NodeList nList = document.getElementsByTagName("DependencyPart");
+        Element log = ((Element) nList.item(0));
+        dependencyPart.parseItemFromXML(log);
     }
 
 }

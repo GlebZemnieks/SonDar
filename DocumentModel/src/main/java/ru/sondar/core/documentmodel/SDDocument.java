@@ -3,6 +3,7 @@ package ru.sondar.core.documentmodel;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import ru.sondar.core.dependencymodel.DependencyPart;
 import ru.sondar.core.documentmodel.exception.DocumentAlreadyInitException;
 import ru.sondar.core.documentmodel.exception.DocumentNotInitException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -18,17 +19,21 @@ import ru.sondar.core.objectmodel.exception.ObjectStructureException;
 public class SDDocument {
 
     /**
-     * Sequence object of with document
+     * Sequence object of this document
      */
     protected SDSequenceObject sequence;
     /**
-     * Head object of with document
+     * Head object of this document
      */
     protected SDHeadPart headPart;
     /**
-     * Log object of with document
+     * Log object of this document
      */
     protected SDLogPart logPart;
+    /**
+     * Dependency object of this document
+     */
+    protected DependencyPart dependency;
 
     /**
      * Getter for sequence object
@@ -80,6 +85,19 @@ public class SDDocument {
     }
 
     /**
+     * Setter for dependency object. Throw DocumentAlreadyInitException if log
+     * already exist
+     *
+     * @param dependency
+     */
+    public void setDependencyPart(DependencyPart dependency) {
+        if (this.dependency != null) {
+            throw new DocumentAlreadyInitException("Trying to reinitialize document part \"dependency\". Denied!");
+        }
+        this.dependency = dependency;
+    }
+
+    /**
      * Load document from file by name
      *
      * @param fileName
@@ -110,24 +128,27 @@ public class SDDocument {
      * @throws ObjectStructureException
      */
     public void loadDocument(SDDOMParser parser, SDSequenceObject sequence) throws ObjectStructureException {
-        if (this.sequence != null || this.headPart != null || this.logPart != null) {
+        if (this.sequence != null || this.headPart != null || this.logPart != null || this.dependency != null) {
             throw new DocumentAlreadyInitException("Trying to reload document. Denied!");
         }
         headPart = new SDHeadPart();
         parser.getHeadPart(headPart);
         this.sequence = sequence;
         parser.getSequence(sequence);
+        dependency = new DependencyPart();
+        parser.getDependencyPart(dependency);
         logPart = new SDLogPart();
         parser.getLogPart(logPart);
     }
 
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
-        if (this.sequence == null || this.headPart == null || this.logPart == null) {
-            throw new DocumentNotInitException("");
+        if (this.sequence == null || this.headPart == null || this.logPart == null || this.dependency == null) {
+            throw new DocumentNotInitException();
         }
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
         this.sequence.printSequence(fileModule);
+        this.dependency.printObjectToXML(fileModule);
         this.logPart.printObjectToXML(fileModule);
         fileModule.write("</Document>\n");
     }

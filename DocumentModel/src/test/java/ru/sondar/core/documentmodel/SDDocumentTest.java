@@ -9,6 +9,7 @@ import com.sun.jndi.toolkit.ctx.HeadTail;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import ru.sondar.core.dependencymodel.DependencyPart;
 import static ru.sondar.core.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.core.objectmodel.SDHeadPart;
@@ -30,14 +31,25 @@ public class SDDocumentTest {
         SDSequenceObject sequence = new SDSequenceObject();
         sequence.parseSequence(TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
         document.setSequence(sequence);
+        DependencyPart dependency = new DependencyPart();
+        dependency.addDependencyItem("test", 0);
+        dependency.addDependencyItem("test2", 1);
+        document.setDependencyPart(dependency);
         document.setLogPart(new SDLogPart());
     }
 
     /**
      * Test of loadDocument method, of class SDDocument.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testLoadDocument_String() throws Exception {
+        SDDocument documentTemp = new SDDocument();
+        documentTemp.loadDocument("E:\\Development\\SonDar\\DocumentModel\\JUnitTest\\SequenceTest\\document_1.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp2.txt");
+        documentTemp.saveDocument(fileModule);
+        fileModule.close();
     }
 
     /**
@@ -45,10 +57,9 @@ public class SDDocumentTest {
      */
     @Test
     public void testSaveDocument() {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\dpcument_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp.txt");
         this.document.saveDocument(fileModule);
         fileModule.close();
-
     }
 
 }
