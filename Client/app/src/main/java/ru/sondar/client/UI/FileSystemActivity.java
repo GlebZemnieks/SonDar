@@ -44,6 +44,7 @@ public class FileSystemActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		Config.setLogger(new ALogging());
         this.logUUID = UUID.randomUUID();
 		Config.Log(logTag,"start");
@@ -111,7 +112,7 @@ public class FileSystemActivity extends Activity {
 	public Button getCreateNewButton(final Activity oldActivity, final SonDarFileSystem fileSystem,final FileModuleInterface fileModule){
 		Button createNew = new Button(this);
 		createNew.setText("Create New");
-		OnClickListener createNewOnCliclListener = new OnClickListener() {
+		OnClickListener createNewOnClickListener = new OnClickListener() {
 	       @Override
 	       public void onClick(View v) {
                if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().length == 1) {
@@ -138,7 +139,7 @@ public class FileSystemActivity extends Activity {
             createNew.setEnabled(false);
             this.isApplicationActive = false;
         }
-		createNew.setOnClickListener(createNewOnCliclListener);
+		createNew.setOnClickListener(createNewOnClickListener);
 		return createNew;
 	}
 

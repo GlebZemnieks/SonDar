@@ -45,7 +45,9 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<object type=\"Text\" id=\"5\">\n"
 				+ "<text>Test Data Xoxoxo</text>\n"
 				+ "</object>\n"
-				+ "</XMLSequence>\n"
+				+ "</XMLSequence>\n" +
+				"<DependencyPart>\n" +
+				"</DependencyPart>\n"
 				+ "<Log>\n"
 				+ "</Log>\n"
 				+ "</Document>\n");
@@ -63,7 +65,9 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<object type=\"Text\" id=\"0\">\n"
 				+ "<text>Test Data Xoxoxo</text>\n"
 				+ "</object>\n"
-				+ "</XMLSequence>\n"
+				+ "</XMLSequence>\n" +
+				"<DependencyPart>\n" +
+						"</DependencyPart>\n"
 				+ "<Log>\n"
 				+ "</Log>\n"
 				+ "</Document>\n");

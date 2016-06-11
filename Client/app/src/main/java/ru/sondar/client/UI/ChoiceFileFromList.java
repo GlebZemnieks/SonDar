@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ru.sondar.client.filemodule.android.FileModule;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 
@@ -61,10 +62,17 @@ public class ChoiceFileFromList extends ListActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 	   	fileSystem.copyFile(fileModule, nowFolder, l.getItemAtPosition(position).toString(), Folder.temp.toString(), l.getItemAtPosition(position).toString());
+		String newFileName = l.getItemAtPosition(position).toString();
+		Config.Log("TEST", "file name : " + newFileName);
+		Config.Log("TEST", "nowFolder : " + nowFolder + " : add uuid : " + (nowFolder.equals(Folder.example.toString())));
+		if(nowFolder.equals(Folder.example.toString())){
+			newFileName = newFileName.replace(".xml", "") + "_" + fileSystem.getUUID() + ".xml";
+			Config.Log("TEST", "added UUID to file name : " + newFileName);
+		}
+ 	   	fileSystem.copyFile(fileModule, nowFolder, l.getItemAtPosition(position).toString(), Folder.temp.toString(), newFileName);
 		Intent intent = new Intent(this, DocumentSessionActivity.class); 
 		intent.putExtra("folderName",nowFolder);
-		intent.putExtra("fileName",l.getItemAtPosition(position).toString());
+		intent.putExtra("fileName",newFileName);
 		startActivity(intent);
 	}
 	
