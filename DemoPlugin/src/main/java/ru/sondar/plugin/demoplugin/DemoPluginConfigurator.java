@@ -19,7 +19,7 @@ import ru.sondar.plugin.PluginConfigurator;
 public class DemoPluginConfigurator extends PluginConfigurator {
 
     public DemoPluginConfigurator(String globalFolder) throws SAXException, IOException, ParserConfigurationException {
-        super(globalFolder);
+        super(globalFolder, "Demo");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DemoPluginConfigurator extends PluginConfigurator {
         SDDocument document = new SDDocument();
         SDHeadPart headPart = new SDHeadPart();
         headPart.setPluginUUID(UUID.fromString("69e0093d-bdde-4110-b8b4-92609b3c2fb3"));
-        headPart.setUUID(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        headPart.setUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         document.setHeadPart(headPart);
         document.setLogPart(new SDLogPart());
         document.setSequence(new SDSequenceObject());

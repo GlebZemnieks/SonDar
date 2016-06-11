@@ -73,12 +73,12 @@ public class SDDocument {
     }
 
     /**
-     * Return document UUID from head part
+     * Getter for head object
      *
      * @return
      */
-    public UUID getDocumentUUID() {
-        return this.headPart.getUUID();
+    public SDHeadPart getHeadPart() {
+        return this.headPart;
     }
 
     /**
@@ -157,7 +157,7 @@ public class SDDocument {
 
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
         if (this.sequence == null || this.headPart == null || this.logPart == null || this.dependency == null) {
-            throw new DocumentNotInitException();
+            throw new DocumentNotInitException("head : " + this.headPart + " : sequence : " + this.sequence + " : dependency : " + this.dependency + " : log : " + this.logPart + " ;");
         }
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);

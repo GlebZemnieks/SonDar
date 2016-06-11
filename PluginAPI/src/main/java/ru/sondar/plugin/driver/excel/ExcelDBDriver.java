@@ -75,7 +75,7 @@ public class ExcelDBDriver implements DBDriverInterface {
     /**
      * Working sheet for next operation
      */
-    private int activeSheet = -1;
+    private int activeSheet = 0;
 
     /**
      * Setter for active sheet field
@@ -118,6 +118,8 @@ public class ExcelDBDriver implements DBDriverInterface {
         try {
             this.fileSystem.writeFilesystem(new FileOutputStream(dataBase));
             this.workBook.write(new FileOutputStream(dataBase));
+            this.fileSystem.close();
+            this.workBook.close();
         } catch (IOException ex) {
             Logger.getLogger(ExcelDBDriver.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -39,8 +39,9 @@ public abstract class PluginConfigurator {
      */
     private String globalPluginFolder = null;
 
-    public PluginConfigurator(String globalFolder) throws SAXException, IOException, ParserConfigurationException {
+    public PluginConfigurator(String globalFolder, String localFoldeName) throws SAXException, IOException, ParserConfigurationException {
         this.globalPluginFolder = globalFolder;
+        this.localFolderName = localFoldeName;
         this.init();
     }
 
