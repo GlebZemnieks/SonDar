@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.objectmodel.SDMainObject;
 import ru.sondar.core.objectmodel.SDMainObjectType;
 import ru.sondar.core.objectmodel.SDText;

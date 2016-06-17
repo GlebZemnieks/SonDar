@@ -123,6 +123,16 @@ public abstract class AXMLMainObject extends SDMainObject {
     }
 
     @Override
+    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
+        //Empty. All printing in sdMainObject object
+    }
+
+    @Override
+    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
+        //Empty. All printing in sdMainObject object
+    }
+
+    @Override
     protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         this.sdMainObject.printObjectToXML(fileModule);
     }

@@ -44,7 +44,6 @@ public class FileSystemActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		Config.setLogger(new ALogging());
         this.logUUID = UUID.randomUUID();
 		Config.Log(logTag,"start");
