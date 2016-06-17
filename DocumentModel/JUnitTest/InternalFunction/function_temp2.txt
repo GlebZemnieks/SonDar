@@ -1,0 +1,4 @@
+<Function functionType="AutoFill" triggerType="allAction">
+<Action actionType="setAction" targetId="1" value="after1"></Action>
+<Action actionType="setAction" targetId="2" value="after2"></Action>
+</Function>

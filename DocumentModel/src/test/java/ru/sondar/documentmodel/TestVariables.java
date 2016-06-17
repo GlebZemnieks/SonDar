@@ -1,4 +1,4 @@
-package ru.sondar.core.objectmodel;
+package ru.sondar.documentmodel;
 
 import java.io.File;
 import java.io.IOException;

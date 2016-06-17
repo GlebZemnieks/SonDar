@@ -1,4 +1,4 @@
-package ru.sondar.core.objectmodel;
+package ru.sondar.documentmodel.objectmodel;
 
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
@@ -8,7 +8,9 @@ import static org.junit.Assert.*;
 import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import static ru.sondar.core.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
+import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 

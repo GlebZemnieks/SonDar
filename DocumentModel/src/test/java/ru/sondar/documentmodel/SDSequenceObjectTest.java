@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.sondar.core.documentmodel;
+package ru.sondar.documentmodel;
 
 import ru.sondar.documentmodel.SDSequenceObject;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static ru.sondar.core.documentmodel.TestVariables.testFolder;
+import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import ru.sondar.documentmodel.objectmodel.SDDate;

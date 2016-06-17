@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.sondar.core.dependencymodel;
+package ru.sondar.documentmodel.dependencymodel;
 
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.dependencymodel.DependencyItem;
@@ -11,9 +11,11 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static ru.sondar.core.documentmodel.TestVariables.testFolder;
+import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.objectmodel.TestVariables;
+import ru.sondar.documentmodel.dependencymodel.DependencyItem;
+import ru.sondar.documentmodel.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.objectmodel.TestVariables;
 
 /**
  *

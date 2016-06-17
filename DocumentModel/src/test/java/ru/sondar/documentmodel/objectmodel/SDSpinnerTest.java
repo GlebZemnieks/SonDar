@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.sondar.core.objectmodel;
+package ru.sondar.documentmodel.objectmodel;
 
 import ru.sondar.documentmodel.objectmodel.SDSpinner;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import static ru.sondar.core.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.objectmodel.SDSpinner;
+import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**

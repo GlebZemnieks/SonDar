@@ -1,11 +1,12 @@
-package ru.sondar.core.objectmodel;
+package ru.sondar.documentmodel.objectmodel;
 
 import ru.sondar.documentmodel.objectmodel.SDEditText;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import static ru.sondar.core.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.objectmodel.SDEditText;
+import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
