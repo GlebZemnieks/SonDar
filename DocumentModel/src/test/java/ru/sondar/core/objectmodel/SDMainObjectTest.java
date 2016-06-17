@@ -1,5 +1,7 @@
 package ru.sondar.core.objectmodel;
 
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -7,8 +9,8 @@ import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.core.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.objectmodel.exception.ObjectAlreadyHaveNameException;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
  *
@@ -117,7 +119,7 @@ public class SDMainObjectTest {
     /**
      * 2 Test of ParseCurrentObjectField method, of class SDMainObject.
      *
-     * @throws ru.sondar.core.objectmodel.exception.NoAttributeException
+     * @throws ru.sondar.documentmodel.objectmodel.exception.NoAttributeException
      */
     @Test
     public void testParseCurrentObjectField2() throws ObjectStructureException {
@@ -128,7 +130,7 @@ public class SDMainObjectTest {
     /**
      * Test of PrintCurrentObjectField method, of class SDMainObject.
      *
-     * @throws ru.sondar.core.objectmodel.exception.NoAttributeException
+     * @throws ru.sondar.documentmodel.objectmodel.exception.NoAttributeException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
@@ -143,7 +145,7 @@ public class SDMainObjectTest {
     /**
      * 2 Test of PrintCurrentObjectField method, of class SDMainObject.
      *
-     * @throws ru.sondar.core.objectmodel.exception.NoAttributeException
+     * @throws ru.sondar.documentmodel.objectmodel.exception.NoAttributeException
      */
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {

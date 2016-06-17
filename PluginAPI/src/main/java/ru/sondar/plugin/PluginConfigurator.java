@@ -8,7 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.sondar.core.DOMParser;
-import ru.sondar.core.documentmodel.SDDocument;
+import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 
 /**

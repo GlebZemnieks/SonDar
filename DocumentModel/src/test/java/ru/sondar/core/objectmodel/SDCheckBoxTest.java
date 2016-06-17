@@ -1,11 +1,12 @@
 package ru.sondar.core.objectmodel;
 
+import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.core.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
  *
@@ -117,7 +118,7 @@ public class SDCheckBoxTest {
     /**
      * Test of printCurrentObjectField method, of class SDCheckBox.
      *
-     * @throws ru.sondar.core.objectmodel.exception.ObjectStructureException
+     * @throws ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {

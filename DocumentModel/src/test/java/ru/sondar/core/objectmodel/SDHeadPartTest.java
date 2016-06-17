@@ -5,6 +5,7 @@
  */
 package ru.sondar.core.objectmodel;
 
+import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import java.util.Date;
 import java.util.UUID;
 import org.junit.Before;

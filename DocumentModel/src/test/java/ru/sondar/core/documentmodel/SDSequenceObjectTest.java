@@ -5,18 +5,19 @@
  */
 package ru.sondar.core.documentmodel;
 
+import ru.sondar.documentmodel.SDSequenceObject;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static ru.sondar.core.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.objectmodel.SDCheckBox;
-import ru.sondar.core.objectmodel.SDDate;
-import ru.sondar.core.objectmodel.SDEditText;
-import ru.sondar.core.objectmodel.SDEndln;
-import ru.sondar.core.objectmodel.SDMainObjectType;
-import ru.sondar.core.objectmodel.SDSpinner;
-import ru.sondar.core.objectmodel.SDText;
+import ru.sondar.documentmodel.objectmodel.SDCheckBox;
+import ru.sondar.documentmodel.objectmodel.SDDate;
+import ru.sondar.documentmodel.objectmodel.SDEditText;
+import ru.sondar.documentmodel.objectmodel.SDEndln;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
+import ru.sondar.documentmodel.objectmodel.SDSpinner;
+import ru.sondar.documentmodel.objectmodel.SDText;
 
 /**
  *

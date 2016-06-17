@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import ru.sondar.core.dependencymodel.DependencyPart;
-import ru.sondar.core.documentfactory.SDObjectFactory;
-import ru.sondar.core.documentmodel.SDDocument;
-import ru.sondar.core.documentmodel.SDSequenceObject;
-import ru.sondar.core.objectmodel.SDHeadPart;
-import ru.sondar.core.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.documentfactory.SDObjectFactory;
+import ru.sondar.documentmodel.SDDocument;
+import ru.sondar.documentmodel.SDSequenceObject;
+import ru.sondar.documentmodel.objectmodel.SDHeadPart;
+import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.plugin.PluginConfigurator;
 
 /**

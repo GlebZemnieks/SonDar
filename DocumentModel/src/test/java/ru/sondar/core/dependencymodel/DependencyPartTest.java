@@ -5,6 +5,8 @@
  */
 package ru.sondar.core.dependencymodel;
 
+import ru.sondar.documentmodel.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.dependencymodel.DependencyItem;
 import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;

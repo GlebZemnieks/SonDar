@@ -5,16 +5,18 @@
  */
 package ru.sondar.core.documentmodel;
 
+import ru.sondar.documentmodel.SDSequenceObject;
+import ru.sondar.documentmodel.SDDocument;
 import com.sun.jndi.toolkit.ctx.HeadTail;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ru.sondar.core.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import static ru.sondar.core.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.objectmodel.SDHeadPart;
-import ru.sondar.core.objectmodel.SDLogPart;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.SDHeadPart;
+import ru.sondar.documentmodel.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
  *
