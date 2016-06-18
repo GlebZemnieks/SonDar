@@ -1,6 +1,7 @@
 package ru.sondar.documentmodel.objectmodel;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.internalfunction.InternalFunction;
 import ru.sondar.documentmodel.internalfunction.TriggerType;
@@ -176,6 +177,16 @@ public abstract class SDMainObject {
     public void parseObjectFromXML(Element element) throws ObjectStructureException {
         this.parseAttribute(element);
         this.parseCurrentObjectField(element);
+        this.parseInternalFunction(element);
+    }
+
+    public void parseInternalFunction(Element element) {
+        NodeList tempList = element.getElementsByTagName("InternalFunction");
+        if (tempList.getLength() > 0) {
+            Element tempElement = (Element) tempList.item(0);
+            this.function = new InternalFunction();
+            function.parseXMLString(tempElement);
+        }
     }
 
     /**
@@ -198,12 +209,14 @@ public abstract class SDMainObject {
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
+        this.printInternalFunction(fileModule);
         fileModule.write("</" + Object_MainTag + ">\n");
     }
 
     /**
-     * If function  was set, print it
-     * @param fileModule 
+     * If function was set, print it
+     *
+     * @param fileModule
      */
     public void printInternalFunction(FileModuleWriteThreadInterface fileModule) {
         if (this.function != null) {

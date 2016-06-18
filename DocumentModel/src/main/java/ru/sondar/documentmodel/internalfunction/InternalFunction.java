@@ -70,10 +70,19 @@ public class InternalFunction {
     }
 
     public Function getFunctionByType(FunctionType type) {
-        if (type.toString().equals(FunctionType.AutoFill.toString())) {
+        if (type.toString().equals(FunctionType.CustomFunction.toString())) {
             return new CustomFunction();
         }
         throw new UnsupportedClassVersionError("Function : " + type.toString() + " : not supported yet");
+    }
+
+    @Override
+    public String toString() {
+        String temp = "";
+        for (int i = 0; i < this.functionList.size(); i++) {
+            temp += this.functionList.get(i).toString();
+        }
+        return temp;
     }
 
 }

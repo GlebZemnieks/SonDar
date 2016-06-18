@@ -1,0 +1,11 @@
+<object type="ErrorObject" id="15">
+<InternalFunction>
+<Function functionType="CustomFunction" triggerType="allAction">
+<Action actionType="checkAction"></Action>
+<Action actionType="checkAction" name="hello" targetId="12" value="test"></Action>
+<Action actionType="setAction"></Action>
+<Action actionType="setAction" targetId="11" value="test2"></Action>
+<Action actionType="setAction" name="hello" targetId="10" value="test3"></Action>
+</Function>
+</InternalFunction>
+</object>

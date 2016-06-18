@@ -1,0 +1,6 @@
+<object type="ErrorObject" id="15">
+<InternalFunction>
+<Function functionType="CustomFunction" triggerType="allAction">
+</Function>
+</InternalFunction>
+</object>

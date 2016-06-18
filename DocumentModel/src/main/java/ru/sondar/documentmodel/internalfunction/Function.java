@@ -141,6 +141,9 @@ public abstract class Function {
         if (XMLTag.contains(FunctionType.SearchFilter.toString())) {
             return FunctionType.SearchFilter;
         }
+        if (XMLTag.contains(FunctionType.CustomFunction.toString())) {
+            return FunctionType.CustomFunction;
+        }
         throw new UnsupportedClassVersionError("Function : " + XMLTag + " : not supported yet");
     }
 
