@@ -2,6 +2,7 @@ package ru.sondar.documentmodel.internalfunction.action;
 
 import ru.sondar.documentmodel.internalfunction.Action;
 import ru.sondar.documentmodel.internalfunction.ActionType;
+import ru.sondar.documentmodel.internalfunction.exception.IncorrectObjectTypeException;
 import ru.sondar.documentmodel.internalfunction.exception.ObjectNotFountException;
 import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
 import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface;
@@ -12,11 +13,11 @@ import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface
  */
 public class CheckAction extends Action {
 
-    public CheckAction(NavigatorInterface navigator, String name) {
+    public CheckAction(NavigatorInterface navigator) {
         this.navigator = navigator;
         this.isActive = false;
         this.actionType = ActionType.checkAction;
-        this.actionName = name;
+        this.actionName = "";
     }
 
     @Override
@@ -25,7 +26,10 @@ public class CheckAction extends Action {
         if (temp == null) {
             throw new ObjectNotFountException();
         }
-        ValueCheckerInterface temp2 = ((ValueCheckerInterface) temp);
-        return temp2.ifValue(value);
+        if (temp instanceof ValueCheckerInterface) {
+            return ((ValueCheckerInterface) temp).ifValue(value);
+        } else {
+            throw new IncorrectObjectTypeException("Need implemented interface \"ValueCheckerInterface\" in object with id " + this.targetId);
+        }
     }
 }

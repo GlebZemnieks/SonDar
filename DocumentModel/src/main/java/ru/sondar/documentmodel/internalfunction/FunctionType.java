@@ -7,6 +7,10 @@ package ru.sondar.documentmodel.internalfunction;
  */
 public enum FunctionType {
     /**
+     * Custom function configuration
+     */
+    CustomFunction,
+    /**
      * See the same value and set value to another object
      */
     AutoFill,

@@ -16,7 +16,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.logging.EmptyLogging;
 import ru.sondar.documentmodel.TestVariables;
 import static ru.sondar.documentmodel.internalfunction.Action.actionTag;
 import ru.sondar.documentmodel.internalfunction.exception.IncorrectValueFormatException;
@@ -107,7 +106,7 @@ public class SetActionTest extends TestCase {
         set.setValue("after");
 
         NavigatorInterface test2 = new Navigator2();
-        CheckAction check = new CheckAction(test2, "test");
+        CheckAction check = new CheckAction(test2);
         check.setValue("test");
         set.setCondition(check);
         assertEquals("before", ((testClass) test.getObject(set)).test);
@@ -122,7 +121,8 @@ public class SetActionTest extends TestCase {
         set.setValue("after");
 
         NavigatorInterface test2 = new Navigator2();
-        CheckAction check = new CheckAction(test2, "test");
+        CheckAction check = new CheckAction(test2);
+        check.setActionName("test");
         check.setValue("No test");
         set.setCondition(check);
         assertEquals("before", ((testClass) test.getObject(set)).test);

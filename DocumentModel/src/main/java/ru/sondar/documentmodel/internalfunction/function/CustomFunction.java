@@ -7,10 +7,10 @@ import ru.sondar.documentmodel.internalfunction.FunctionType;
  *
  * @author GlebZemnieks
  */
-public class AutoFill extends Function {
+public class CustomFunction extends Function {
 
-    public AutoFill() {
-        this.functionType = FunctionType.AutoFill;
+    public CustomFunction() {
+        this.functionType = FunctionType.CustomFunction;
     }
 
 }

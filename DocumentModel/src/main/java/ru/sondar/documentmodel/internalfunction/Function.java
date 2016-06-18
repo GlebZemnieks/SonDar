@@ -71,9 +71,12 @@ public abstract class Function {
         this.actionList.add(newObject);
     }
 
-    public void makeFunction() {
-        for (int i = 0; i < this.actionList.size(); i++) {
-            this.actionList.get(i).makeAction();
+    public void makeFunction(TriggerType trigger) {
+        //If trigger is active trigger calling all actions in function
+        if (trigger == triggerType) {
+            for (int i = 0; i < this.actionList.size(); i++) {
+                this.actionList.get(i).makeAction();
+            }
         }
     }
 
@@ -174,11 +177,12 @@ public abstract class Function {
             return new SetAction(null);
         }
         if ((type.toString()).equals(ActionType.checkAction.toString())) {
-            return new CheckAction(null, "");
+            return new CheckAction(null);
         }
         throw new UnsupportedClassVersionError("Action : " + type.toString() + " : not supported yet");
     }
 
+    @Override
     public String toString() {
         String temp = "";
         for (int i = 0; i < this.actionList.size(); i++) {

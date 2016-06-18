@@ -2,6 +2,7 @@ package ru.sondar.documentmodel.internalfunction.action;
 
 import ru.sondar.documentmodel.internalfunction.Action;
 import ru.sondar.documentmodel.internalfunction.ActionType;
+import ru.sondar.documentmodel.internalfunction.exception.IncorrectObjectTypeException;
 import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
 import ru.sondar.documentmodel.internalfunction.interfaces.SetterInterface;
 
@@ -23,19 +24,26 @@ public class SetAction extends Action {
         this.navigator = navigator;
         this.isActive = true;
         this.actionType = ActionType.setAction;
+        this.condition = null;
     }
 
+    /**
+     * Overloading for set action
+     *
+     * @return - not use
+     */
     @Override
     public Object makeAction() {
-        if (this.condition != null) {
-            if ((boolean) ((CheckAction) this.condition).makeAction()) {
-                ((SetterInterface) navigator.getObject(targetId)).setValue(value);
-            }
-        } else {
+        //If condition not null and if condition return True set Value. + !(x||y) == !x&&!y - for avoid NullPointer Exception
+        if (!((this.condition != null) && (!(boolean) ((CheckAction) this.condition).makeAction()))) {
             Object temp = navigator.getObject(targetId);
-            SetterInterface temp2 = ((SetterInterface) temp);
-            temp2.setValue(value);
+            if (temp instanceof SetterInterface) {
+                ((SetterInterface) temp).setValue(value);
+            } else {
+                throw new IncorrectObjectTypeException("Need implemented interface \"SetterInterface\" in object with id " + this.targetId);
+            }
         }
+        //Return value not use
         return null;
     }
 }

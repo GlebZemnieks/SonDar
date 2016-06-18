@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.internalfunction.function;
 
 import java.io.File;
@@ -16,10 +11,10 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.logging.EmptyLogging;
 import ru.sondar.core.logging.PCLogging;
 import ru.sondar.documentmodel.TestVariables;
 import ru.sondar.documentmodel.internalfunction.Function;
+import ru.sondar.documentmodel.internalfunction.TriggerType;
 import ru.sondar.documentmodel.internalfunction.action.SetAction;
 import ru.sondar.documentmodel.internalfunction.exception.IncorrectValueFormatException;
 import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
@@ -30,9 +25,9 @@ import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface
  *
  * @author GlebZemnieks
  */
-public class AutoFillTest extends TestCase {
+public class CustomFunctionTest extends TestCase {
 
-    public AutoFillTest(String testName) {
+    public CustomFunctionTest(String testName) {
         super(testName);
     }
 
@@ -94,7 +89,7 @@ public class AutoFillTest extends TestCase {
     }
 
     public void testMakeFunction() {
-        Function function = new AutoFill();
+        Function function = new CustomFunction();
         NavigatorInterface navigatorInterface = new Navigator();
         SetAction set = new SetAction(navigatorInterface);
         set.setTargetId("1");
@@ -107,14 +102,14 @@ public class AutoFillTest extends TestCase {
         function.AddAction(set2);
         assertEquals(((testClass) navigatorInterface.getObject("1")).test, "before");
         assertEquals(((testClass) navigatorInterface2.getObject("1")).test, "before");
-        function.makeFunction();
+        function.makeFunction(TriggerType.allAction);
         assertEquals(((testClass) navigatorInterface.getObject("1")).test, "after1");
         assertEquals(((testClass) navigatorInterface2.getObject("1")).test, "after2");
 
     }
 
     public void testPrint() {
-        Function function = new AutoFill();
+        Function function = new CustomFunction();
         SetAction set = new SetAction(new Navigator());
         set.setTargetId(1);
         set.setValue("after1");
@@ -136,7 +131,7 @@ public class AutoFillTest extends TestCase {
      * @throws java.io.IOException
      */
     public void testParseXMLString() throws ParserConfigurationException, SAXException, IOException {
-        Function function = new AutoFill();
+        Function function = new CustomFunction();
         NavigatorInterface navigatorInterface = new Navigator();
         SetAction set = new SetAction(navigatorInterface);
         set.setTargetId(1);
@@ -155,7 +150,7 @@ public class AutoFillTest extends TestCase {
         Document doc = builder.parse(inputFile);
         Element root = doc.getDocumentElement();
         doc.getDocumentElement().normalize();
-        Function function2 = new AutoFill();
+        Function function2 = new CustomFunction();
         function2.parseXMLString(root);
         NavigatorInterface navigatorInterface2 = new Navigator();
         function2.setNavigator(navigatorInterface2);
@@ -163,7 +158,7 @@ public class AutoFillTest extends TestCase {
 
         assertEquals(((testClass) navigatorInterface2.getObject("1")).test, "before");
         assertEquals(((testClass) navigatorInterface2.getObject("2")).test, "before");
-        function2.makeFunction();
+        function2.makeFunction(TriggerType.allAction);
         assertEquals(((testClass) navigatorInterface2.getObject("1")).test, "after1");
         assertEquals(((testClass) navigatorInterface2.getObject("2")).test, "after2");
 

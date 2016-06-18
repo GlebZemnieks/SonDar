@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import static ru.sondar.documentmodel.internalfunction.Function.functionTag;
-import ru.sondar.documentmodel.internalfunction.function.AutoFill;
+import ru.sondar.documentmodel.internalfunction.function.CustomFunction;
 
 /**
  * Class witch give you access to internal function list.
@@ -28,9 +28,9 @@ public class InternalFunction {
         this.functionList.add(newObject);
     }
 
-    public void makeFunction() {
+    public void makeFunction(TriggerType trigger) {
         for (int i = 0; i < this.functionList.size(); i++) {
-            this.functionList.get(i).makeFunction();
+            this.functionList.get(i).makeFunction(trigger);
         }
     }
 
@@ -71,7 +71,7 @@ public class InternalFunction {
 
     public Function getFunctionByType(FunctionType type) {
         if (type.toString().equals(FunctionType.AutoFill.toString())) {
-            return new AutoFill();
+            return new CustomFunction();
         }
         throw new UnsupportedClassVersionError("Function : " + type.toString() + " : not supported yet");
     }

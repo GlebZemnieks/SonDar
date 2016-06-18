@@ -2,6 +2,8 @@ package ru.sondar.documentmodel.objectmodel;
 
 import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.internalfunction.InternalFunction;
+import ru.sondar.documentmodel.internalfunction.TriggerType;
 import ru.sondar.documentmodel.objectmodel.exception.NoAttributeException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
@@ -36,6 +38,36 @@ public abstract class SDMainObject {
      */
     public SDMainObjectType getObjectType() {
         return this.objectType;
+    }
+
+    /**
+     * InternalFunction object. This function make possible to change current or
+     * another object by trigger of this function.
+     */
+    protected InternalFunction function = null;
+
+    /**
+     * Method to set InternalFunction for this object. Return current object for
+     * usability
+     *
+     * @param function
+     * @return
+     */
+    public SDMainObject setInternalFunction(InternalFunction function) {
+        this.function = function;
+        return this;
+    }
+
+    /**
+     * Call of internal object
+     *
+     * @param trigger
+     */
+    public void startInternalFunction(TriggerType trigger) {
+        //Do nothing if internal function not set in this object
+        if (this.function != null) {
+            this.function.makeFunction(trigger);
+        }
     }
 
     /**
@@ -150,7 +182,7 @@ public abstract class SDMainObject {
      * An abstract method for parsing internal field in object
      *
      * @param element
-     * @throws ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
+     * @throws ObjectStructureException
      */
     protected abstract void parseCurrentObjectField(Element element) throws ObjectStructureException;
 
@@ -167,6 +199,16 @@ public abstract class SDMainObject {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</" + Object_MainTag + ">\n");
+    }
+
+    /**
+     * If function  was set, print it
+     * @param fileModule 
+     */
+    public void printInternalFunction(FileModuleWriteThreadInterface fileModule) {
+        if (this.function != null) {
+            function.printXMLString(fileModule);
+        }
     }
 
     /**
