@@ -2,11 +2,11 @@ package ru.sondar.client.documentmodel.android;
 
 import android.content.Context;
 import android.widget.LinearLayout;
-import ru.sondar.core.documentmodel.SDDOMParser;
-import ru.sondar.core.documentmodel.SDDocument;
-import ru.sondar.core.documentmodel.SDSequenceObject;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.SDDOMParser;
+import ru.sondar.documentmodel.SDDocument;
+import ru.sondar.documentmodel.SDSequenceObject;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 public class AXMLDocument extends SDDocument {
 

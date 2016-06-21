@@ -2,9 +2,10 @@ package ru.sondar.client.objectmodel.android;
 
 import android.content.Context;
 import android.view.View;
-import ru.sondar.core.objectmodel.SDEndln;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
+
+import ru.sondar.documentmodel.objectmodel.SDEndln;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 public class AXMLEndln extends AXMLMainObject {
 

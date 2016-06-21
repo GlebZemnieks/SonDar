@@ -5,9 +5,10 @@ import java.util.Date;
 import android.content.Context;
 import android.view.View;
 import android.widget.DatePicker;
-import ru.sondar.core.objectmodel.SDDate;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
+
+import ru.sondar.documentmodel.objectmodel.SDDate;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 public class AXMLDate extends AXMLMainObject {
 

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
-import ru.sondar.core.objectmodel.SDSpinner;
+
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
+import ru.sondar.documentmodel.objectmodel.SDSpinner;
 
 public class AXMLSpinner extends AXMLMainObject {
 

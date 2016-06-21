@@ -67,6 +67,7 @@ public class FileSystemActivity extends Activity {
 	public void onResume(){
 		super.onResume();
 		Config.Log(logTag,"Preparing file system ...");
+		prepare();
 		fileSystem.init(fileModule);
 		Config.Log(logTag,"File system init successfully");
 		isSomeDocumentInTemp(fileSystem);

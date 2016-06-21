@@ -1,9 +1,9 @@
 package ru.sondar.client.documentmodel.android;
 
 import ru.sondar.client.objectmodel.android.*;
-import ru.sondar.core.documentmodel.SDSequenceObject;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
+import ru.sondar.documentmodel.SDSequenceObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 /**
  * Overwriting sequence object for supporting android objects

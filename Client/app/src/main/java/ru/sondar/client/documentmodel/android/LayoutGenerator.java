@@ -2,13 +2,12 @@ package ru.sondar.client.documentmodel.android;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import ru.sondar.client.objectmodel.android.AXMLMainObject;
 import ru.sondar.core.Config;
-import ru.sondar.core.objectmodel.SDMainObjectType;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 /**
  * TODO Need refactoring!! This is puzdes!

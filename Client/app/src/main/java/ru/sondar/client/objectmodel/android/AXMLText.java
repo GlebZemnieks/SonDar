@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
-import ru.sondar.core.objectmodel.SDText;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
+import ru.sondar.documentmodel.objectmodel.SDText;
 
 public class AXMLText extends AXMLMainObject {
 

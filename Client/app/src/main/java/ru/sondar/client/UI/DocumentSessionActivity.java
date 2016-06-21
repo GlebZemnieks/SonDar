@@ -21,11 +21,11 @@ import ru.sondar.client.documentmodel.android.AXMLSequenceObject;
 import ru.sondar.client.documentmodel.android.XMLSequenceIndexOverflowException;
 import ru.sondar.client.filemodule.android.FileModule;
 import ru.sondar.core.Config;
-import ru.sondar.core.documentmodel.SDDOMParser;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.SDDOMParser;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 public class DocumentSessionActivity extends Activity {
 

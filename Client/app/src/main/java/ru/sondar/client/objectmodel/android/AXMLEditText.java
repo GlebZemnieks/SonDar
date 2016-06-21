@@ -3,9 +3,10 @@ package ru.sondar.client.objectmodel.android;
 import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
-import ru.sondar.core.objectmodel.SDEditText;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.SDMainObjectType;
+
+import ru.sondar.documentmodel.objectmodel.SDEditText;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 public class AXMLEditText extends AXMLMainObject {
 

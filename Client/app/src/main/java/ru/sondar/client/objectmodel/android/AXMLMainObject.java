@@ -6,9 +6,8 @@ import android.widget.LinearLayout;
 import org.w3c.dom.Element;
 
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.objectmodel.SDMainObject;
-import ru.sondar.core.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
  * Main class for association android parameter for object
