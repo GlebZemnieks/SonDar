@@ -39,7 +39,7 @@ public class DemoPlugin extends Plugin {
         for (int i = 0; i < 4; i++) {
             try {
                 SDDocument document = demo.importDocumentFromDB(DriverName.ExcelDriver, "00000000-0000-0000-0000-00000000000" + (i + 1));
-                FileModuleWriteThread fileModule = new FileModuleWriteThread("E:\\temp\\demo_" + "00000000-0000-0000-0000-00000000000" + (i + 1) + ".txt");
+                FileModuleWriteThread fileModule = new FileModuleWriteThread("E:\\temp\\demo_" + "00000000-0000-0000-0000-00000000000" + (i + 1) + ".txt", false);
                 document.saveDocument(fileModule);
                 fileModule.close();
             } catch (DataBaseFileNotFoundException | RowNotFoundException ex) {

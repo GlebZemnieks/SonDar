@@ -108,7 +108,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\editText_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\editText_temp.txt", false);
         this.text.printObjectToXML(fileModule);
         fileModule.close();
         SDEditText text2 = new SDEditText();

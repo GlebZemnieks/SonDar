@@ -507,7 +507,7 @@ public class SpaceForYourCreativity {
         //log 
         SDLogPart log = new SDLogPart();
         document.setLogPart(log);
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(pathToFileCreate);
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(pathToFileCreate, false);
         document.saveDocument(fileModule);
         fileModule.close();
     }

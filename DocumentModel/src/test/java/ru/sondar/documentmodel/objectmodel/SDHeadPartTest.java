@@ -102,7 +102,7 @@ public class SDHeadPartTest {
         Date date = new Date();
         head.setCreationTime(date);
         head.setLastModificationTime(date);
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\head_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\head_temp.txt", false);
         this.head.printObjectToXML(fileModule);
         fileModule.close();
         this.head.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "head_temp.txt"));

@@ -146,7 +146,7 @@ public class SDSpinnerTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\spinner_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\spinner_temp.txt", false);
         this.spinner.printObjectToXML(fileModule);
         fileModule.close();
         SDSpinner spinner2 = new SDSpinner();

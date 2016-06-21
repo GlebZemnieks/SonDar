@@ -138,7 +138,7 @@ public class SDMainObjectTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt", false);
         this.object.printObjectToXML(fileModule);
         fileModule.delFile();
         fileModule.close();
@@ -154,7 +154,7 @@ public class SDMainObjectTest {
      */
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt", false);
         this.object.setID(15);
         this.object.printObjectToXML(fileModule);
         fileModule.delFile();
@@ -171,7 +171,7 @@ public class SDMainObjectTest {
      */
     @Test
     public void testPrintCurrentObjectField3() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp2.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp2.txt", false);
         this.object.setID(15);
         InternalFunction function = InternalFunctionFactory.getInternalFunction();
         function.AddXMLObject(InternalFunctionFactory.getCustomFunction());
@@ -191,7 +191,7 @@ public class SDMainObjectTest {
      */
     @Test
     public void testPrintCurrentObjectField4() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp3.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp3.txt", false);
         this.object.setID(15);
         InternalFunction function = InternalFunctionFactory.getInternalFunction();
         Function custom = InternalFunctionFactory.getCustomFunction();

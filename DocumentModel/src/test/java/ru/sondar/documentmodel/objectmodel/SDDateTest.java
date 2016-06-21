@@ -68,7 +68,7 @@ public class SDDateTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\date_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\date_temp.txt", false);
         Date now = new Date();
         date.setDate(now);
         date.setID(11);

@@ -75,7 +75,7 @@ public class SDTextTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp.txt", false);
         this.text.printObjectToXML(fileModule);
         fileModule.close();
         SDText text2 = new SDText();
@@ -92,7 +92,7 @@ public class SDTextTest {
      */
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp2.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp2.txt", false);
         this.text.printObjectToXML(fileModule);
         fileModule.close();
         SDText text2 = new SDText();

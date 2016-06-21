@@ -1,35 +1,47 @@
 package ru.sondar.core;
 
-import ru.sondar.core.logging.EmptyLogging;
-import ru.sondar.core.logging.LoggerInterface;
+import ru.sondar.core.logging.*;
 
 /**
+ * Configuration object for SonDar Core.
  *
  * @author GlebZemnieks
  */
 public class Config {
 
     /**
-     * Logger object
+     * Logger object. By default have value
+     * {@link ru.sondar.core.logging.EmptyLogging} with empty logging method.
      */
     private static LoggerInterface logger = new EmptyLogging();
 
     /**
-     * Setter for logger object
+     * Setter for logger object. Logger object should implement interface
+     * {@link ru.sondar.core.logging.LoggerInterface}.
      *
-     * @param loggerInterface
+     * @param logger All logging message will set off to this object.
      */
-    public static void setLogger(LoggerInterface loggerInterface) {
-        logger = loggerInterface;
+    public static void setLogger(LoggerInterface logger) {
+        Config.logger = logger;
+        if (logger instanceof EmptyLogging) {
+            Config.Log("Config", "Disable logging");
+        } else {
+            Config.Log("Config", "New logger object : " + logger.getClass());
+        }
     }
 
     /**
-     * Log method
+     * Log method. Call {@link ru.sondar.core.logging.LoggerInterface} default
+     * method.
+     * <p>
+     * Access to another methods don't provided in current Configuration
+     * version.
+     * </p>
      *
      * @param tag
      * @param msg
      */
     public static void Log(String tag, String msg) {
-        logger.Log(tag, msg);
+        Config.logger.Log(tag, msg);
     }
 }

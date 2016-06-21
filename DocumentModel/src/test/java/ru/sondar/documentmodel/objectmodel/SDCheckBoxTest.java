@@ -123,7 +123,7 @@ public class SDCheckBoxTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\check_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\check_temp.txt", false);
         box.printObjectToXML(fileModule);
         fileModule.close();
         SDCheckBox box2 = new SDCheckBox();

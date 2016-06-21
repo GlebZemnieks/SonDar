@@ -118,7 +118,7 @@ public class CustomFunctionTest extends TestCase {
         set2.setValue("after2");
         function.AddAction(set);
         function.AddAction(set2);
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\function_temp1.txt");
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\function_temp1.txt", false);
         function.printXMLString(fileModule);
         fileModule.close();
     }
@@ -141,7 +141,7 @@ public class CustomFunctionTest extends TestCase {
         set2.setValue("after2");
         function.AddAction(set);
         function.AddAction(set2);
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\function_temp2.txt");
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\function_temp2.txt", false);
         function.printXMLString(fileModule);
         fileModule.close();
         File inputFile = new File(TestVariables.testFolder + "InternalFunction\\function_temp2.txt");

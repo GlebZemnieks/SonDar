@@ -71,7 +71,7 @@ public abstract class PluginConfigurator {
      */
     public void generateExampleFile() {
         SDDocument document = this.getExampleDocument();
-        FileModuleWriteThread fileThread = new FileModuleWriteThread(this.globalPluginFolder + "\\" + this.localFolderName + "\\Demo.xml");
+        FileModuleWriteThread fileThread = new FileModuleWriteThread(this.globalPluginFolder + "\\" + this.localFolderName + "\\Demo.xml", false);
         document.saveDocument(fileThread);
         fileThread.close();
     }

@@ -49,7 +49,7 @@ public class SDDocumentTest {
     public void testLoadDocument_String() throws Exception {
         SDDocument documentTemp = new SDDocument();
         documentTemp.loadDocument("E:\\Development\\SonDar\\DocumentModel\\JUnitTest\\SequenceTest\\document_1.txt");
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp2.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp2.txt", false);
         documentTemp.saveDocument(fileModule);
         fileModule.close();
     }
@@ -59,7 +59,7 @@ public class SDDocumentTest {
      */
     @Test
     public void testSaveDocument() {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\document_temp.txt", false);
         this.document.saveDocument(fileModule);
         fileModule.close();
     }

@@ -1,15 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sondar.core.filemodule.exception;
 
 /**
- * Throw when try to open file whose not exist in folder
- * @author Глеб
+ * Throw when code trying to open file, which not exist by path
+ *
+ * @author GlebZemnieks
+ * @since SonDar-1.0
  */
-public class SonDarFileNotFoundException extends RuntimeException{
-    
+public class SonDarFileNotFoundException extends RuntimeException {
+
+    public SonDarFileNotFoundException() {
+        super();
+    }
+
+    public SonDarFileNotFoundException(String msg) {
+        super(msg);
+    }
+
 }

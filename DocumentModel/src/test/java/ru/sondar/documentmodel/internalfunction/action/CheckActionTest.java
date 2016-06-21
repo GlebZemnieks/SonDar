@@ -102,14 +102,14 @@ public class CheckActionTest extends TestCase {
     }
 
     public void testPrint1() {
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp1.txt");
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp1.txt", false);
         CheckAction check = new CheckAction(null);
         check.printXMLString(fileModule);
         fileModule.close();
     }
 
     public void testPrint2() {
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp2.txt");
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp2.txt", false);
         CheckAction check = new CheckAction(null);
         check.setActionName("testName");
         check.setTargetId("3");
@@ -119,7 +119,7 @@ public class CheckActionTest extends TestCase {
     }
 
     public void testParse1() throws SAXException, IOException, ParserConfigurationException {
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp3.txt");
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(TestVariables.testFolder + "InternalFunction\\checkAction_temp3.txt", false);
         CheckAction check = new CheckAction(null);
         check.setActionName("test");
         check.setTargetId("test");

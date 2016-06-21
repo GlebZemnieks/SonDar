@@ -117,7 +117,7 @@ public class SDLogPartTest {
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\log_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\log_temp.txt", false);
         this.log.printObjectToXML(fileModule);
         fileModule.close();
         this.log.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "log_temp.txt"));

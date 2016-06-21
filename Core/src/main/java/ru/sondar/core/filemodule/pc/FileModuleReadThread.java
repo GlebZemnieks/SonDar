@@ -5,36 +5,40 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ru.sondar.core.Config;
-import ru.sondar.core.filemodule.exception.SonDarFileNotFoundException;
-import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
+import ru.sondar.core.filemodule.exception.*;
 
 /**
- * Main read thread for PC
+ * Default realization interface
+ * {@link ru.sondar.core.filemodule.FileModuleReadThreadInterface} for windows.
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class FileModuleReadThread extends FileModuleThread implements FileModuleReadThreadInterface {
 
+    /**
+     * BufferedReader object file representation for current thread
+     */
     BufferedReader in;
 
     public FileModuleReadThread(String fileName) {
         super(fileName);
-        Config.Log("FileModuleLog", "Try to open file '" + this.fileName + "'");
+        Config.Log(LOGTAG, "Try to open file '" + this.fileName + "'");
         this.file = new File(fileName);
         if (!file.exists()) {
-            this.close();
-            Config.Log("FileModuleLog", "File '" + this.fileName + "' not found");
-            throw new SonDarFileNotFoundException();
+            super.close();
+            Config.Log(LOGTAG, "File '" + this.fileName + "' not found");
+            throw new SonDarFileNotFoundException("File '" + this.fileName + "' not found");
         }
         try {
             this.in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
         } catch (FileNotFoundException ex) {
+            //TODO Do nothing, while have not requirement or stable reproduction.
+            throw new RuntimeException("File \"" + this.fileName + "\" was found, but BufferedReader building fail. It's impossible but It happened. Sorry!");
         }
-        Config.Log("FileModuleLog", "File '" + this.fileName + "' successful opened");
+        Config.Log(LOGTAG, "File '" + this.fileName + "' successful opened");
     }
 
     @Override
@@ -42,14 +46,15 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log("FileModuleLog", "Read text from file '" + this.fileName + "'");
+        Config.Log(LOGTAG, "Read text from file '" + this.fileName + "'");
         String temp = null;
         try {
             temp = in.readLine();
         } catch (IOException ex) {
-            Logger.getLogger(FileModuleReadThread.class.getName()).log(Level.SEVERE, null, ex);
+            //TODO Do nothing, while have not requirement or stable reproduction.
+            throw new RuntimeException("Reading file \"" + this.fileName + "\" fail. It's impossible but It happened. Sorry!");
         }
-        Config.Log("FileModuleLog", "-->TEXT:  '" + temp + "'");
+        Config.Log(LOGTAG, "-->TEXT:  '" + temp + "'");
         return temp;
     }
 
@@ -61,7 +66,8 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
                 this.in.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO Do nothing, while have not requirement or stable reproduction.
+            throw new RuntimeException("Closing file \"" + this.fileName + "\" fail. It's impossible but It happened. Sorry!");
         }
     }
 

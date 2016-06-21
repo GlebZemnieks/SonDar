@@ -54,7 +54,7 @@ public class DependencyPartTest {
     @Test
     public void testPrintObjectToXML() {
         dependency.parseItemFromXML(TestVariables.getRootElementByFile("DependencyTest", "dependency_1.txt"));
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "DependencyTest\\dependency_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "DependencyTest\\dependency_temp.txt", false);
         dependency.printObjectToXML(fileModule);
         fileModule.close();
         dependency.parseItemFromXML(TestVariables.getRootElementByFile("DependencyTest", "dependency_temp.txt"));

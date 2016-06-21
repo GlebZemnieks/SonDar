@@ -96,7 +96,7 @@ public class SDSequenceObjectTest {
     @Test
     public void testParseSequence() throws Exception {
         this.sequence.parseSequence(TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\sequence_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\sequence_temp.txt", false);
         this.sequence.printSequence(fileModule);
         fileModule.close();
     }
@@ -130,7 +130,7 @@ public class SDSequenceObjectTest {
     public void testPrintCurrentObjectField() {
         //Так надо
         sequence.setID(-1);
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\div_object_temp.txt");
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\div_object_temp.txt", false);
         this.sequence.printObjectToXML(fileModule);
         fileModule.close();
     }
