@@ -1,15 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sondar.core.filesystem.exception;
 
 /**
- * Throw when file included in config file but not exist in folder
+ * Throw when file included in configuration file but not exist in folder
+ *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
-public class MissFileInFolderException extends SomeTroubleWithFolderException{
-    
+public class MissFileInFolderException extends SomeTroubleWithFolderException {
+
+    public MissFileInFolderException() {
+        super();
+    }
+
+    public MissFileInFolderException(String msg) {
+        super(msg);
+    }
+
 }

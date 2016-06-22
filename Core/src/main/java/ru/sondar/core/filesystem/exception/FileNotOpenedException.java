@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.core.filesystem.exception;
 
 /**
+ * Throw when user want to save file which not opened
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
-public class FileNotOpenedException extends RuntimeException{
-    
+public class FileNotOpenedException extends RuntimeException {
+
+    public FileNotOpenedException() {
+        super();
+    }
+
+    public FileNotOpenedException(String msg) {
+        super(msg);
+    }
+
 }

@@ -2,19 +2,16 @@ package ru.sondar.core.filesystem;
 
 import java.util.Arrays;
 import ru.sondar.core.Config;
-import ru.sondar.core.filemodule.FileModuleInterface;
-import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.filemodule.exception.SonDarFileNotFoundException;
-import ru.sondar.core.filesystem.exception.ConfigFileFormatException;
-import ru.sondar.core.filesystem.exception.FileNotFoundInFolderException;
-import ru.sondar.core.filesystem.exception.FileNotOpenedException;
-import ru.sondar.core.filesystem.exception.FirstFolderUseException;
-import ru.sondar.core.filesystem.exception.FolderNotReadyException;
-import ru.sondar.core.filesystem.exception.FolderObjectNotInSystemException;
-import ru.sondar.core.filesystem.exception.MissFileInFolderException;
-import ru.sondar.core.filesystem.exception.SomeTroubleWithFolderException;
+import ru.sondar.core.filemodule.*;
+import ru.sondar.core.filemodule.exception.*;
+import ru.sondar.core.filesystem.exception.*;
 
+/**
+ * Folder object.
+ *
+ * @author GlebZemnieks
+ * @since SonDar-1.0
+ */
 public class SonDarFolder {
 
     /**
@@ -54,7 +51,6 @@ public class SonDarFolder {
      *
      * @param globalFolder
      * @param folderName
-     * @param logger
      */
     public SonDarFolder(String globalFolder, String folderName) {
         this.folderName = folderName;
@@ -122,7 +118,7 @@ public class SonDarFolder {
     }
 
     /**
-     * Read config file and check that folder relevant
+     * Read configuration file and check that folder relevant
      *
      * @param fileModule
      * @throws SomeTroubleWithFolderException
@@ -249,7 +245,7 @@ public class SonDarFolder {
     }
 
     /**
-     * Delete File. Delete file from folder object, config file and disk space.
+     * Delete File. Delete file from folder object, configuration file and disk space.
      *
      * @param fileModule
      * @param fileName

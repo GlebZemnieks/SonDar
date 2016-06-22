@@ -2,13 +2,17 @@ package ru.sondar.core.filesystem;
 
 import java.util.Arrays;
 import ru.sondar.core.Config;
-import ru.sondar.core.filemodule.FileModuleInterface;
-import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.core.filemodule.*;
 import static ru.sondar.core.filesystem.SonDarFileSystem.getTagContent;
-import ru.sondar.core.filesystem.exception.ConfigFileFormatException;
-import ru.sondar.core.filesystem.exception.FileNotFoundInFolderException;
+import ru.sondar.core.filesystem.exception.*;
 
+/**
+ * Folder's configuration object. Supports configuration file in actual state
+ * and do action with them.
+ *
+ * @author GlebZemnieks
+ * @since SonDar-1.0
+ */
 public class SonDarFolderConfig {
 
     /**
@@ -16,14 +20,6 @@ public class SonDarFolderConfig {
      */
     private final String configFileName = "config.txt";
 
-    /**
-     * Getter for file name field
-     *
-     * @return
-     */
-    public String getConfigFileName() {
-        return this.configFileName;
-    }
     /**
      * Global tag text
      */
@@ -39,12 +35,16 @@ public class SonDarFolderConfig {
     private final String logTag = "FileSystemLog";
 
     /**
+     * List of file on folder
+     */
+    public String[] configFileList;
+
+    /**
      * Constructor
      *
      * @param fileModule
      * @param globalFolder
      * @param folderName
-     * @param logger
      * @throws ConfigFileFormatException
      */
     public SonDarFolderConfig(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
@@ -52,9 +52,13 @@ public class SonDarFolderConfig {
     }
 
     /**
-     * List of file on folder
+     * Getter for file name field
+     *
+     * @return
      */
-    public String[] configFileList;
+    public String getConfigFileName() {
+        return this.configFileName;
+    }
 
     /**
      * Reset file list
@@ -64,7 +68,8 @@ public class SonDarFolderConfig {
     }
 
     /**
-     * Read config file and check it relevant Configurate actual fileList
+     * Read configuration file and check it relevant Configurate actual file
+     * List
      *
      * @param fileModule
      * @param globalFolder
@@ -103,8 +108,8 @@ public class SonDarFolderConfig {
     }
 
     /**
-     * Add file in fileList. To write changes in config file calling method
-     * Update
+     * Add file in fileList. To write changes in configuration file calling
+     * method Update
      *
      * @param fileModule
      * @param globalFolder
@@ -134,8 +139,8 @@ public class SonDarFolderConfig {
 
     /**
      *
-     * Delete file from fileList. To write changes in config file calling method
-     * Update
+     * Delete file from fileList. To write changes in configuration file calling
+     * method Update
      *
      * @param fileModule
      * @param globalFolder
@@ -173,7 +178,7 @@ public class SonDarFolderConfig {
     }
 
     /**
-     * Write changes to config file
+     * Write changes to configuration file
      *
      * @param fileModule
      * @param globalFolder

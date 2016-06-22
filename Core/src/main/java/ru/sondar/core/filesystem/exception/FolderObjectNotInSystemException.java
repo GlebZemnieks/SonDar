@@ -1,15 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sondar.core.filesystem.exception;
 
 /**
- * Throw when try to init folder not belong FileSystem
+ * Throw when try to initialization folder not belong FileSystem
+ *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
-public class FolderObjectNotInSystemException extends RuntimeException{
-    
+public class FolderObjectNotInSystemException extends RuntimeException {
+
+    public FolderObjectNotInSystemException() {
+        super();
+    }
+
+    public FolderObjectNotInSystemException(String msg) {
+        super(msg);
+    }
+
 }

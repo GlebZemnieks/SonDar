@@ -3,12 +3,13 @@ package ru.sondar.core.filesystem;
 import java.util.Arrays;
 import java.util.UUID;
 import ru.sondar.core.Config;
-import ru.sondar.core.filemodule.FileModuleInterface;
-import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.filesystem.exception.FolderNotFoundException;
-import ru.sondar.core.filesystem.exception.SomeTroubleWithFolderException;
+import ru.sondar.core.filemodule.*;
+import ru.sondar.core.filesystem.exception.*;
 
+/**
+ * 
+ * @author GlebZemnieks
+ */
 public class SonDarFileSystem {
 
     /**
