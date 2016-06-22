@@ -44,7 +44,7 @@ public class FileModuleThread implements FileModuleThreadInterface {
     @Override
     public void delFile() {
         if (isClose) {
-            throw new ThreadIsCloseException("Tried to close file after thread closing. File name : " + this.file.getName());
+            throw new ThreadIsCloseException("Tried to delete file after thread closing. File name : " + this.fileName);
         }
         if (this.file != null) {
             this.file.delete();
@@ -54,6 +54,9 @@ public class FileModuleThread implements FileModuleThreadInterface {
 
     @Override
     public void close() {
+        if (isClose) {
+            throw new ThreadIsCloseException("Tried to close file after thread closing. File name : " + this.fileName);
+        }
         Config.Log("FileModuleLog", "Close file '" + fileName + "'");
         this.isClose = true;
     }
