@@ -1,0 +1,4 @@
+<configFile>
+<fileName>test.txt</fileName>
+<fileName>test2.txt</fileName>
+</configFile>

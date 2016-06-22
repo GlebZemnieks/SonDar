@@ -1,0 +1,1 @@
+git add Core\JUnitTest\*.txt

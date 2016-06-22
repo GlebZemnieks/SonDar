@@ -7,6 +7,9 @@ git add DocumentModel\pom.xml
 git add DocumentModel\JUnitTest\addTestFile.bat
 call DocumentModel\JUnitTest\addTestFile.bat
 
+git add Core\JUnitTest\addTestFile.bat
+call Core\JUnitTest\addTestFile.bat
+
 git add PluginAPI\src\main\java\*.java
 git add PluginAPI\src\test\java\*.java
 git add PluginAPI\pom.xml
