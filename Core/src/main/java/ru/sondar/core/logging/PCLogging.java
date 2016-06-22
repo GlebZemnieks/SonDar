@@ -4,7 +4,7 @@ package ru.sondar.core.logging;
  * Class logger for PC Implements
  *
  * @author GlebZemnieks
- * @see LoggerInterface
+ * @since SonDar-1.0
  */
 public class PCLogging implements LoggerInterface {
 

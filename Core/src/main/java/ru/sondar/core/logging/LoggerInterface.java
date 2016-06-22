@@ -4,6 +4,7 @@ package ru.sondar.core.logging;
  * Main logger interface. All logger classes must implement this.
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public interface LoggerInterface {
 

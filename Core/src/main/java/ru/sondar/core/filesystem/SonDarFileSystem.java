@@ -7,8 +7,10 @@ import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filesystem.exception.*;
 
 /**
- * 
+ * File system object.
+ *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SonDarFileSystem {
 
