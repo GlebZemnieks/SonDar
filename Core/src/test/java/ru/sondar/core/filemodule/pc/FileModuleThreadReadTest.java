@@ -5,8 +5,10 @@ import ru.sondar.core.filemodule.exception.*;
 import static ru.sondar.core.filemodule.pc.FileModuleTest.TESTDATAFOLDER;
 
 /**
+ * Test class for {@link ru.sondar.core.filemodule.pc.FileModuleReadThread}
  *
- * @author Глеб
+ * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class FileModuleThreadReadTest extends TestCase {
 

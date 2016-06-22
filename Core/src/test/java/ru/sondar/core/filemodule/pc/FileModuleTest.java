@@ -5,6 +5,12 @@ import ru.sondar.core.filemodule.exception.SonDarFileNotFoundException;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 
+/**
+ * Test class for {@link ru.sondar.core.filemodule.pc.FileModule}
+ *
+ * @author GlebZemnieks
+ * @since SonDar-1.0
+ */
 public class FileModuleTest extends TestCase {
 
     public static final String TESTDATAFOLDER = TestVariables.testFolder + "fileModule\\";

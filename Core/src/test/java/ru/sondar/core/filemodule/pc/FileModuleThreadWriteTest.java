@@ -7,8 +7,10 @@ import ru.sondar.core.logging.PCLogging;
 import static ru.sondar.core.filemodule.pc.FileModuleTest.TESTDATAFOLDER;
 
 /**
+ * Test class for {@link ru.sondar.core.filemodule.pc.FileModuleWriteThread}
  *
- * @author Глеб
+ * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class FileModuleThreadWriteTest extends TestCase {
 

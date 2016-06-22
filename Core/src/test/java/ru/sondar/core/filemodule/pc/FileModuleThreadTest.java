@@ -4,6 +4,12 @@ import junit.framework.TestCase;
 import static junit.framework.TestCase.fail;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 
+/**
+ * Test class for {@link ru.sondar.core.filemodule.pc.FileModuleThread}
+ *
+ * @author GlebZemnieks
+ * @since SonDar-1.0
+ */
 public class FileModuleThreadTest extends TestCase {
 
     public FileModuleThreadTest(String testName) {
