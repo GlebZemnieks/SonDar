@@ -8,6 +8,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * End of line object decoration object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDEndln extends SDMainObject {
 

@@ -10,15 +10,34 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 /**
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDHeadPart extends SDMainObject {
 
     /**
-     * UUID for document. Set position in DataBase. set
+     * UUID for document. Set position in DataBase. Set
      * 00000000-0000-0000-0000-000000000000 if document new and have not
      * protection in DataBase.
      */
     private UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+    /**
+     * Plugin UUID. Used in DocumentManager for plugin indentefication.
+     */
+    private UUID plugin = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+    /**
+     * Time and Date of document creation. Using if you wont to know if this
+     * document are equals;
+     */
+    private Date creationTime = new Date();
+
+    /**
+     * Time and Date of document last modification. Use it, if you have two
+     * document with equal time creation but wrong context, to choise last
+     * document version.
+     */
+    private Date lastModificationTime = new Date();
 
     /**
      * Getter for UUID
@@ -39,11 +58,6 @@ public class SDHeadPart extends SDMainObject {
     }
 
     /**
-     * Plugin UUID. Used in DocumentManager for plugin indentefication.
-     */
-    private UUID plugin = UUID.fromString("00000000-0000-0000-0000-000000000000");
-
-    /**
      * Getter for plugin UUID
      *
      * @return
@@ -62,12 +76,6 @@ public class SDHeadPart extends SDMainObject {
     }
 
     /**
-     * Time and Date of document creation. Using if you wont to know if this
-     * document are equals;
-     */
-    private Date creationTime = new Date();
-
-    /**
      * Getter for creation time
      *
      * @return
@@ -84,13 +92,6 @@ public class SDHeadPart extends SDMainObject {
     public void setCreationTime(Date date) {
         this.creationTime = date;
     }
-
-    /**
-     * Time and Date of document last modification. Use it, if you have two
-     * document with equal time creation but wrong context, to choise last
-     * document version.
-     */
-    private Date lastModificationTime = new Date();
 
     /**
      * Getter for last modification time

@@ -1,7 +1,6 @@
 package ru.sondar.documentmodel;
 
 import java.io.IOException;
-import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
@@ -16,6 +15,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * Document model
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDDocument {
 
@@ -46,8 +46,9 @@ public class SDDocument {
     }
 
     /**
-     * Setter for sequence object.Throw DocumentAlreadyInitException if sequence
-     * already exist
+     * Setter for sequence object. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
+     * (RunTime) if sequence already exist
      *
      * @param sequence
      * @throws DocumentAlreadyInitException
@@ -60,10 +61,12 @@ public class SDDocument {
     }
 
     /**
-     * Setter for head object. Throw DocumentAlreadyInitException if head
-     * already exist
+     * Setter for head object. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
+     * (RunTime) if head already exist
      *
      * @param head
+     * @throws DocumentAlreadyInitException
      */
     public void setHeadPart(SDHeadPart head) {
         if (this.headPart != null) {
@@ -75,17 +78,20 @@ public class SDDocument {
     /**
      * Getter for head object
      *
-     * @return
+     * @return head object of current document
+     * @throws DocumentAlreadyInitException
      */
     public SDHeadPart getHeadPart() {
         return this.headPart;
     }
 
     /**
-     * Setter for log object. Throw DocumentAlreadyInitException if log already
-     * exist
+     * Setter for log object. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
+     * (RunTime) if log already exist
      *
      * @param log
+     * @throws DocumentAlreadyInitException
      */
     public void setLogPart(SDLogPart log) {
         if (this.logPart != null) {
@@ -95,10 +101,12 @@ public class SDDocument {
     }
 
     /**
-     * Setter for dependency object. Throw DocumentAlreadyInitException if log
-     * already exist
+     * Setter for dependency object. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
+     * (RunTime) if log already exist
      *
      * @param dependency
+     * @throws DocumentAlreadyInitException
      */
     public void setDependencyPart(DependencyPart dependency) {
         if (this.dependency != null) {
@@ -107,6 +115,12 @@ public class SDDocument {
         this.dependency = dependency;
     }
 
+    /**
+     * Getter for dependency part object. If head is null - return
+     * <code>null</code>
+     *
+     * @return dependency object of current document
+     */
     public DependencyPart getDependencyPart() {
         return this.dependency;
     }
@@ -119,27 +133,35 @@ public class SDDocument {
      * @throws IOException
      * @throws ParserConfigurationException
      * @throws ObjectStructureException
+     * @throws DocumentAlreadyInitException Throw when some of part document
+     * already initializing.
      */
     public void loadDocument(String fileName) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException {
         this.loadDocument(new SDDOMParser(fileName));
     }
 
     /**
-     * Load document from file by parser object
+     * Load document from file by parser object. Used default parser
+     * {@link ru.sondar.documentmodel.SDDOMParser}
      *
      * @param parser
      * @throws ObjectStructureException
+     * @throws DocumentAlreadyInitException Throw when some of part document
+     * already initializing.
      */
     public void loadDocument(SDDOMParser parser) throws ObjectStructureException {
         this.loadDocument(parser, new SDSequenceObject());
     }
 
     /**
-     * Load document from file by parser object with customer sequence format
+     * Load document from file by parser object with customer sequence format.
      *
      * @param parser
      * @param sequence
-     * @throws ObjectStructureException
+     * @throws ObjectStructureException Throw when document structure cant be
+     * read
+     * @throws DocumentAlreadyInitException Throw when some of part document
+     * already initializing.
      */
     public void loadDocument(SDDOMParser parser, SDSequenceObject sequence) throws ObjectStructureException {
         if (this.sequence != null || this.headPart != null || this.logPart != null || this.dependency != null) {
@@ -155,6 +177,14 @@ public class SDDocument {
         parser.getLogPart(logPart);
     }
 
+    /**
+     * Save document to thread in format
+     * {@link ru.sondar.core.filemodule.FileModuleWriteThreadInterface}. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentNotInitException} if
+     * some part of document not initialized.
+     *
+     * @param fileModule
+     */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
         if (this.sequence == null || this.headPart == null || this.logPart == null || this.dependency == null) {
             throw new DocumentNotInitException("head : " + this.headPart + " : sequence : " + this.sequence + " : dependency : " + this.dependency + " : log : " + this.logPart + " ;");

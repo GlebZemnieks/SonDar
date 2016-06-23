@@ -4,6 +4,7 @@ package ru.sondar.documentmodel.objectmodel;
  * Description of possible types of objects
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public enum SDMainObjectType {
     /**

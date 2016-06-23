@@ -12,9 +12,11 @@ import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
- * DOM parser for document
+ * Expansion for DOM parser object {@link ru.sondar.core.DOMParser } with
+ * document partitions support
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDDOMParser extends DOMParser {
 
@@ -25,7 +27,7 @@ public class SDDOMParser extends DOMParser {
     /**
      * Get Sequence of document
      *
-     * @param xmlSequence
+     * @param xmlSequence get sequence part from document by "%fileName%"
      * @throws ObjectStructureException
      */
     public void getSequence(SDSequenceObject xmlSequence) throws ObjectStructureException {
@@ -37,7 +39,7 @@ public class SDDOMParser extends DOMParser {
     /**
      * Get Head part of document
      *
-     * @param headPart
+     * @param headPart get head part from document by "%fileName%"
      * @throws ObjectStructureException
      */
     public void getHeadPart(SDHeadPart headPart) throws ObjectStructureException {
@@ -49,7 +51,7 @@ public class SDDOMParser extends DOMParser {
     /**
      * Get Log part of document
      *
-     * @param logPart
+     * @param logPart get log part from document by "%fileName%"
      * @throws ObjectStructureException
      */
     public void getLogPart(SDLogPart logPart) throws ObjectStructureException {
@@ -57,11 +59,11 @@ public class SDDOMParser extends DOMParser {
         Element log = ((Element) nList.item(0));
         logPart.parseObjectFromXML(log);
     }
-    
+
     /**
      * Get dependency part of document
      *
-     * @param dependencyPart
+     * @param dependencyPart get dependency part from document by "%fileName%"
      * @throws ObjectStructureException
      */
     public void getDependencyPart(DependencyPart dependencyPart) throws ObjectStructureException {

@@ -1,22 +1,17 @@
 package ru.sondar.documentmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDSpinner;
-import ru.sondar.documentmodel.objectmodel.SDText;
-import ru.sondar.documentmodel.objectmodel.SDEditText;
-import ru.sondar.documentmodel.objectmodel.SDDate;
-import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.documentmodel.objectmodel.SDEndln;
-import ru.sondar.documentmodel.objectmodel.SDCheckBox;
-import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
+ * Objects sequence object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDSequenceObject extends SDMainObject {
 
@@ -48,17 +43,17 @@ public class SDSequenceObject extends SDMainObject {
     /**
      * Getter for sequenceArrayLength field
      *
-     * @return
+     * @return Just sequence by current object
      */
     public int getSequenceSize() {
         return this.sequenceArrayLength;
     }
 
     /**
-     * Find object with %name% and return it. If it not exist return null
+     * Find object with %name% and return it. If it not exist return null.
      *
-     * @param name
-     * @return
+     * @param name name of object
+     * @return object with name or null if object not exist
      */
     public SDMainObject getXMLObjectByName(String name) {
         for (int i = 0; i < this.sequenceArray.size(); i++) {
@@ -180,7 +175,8 @@ public class SDSequenceObject extends SDMainObject {
      * Method for parse sequence.
      *
      * @param element
-     * @throws ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
+     * @throws
+     * ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
      */
     public void parseSequence(Element element) throws ObjectStructureException {
         this.sequenceArray = new ArrayList<>();
@@ -223,29 +219,32 @@ public class SDSequenceObject extends SDMainObject {
         }
     }
 
+    /**
+     * Return object by type.
+     *
+     * @param type {@link ru.sondar.documentmodel.objectmodel.SDMainObjectType}
+     * by object which should be returned
+     * @return
+     */
     public SDMainObject getObjectByType(SDMainObjectType type) {
-        if (type == SDMainObjectType.Text) {
-            return new SDText();
+        switch (type) {
+            case Text:
+                return new SDText();
+            case Spinner:
+                return new SDSpinner();
+            case CheckBox:
+                return new SDCheckBox();
+            case EndLn:
+                return new SDEndln();
+            case Date:
+                return new SDDate();
+            case EditText:
+                return new SDEditText();
+            case DivContainer:
+                return new SDSequenceObject();
+            default:
+                return null;
         }
-        if (type == SDMainObjectType.Spinner) {
-            return new SDSpinner();
-        }
-        if (type == SDMainObjectType.CheckBox) {
-            return new SDCheckBox();
-        }
-        if (type == SDMainObjectType.EndLn) {
-            return new SDEndln();
-        }
-        if (type == SDMainObjectType.Date) {
-            return new SDDate();
-        }
-        if (type == SDMainObjectType.EditText) {
-            return new SDEditText();
-        }
-        if (type == SDMainObjectType.DivContainer) {
-            return new SDSequenceObject();
-        }
-        return null;
     }
 
 }

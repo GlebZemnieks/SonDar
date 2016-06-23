@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
 import org.w3c.dom.Element;
@@ -15,6 +10,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 /**
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDEditText extends SDMainObject implements SupportDependencyInterface {
 
@@ -31,6 +27,18 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
      * Text field
      */
     private String Text;
+
+    /**
+     * Length field
+     */
+    private int textLength = 0;
+
+    /**
+     * Constructor
+     */
+    public SDEditText() {
+        this.objectType = SDMainObjectType.EditText;
+    }
 
     /**
      * Getter for text field
@@ -51,20 +59,6 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     }
 
     /**
-     * Length field
-     */
-    private int textLength = 0;
-
-    /**
-     * Getter for length field
-     *
-     * @return
-     */
-    public int getTextLength() {
-        return this.textLength;
-    }
-
-    /**
      * Setter for length field
      *
      * @param length
@@ -74,10 +68,12 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     }
 
     /**
-     * Constructor
+     * Getter for length field
+     *
+     * @return
      */
-    public SDEditText() {
-        this.objectType = SDMainObjectType.EditText;
+    public int getTextLength() {
+        return this.textLength;
     }
 
     @Override
@@ -89,6 +85,7 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     public void setValue(Object object) {
         this.Text = (String) object;
     }
+    // End SupportDependency Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

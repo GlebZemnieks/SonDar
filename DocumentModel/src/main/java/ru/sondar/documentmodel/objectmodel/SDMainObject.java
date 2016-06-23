@@ -3,16 +3,14 @@ package ru.sondar.documentmodel.objectmodel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.InternalFunction;
-import ru.sondar.documentmodel.internalfunction.TriggerType;
-import ru.sondar.documentmodel.objectmodel.exception.NoAttributeException;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.internalfunction.*;
+import ru.sondar.documentmodel.objectmodel.exception.*;
 
 /**
  * Abstract class to association main SDobject's parameters
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public abstract class SDMainObject {
 
@@ -27,10 +25,27 @@ public abstract class SDMainObject {
     protected static String Object_MainTag = "object";
 
     /**
+     * Object ID. The sequentially numbering. Set in the XML parsing.
+     */
+    protected int ID;
+
+    /**
      * Object type to access personal and overloaded methods. Set once when
      * calling child's construction.
      */
     protected SDMainObjectType objectType;
+
+    /**
+     * InternalFunction object. This function make possible to change current or
+     * another object by trigger of this function.
+     */
+    protected InternalFunction function = null;
+
+    /**
+     * Object name. Use for relative calls from another object and to access
+     * from plugin whose answering of this document
+     */
+    protected String objectName = null;
 
     /**
      * Method for access to objectType parameter
@@ -40,12 +55,6 @@ public abstract class SDMainObject {
     public SDMainObjectType getObjectType() {
         return this.objectType;
     }
-
-    /**
-     * InternalFunction object. This function make possible to change current or
-     * another object by trigger of this function.
-     */
-    protected InternalFunction function = null;
 
     /**
      * Method to set InternalFunction for this object. Return current object for
@@ -86,10 +95,31 @@ public abstract class SDMainObject {
     }
 
     /**
-     * Object name. Use for relative calls from another object and to access
-     * from plugin whose answering of this document
+     * Getter for ID field
+     *
+     * @return
      */
-    protected String objectName = null;
+    public int getID() {
+        return ID;
+    }
+
+    /**
+     * Setter for ID field
+     *
+     * @param iD
+     */
+    public void setID(int iD) {
+        ID = iD;
+    }
+
+    /**
+     * Method to access object name. If name is null return null;
+     *
+     * @return
+     */
+    public String getObjectName() {
+        return this.objectName;
+    }
 
     /**
      * Method to set object name. Object name sets only once. Another calls
@@ -107,15 +137,6 @@ public abstract class SDMainObject {
     }
 
     /**
-     * Method to access object name. If name is null return null;
-     *
-     * @return
-     */
-    public String getObjectName() {
-        return this.objectName;
-    }
-
-    /**
      * Method for printXMLString. Return name="%objectName%" if
      * %objectName%!=null or empty string if %objectName% is null;
      *
@@ -126,29 +147,6 @@ public abstract class SDMainObject {
             return " name=\"" + this.objectName + "\"";
         }
         return "";
-    }
-
-    /**
-     * Object ID. The sequentially numbering. Set in the XML parsing.
-     */
-    protected int ID;
-
-    /**
-     * Getter for ID field
-     *
-     * @return
-     */
-    public int getID() {
-        return ID;
-    }
-
-    /**
-     * Setter for ID field
-     *
-     * @param iD
-     */
-    public void setID(int iD) {
-        ID = iD;
     }
 
     /**

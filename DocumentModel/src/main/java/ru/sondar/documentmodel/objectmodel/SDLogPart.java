@@ -10,6 +10,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * Log file list object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDLogPart extends SDMainObject {
 

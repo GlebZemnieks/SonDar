@@ -3,12 +3,13 @@ package ru.sondar.documentmodel.objectmodel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.exception.*;
 
 /**
+ * SDText object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDText extends SDMainObject {
 
@@ -16,6 +17,7 @@ public class SDText extends SDMainObject {
      * Tag for print and parse text filed
      */
     public static String Text_textFieldTag = "text";
+
     /**
      * Text fields
      */

@@ -8,8 +8,10 @@ import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
+ * SDCheckBox object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDCheckBox extends SDMainObject implements SupportDependencyInterface {
 
@@ -26,6 +28,13 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
      * Text field
      */
     private String Text;
+
+    /**
+     * Constructor
+     */
+    public SDCheckBox() {
+        this.objectType = SDMainObjectType.CheckBox;
+    }
 
     /**
      * Getter for text field
@@ -67,13 +76,7 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
         this.checked = newValue;
     }
 
-    /**
-     * Constructor
-     */
-    public SDCheckBox() {
-        this.objectType = SDMainObjectType.CheckBox;
-    }
-
+    // Start SupportDependency Interface
     @Override
     public Object getValue() {
         return String.valueOf(this.checked);
@@ -83,6 +86,7 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
     public void setValue(Object object) {
         this.checked = Boolean.valueOf((String) object);
     }
+    // End SupportDependency Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

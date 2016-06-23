@@ -12,8 +12,9 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * Date object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
-public class SDDate extends SDMainObject implements SupportDependencyInterface{
+public class SDDate extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag to print and parse date field
@@ -24,6 +25,13 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface{
      * Date field
      */
     private Date date;
+
+    /**
+     * Constructor
+     */
+    public SDDate() {
+        this.objectType = SDMainObjectType.Date;
+    }
 
     /**
      * Getter for date field
@@ -50,13 +58,7 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface{
         this.date = new Date();
     }
 
-    /**
-     * Constructor
-     */
-    public SDDate() {
-        this.objectType = SDMainObjectType.Date;
-    }
-
+    // Start SupportDependency Interface
     @Override
     public Object getValue() {
         return this.date.getTime();
@@ -64,8 +66,9 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface{
 
     @Override
     public void setValue(Object object) {
-        this.date = new Date(Long.parseLong((String)object));
+        this.date = new Date(Long.parseLong((String) object));
     }
+    // End SupportDependency Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

@@ -11,6 +11,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * Spinner object
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class SDSpinner extends SDMainObject implements SupportDependencyInterface {
 
@@ -26,6 +27,11 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      * Tag for print and parse ItemSelected filed
      */
     public static String Spinner_defaultItemSelected = "ItemSelected";
+
+    /**
+     * Selected item index field
+     */
+    private int defaultItemSelected;
 
     /**
      * Data list field
@@ -49,11 +55,6 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     public void setList(String[] dataList) {
         this.dataList = dataList;
     }
-
-    /**
-     * Selected item index field
-     */
-    private int defaultItemSelected;
 
     /**
      * Getter for selected item index
