@@ -11,6 +11,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
  * Object for store dependency item and iteration for them
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class DependencyPart implements Iterable<DependencyItem> {
 
@@ -23,6 +24,10 @@ public class DependencyPart implements Iterable<DependencyItem> {
      * Dependency list object
      */
     private ArrayList<DependencyItem> dependencyList = new ArrayList<>();
+
+    public void addDependencyItem(String name, int cellId) {
+        this.dependencyList.add(new DependencyItem(name, cellId));
+    }
 
     /**
      * Method for parse item from XML
@@ -37,10 +42,6 @@ public class DependencyPart implements Iterable<DependencyItem> {
             item.parseItemFromXML((Element) list.item(i));
             this.dependencyList.add(item);
         }
-    }
-
-    public void addDependencyItem(String name, int cellId) {
-        this.dependencyList.add(new DependencyItem(name, cellId));
     }
 
     /**

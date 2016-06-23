@@ -8,7 +8,7 @@ import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
- * Spinner object
+ * SDSpinner object
  *
  * @author GlebZemnieks
  * @since SonDar-1.0
@@ -90,6 +90,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         this.objectType = SDMainObjectType.Spinner;
     }
 
+    // Start SupportDependency Interface
     @Override
     public Object getValue() {
         return this.defaultItemSelected;
@@ -104,6 +105,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
             throw new IllegalArgumentException("Try to set \"" + value + "\" to list with length \"" + this.dataList.length + "\"");
         }
     }
+    // End SupportDependency Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

@@ -8,6 +8,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
+ * SDHeadPart object
  *
  * @author GlebZemnieks
  * @since SonDar-1.0

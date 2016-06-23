@@ -5,6 +5,7 @@ package ru.sondar.documentmodel.dependencymodel;
  * type
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public interface SupportDependencyInterface {
 

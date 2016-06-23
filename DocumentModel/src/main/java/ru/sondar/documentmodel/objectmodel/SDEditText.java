@@ -8,6 +8,7 @@ import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
+ * SDEditText object
  *
  * @author GlebZemnieks
  * @since SonDar-1.0
@@ -76,6 +77,7 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
         return this.textLength;
     }
 
+    // Start SupportDependency Interface
     @Override
     public Object getValue() {
         return this.Text;

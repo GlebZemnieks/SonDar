@@ -8,6 +8,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
  * Object for link between SDMainObject and Cell in DB
  *
  * @author GlebZemnieks
+ * @since SonDar-1.0
  */
 public class DependencyItem {
 
@@ -25,8 +26,9 @@ public class DependencyItem {
      * Cell Id
      */
     public int cellId;
-    
+
     public DependencyItem() {
+        //Empty constructor
     }
 
     public DependencyItem(String objectName, int cellId) {

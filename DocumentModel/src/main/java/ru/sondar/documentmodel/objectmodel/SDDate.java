@@ -9,7 +9,7 @@ import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
- * Date object
+ * SDDate object
  *
  * @author GlebZemnieks
  * @since SonDar-1.0
