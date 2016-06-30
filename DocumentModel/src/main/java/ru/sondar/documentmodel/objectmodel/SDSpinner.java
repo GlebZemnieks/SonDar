@@ -16,15 +16,15 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 public class SDSpinner extends SDMainObject implements SupportDependencyInterface {
 
     /**
-     * Tag for print and parse dataList filed
+     * Tag for print and parse dataList field
      */
     public static String Spinner_DataList = "dataList";
     /**
-     * Tag for print and parse item filed
+     * Tag for print and parse item field
      */
     public static String Spinner_Item = "item";
     /**
-     * Tag for print and parse ItemSelected filed
+     * Tag for print and parse ItemSelected field
      */
     public static String Spinner_defaultItemSelected = "ItemSelected";
 

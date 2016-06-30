@@ -1,0 +1,10 @@
+<WordsBase>
+<dataList name="test2">
+<item>hello</item>
+<item>hello2</item>
+</dataList>
+<dataList name="test">
+<item>hello</item>
+<item>hello3</item>
+</dataList>
+</WordsBase>
