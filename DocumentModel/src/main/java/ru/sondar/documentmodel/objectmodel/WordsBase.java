@@ -11,6 +11,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
  * Words base main class
  *
  * @author GlebZemnieks
+ * @since SonDar-1.1
  */
 public class WordsBase {
 

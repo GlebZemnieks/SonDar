@@ -1,5 +1,7 @@
 package ru.sondar.documentmodel.objectmodel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
@@ -36,23 +38,34 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     /**
      * Data list field
      */
-    private String[] dataList = {"item1", "item2"};
+    private ArrayList<String> dataList;
 
     /**
      * Getter for data list
      *
      * @return
      */
-    public String[] getList() {
+    public ArrayList<String> getList() {
         return dataList;
     }
 
     /**
      * Setter for data list
      *
-     * @param dataList
+     * @param dataList in String sequence format
      */
     public void setList(String[] dataList) {
+        ArrayList<String> temp = new ArrayList<>();
+        temp.addAll(Arrays.asList(dataList));
+        this.dataList = temp;
+    }
+
+    /**
+     * Setter for data list
+     *
+     * @param dataList In ArrayList format
+     */
+    public void setList(ArrayList<String> dataList) {
         this.dataList = dataList;
     }
 
@@ -80,7 +93,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      * @return
      */
     public String getSelectedItem() {
-        return this.dataList[this.defaultItemSelected];
+        return this.dataList.get(this.defaultItemSelected);
     }
 
     /**
@@ -88,6 +101,9 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      */
     public SDSpinner() {
         this.objectType = SDMainObjectType.Spinner;
+        this.dataList = new ArrayList<>();
+        this.dataList.add("item1");
+        this.dataList.add("item2");
     }
 
     // Start SupportDependency Interface
@@ -99,10 +115,10 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     @Override
     public void setValue(Object object) {
         int value = Integer.parseInt((String) object);
-        if (value >= 0 && value < this.dataList.length) {
+        if (value >= 0 && value < this.dataList.size()) {
             this.defaultItemSelected = value;
         } else {
-            throw new IllegalArgumentException("Try to set \"" + value + "\" to list with length \"" + this.dataList.length + "\"");
+            throw new IllegalArgumentException("Try to set \"" + value + "\" to list with length \"" + this.dataList.size() + "\"");
         }
     }
     // End SupportDependency Interface

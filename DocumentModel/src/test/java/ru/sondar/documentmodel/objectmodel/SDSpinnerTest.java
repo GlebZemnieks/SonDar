@@ -5,12 +5,11 @@
  */
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDSpinner;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDSpinner;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -33,9 +32,9 @@ public class SDSpinnerTest {
      */
     @Test
     public void testGetList() {
-        String[] test = spinner.getList();
-        assertEquals("item1", test[0]);
-        assertEquals("item2", test[1]);
+        ArrayList<String> test = spinner.getList();
+        assertEquals("item1", test.get(0));
+        assertEquals("item2", test.get(1));
     }
 
     /**
@@ -43,14 +42,14 @@ public class SDSpinnerTest {
      */
     @Test
     public void testSetList() {
-        String[] test = spinner.getList();
-        assertEquals("item1", test[0]);
-        assertEquals("item2", test[1]);
+        ArrayList<String> test = spinner.getList();
+        assertEquals("item1", test.get(0));
+        assertEquals("item2", test.get(1));
         spinner.setList(new String[]{"item1", "item2", "item3"});
         test = spinner.getList();
-        assertEquals("item1", test[0]);
-        assertEquals("item2", test[1]);
-        assertEquals("item3", test[2]);
+        assertEquals("item1", test.get(0));
+        assertEquals("item2", test.get(1));
+        assertEquals("item3", test.get(2));
     }
 
     /**
@@ -142,7 +141,8 @@ public class SDSpinnerTest {
     /**
      * Test of printCurrentObjectField method, of class SDSpinner.
      *
-     * @throws ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
+     * @throws
+     * ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
@@ -151,9 +151,9 @@ public class SDSpinnerTest {
         fileModule.close();
         SDSpinner spinner2 = new SDSpinner();
         spinner2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
-        assertEquals(spinner.getList().length, spinner2.getList().length);
-        assertEquals(spinner.getList()[0], spinner2.getList()[0]);
-        assertEquals(spinner.getList()[1], spinner2.getList()[1]);
+        assertEquals(spinner.getList().size(), spinner2.getList().size());
+        assertEquals(spinner.getList().get(0), spinner2.getList().get(0));
+        assertEquals(spinner.getList().get(1), spinner2.getList().get(1));
         assertEquals(spinner.getDefaultItemSelected(), spinner2.getDefaultItemSelected());
         assertEquals(spinner.getSelectedItem(), spinner2.getSelectedItem());
 
