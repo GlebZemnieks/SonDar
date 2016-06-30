@@ -111,7 +111,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     public Object getValue() {
         return this.defaultItemSelected;
     }
-
+    
     @Override
     public void setValue(Object object) {
         int value = Integer.parseInt((String) object);
@@ -127,7 +127,13 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(Spinner_DataList);
         if (list.item(0) != null) {
-            this.setList(getStringArray((Element) list.item(0)));
+            if (((Element) list.item(0)).hasAttribute("baseName")) {
+                //Have link to words base
+                this.setList(this.sequence.document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
+            } else {
+                //All words base in current object
+                this.setList(getStringArray((Element) list.item(0)));
+            }
         } else {
             throw new NoFieldException("Missing \"dataList\" field");
         }
@@ -153,7 +159,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         }
         return tempArray;
     }
-
+    
     @Override
     protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Spinner_DataList + ">\n");
@@ -163,5 +169,5 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         fileModule.write("</" + Spinner_DataList + ">\n"
                 + "<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
     }
-
+    
 }

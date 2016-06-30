@@ -3,6 +3,7 @@ package ru.sondar.documentmodel.objectmodel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.internalfunction.*;
 import ru.sondar.documentmodel.objectmodel.exception.*;
 
@@ -28,6 +29,11 @@ public abstract class SDMainObject {
      * Object ID. The sequentially numbering. Set in the XML parsing.
      */
     protected int ID;
+
+    /**
+     * Domain sequence
+     */
+    public SDSequenceObject sequence;
 
     /**
      * Object type to access personal and overloaded methods. Set once when

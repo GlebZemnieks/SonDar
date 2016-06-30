@@ -28,6 +28,12 @@ public class SDSequenceObject extends SDMainObject {
      * Count of objectS in sequence considering nested sequences
      */
     public int sequenceArrayLength = 0;
+
+    /**
+     * Domain document object
+     */
+    public SDDocument document;
+
     /**
      * Sequence of objects
      */
@@ -187,6 +193,7 @@ public class SDSequenceObject extends SDMainObject {
                 Element tempElement = (Element) tempList.item(count);
                 SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
                 SDMainObject tempObject = getObjectByType(newObjectType);
+                tempObject.sequence = this;
                 tempObject.parseObjectFromXML(tempElement);
                 AddXMLObject(tempObject);
             }

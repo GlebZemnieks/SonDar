@@ -4,12 +4,9 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
-import ru.sondar.documentmodel.exception.DocumentAlreadyInitException;
-import ru.sondar.documentmodel.exception.DocumentNotInitException;
+import ru.sondar.documentmodel.exception.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.objectmodel.SDHeadPart;
-import ru.sondar.documentmodel.objectmodel.SDLogPart;
-import ru.sondar.documentmodel.objectmodel.WordsBase;
+import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -165,7 +162,8 @@ public class SDDocument {
      * @throws DocumentAlreadyInitException Throw when some of part document
      * already initializing.
      */
-    public void loadDocument(String fileName) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException {
+    public void loadDocument(String fileName) throws SAXException, IOException,
+            ParserConfigurationException, ObjectStructureException {
         this.loadDocument(new SDDOMParser(fileName));
     }
 
@@ -203,6 +201,7 @@ public class SDDocument {
         wordsBase = new WordsBase();
         parser.getWordsBasePart(wordsBase);
         this.sequence = sequence;
+        this.sequence.document = this;
         parser.getSequence(sequence);
         dependency = new DependencyPart();
         parser.getDependencyPart(dependency);
@@ -222,7 +221,11 @@ public class SDDocument {
         if (this.sequence == null || this.headPart == null
                 || this.logPart == null || this.dependency == null
                 || this.wordsBase == null) {
-            throw new DocumentNotInitException("head : " + this.headPart + " : sequence : " + this.sequence + " : dependency : " + this.dependency + " : log : " + this.logPart + " : wordsBase : " + this.wordsBase + " ;");
+            throw new DocumentNotInitException("head : " + this.headPart
+                    + " : sequence : " + this.sequence
+                    + " : dependency : " + this.dependency
+                    + " : log : " + this.logPart
+                    + " : wordsBase : " + this.wordsBase + " ;");
         }
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
