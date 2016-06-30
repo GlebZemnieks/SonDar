@@ -97,6 +97,18 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     }
 
     /**
+     * Name of words base list
+     */
+    private String wordsBaseName;
+
+    private String getWordsBaseNameAttribute() {
+        if (wordsBaseName != null) {
+            return " baseName=\"wordsBaseName\"";
+        }
+        return "";
+    }
+
+    /**
      * Constructor
      */
     public SDSpinner() {
@@ -111,7 +123,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     public Object getValue() {
         return this.defaultItemSelected;
     }
-    
+
     @Override
     public void setValue(Object object) {
         int value = Integer.parseInt((String) object);
@@ -159,15 +171,17 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         }
         return tempArray;
     }
-    
+
     @Override
     protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Spinner_DataList + ">\n");
-        for (String data : this.dataList) {
-            fileModule.write("<" + Spinner_Item + ">" + data + "</" + Spinner_Item + ">\n");
+        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + ">\n");
+        if (wordsBaseName == null) {
+            for (String data : this.dataList) {
+                fileModule.write("<" + Spinner_Item + ">" + data + "</" + Spinner_Item + ">\n");
+            }
         }
         fileModule.write("</" + Spinner_DataList + ">\n"
                 + "<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
     }
-    
+
 }

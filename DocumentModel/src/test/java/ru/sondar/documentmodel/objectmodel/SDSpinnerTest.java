@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.documentmodel.SDDocument;
+import ru.sondar.documentmodel.SDSequenceObject;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -136,6 +138,29 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField3() throws Exception {
         this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
+    }
+    
+    /**
+     * 3 Test of parseCurrentObjectField method, of class SDSpinner.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testParseWordsBase() throws Exception {
+        SDDocument document = new SDDocument();
+        WordsBase base = new WordsBase();
+        ArrayList<String> list = new ArrayList<>();
+        list.add("test1");
+        list.add("test2");
+        base.addNewBase("test", list);
+        document.setWordsBasePart(base);
+        SDSequenceObject sequence = new SDSequenceObject();
+        spinner.sequence = sequence;
+        sequence.document = document;
+        this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
+        assertEquals(spinner.getList().size(), list.size());
+        assertEquals(spinner.getList().get(0), list.get(0));
+        assertEquals(spinner.getList().get(1), list.get(1));
     }
 
     /**
