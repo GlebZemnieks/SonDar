@@ -1,13 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel;
 
-import ru.sondar.documentmodel.SDSequenceObject;
-import ru.sondar.documentmodel.SDDocument;
-import com.sun.jndi.toolkit.ctx.HeadTail;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,6 +8,7 @@ import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.objectmodel.WordsBase;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -38,6 +31,7 @@ public class SDDocumentTest {
         dependency.addDependencyItem("test2", 1);
         document.setDependencyPart(dependency);
         document.setLogPart(new SDLogPart());
+        document.wordsBase = new WordsBase();
     }
 
     /**

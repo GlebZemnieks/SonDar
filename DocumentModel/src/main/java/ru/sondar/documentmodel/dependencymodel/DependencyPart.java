@@ -18,7 +18,7 @@ public class DependencyPart implements Iterable<DependencyItem> {
     /**
      * Tag for print and parse object
      */
-    private final String xmlTag = "DependencyPart";
+    public static String Dependency_MainTag = "DependencyPart";
 
     /**
      * Dependency list object
@@ -50,11 +50,11 @@ public class DependencyPart implements Iterable<DependencyItem> {
      * @param fileModule
      */
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + xmlTag + ">\n");
+        fileModule.write("<" + Dependency_MainTag + ">\n");
         for (int i = 0; i < this.dependencyList.size(); i++) {
             this.dependencyList.get(i).printObjectToXML(fileModule);
         }
-        fileModule.write("</" + xmlTag + ">\n");
+        fileModule.write("</" + Dependency_MainTag + ">\n");
     }
 
     @Override

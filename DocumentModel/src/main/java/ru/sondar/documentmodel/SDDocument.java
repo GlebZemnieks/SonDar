@@ -9,6 +9,7 @@ import ru.sondar.documentmodel.exception.DocumentNotInitException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.objectmodel.WordsBase;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -35,6 +36,10 @@ public class SDDocument {
      * Dependency object of this document
      */
     protected DependencyPart dependency;
+    /**
+     * WordsBase object of this document
+     */
+    protected WordsBase wordsBase;
 
     /**
      * Getter for sequence object
@@ -79,7 +84,6 @@ public class SDDocument {
      * Getter for head object
      *
      * @return head object of current document
-     * @throws DocumentAlreadyInitException
      */
     public SDHeadPart getHeadPart() {
         return this.headPart;
@@ -103,7 +107,7 @@ public class SDDocument {
     /**
      * Setter for dependency object. Throw
      * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
-     * (RunTime) if log already exist
+     * (RunTime) if dependency already exist
      *
      * @param dependency
      * @throws DocumentAlreadyInitException
@@ -123,6 +127,31 @@ public class SDDocument {
      */
     public DependencyPart getDependencyPart() {
         return this.dependency;
+    }
+
+    /**
+     * Getter for words base part object. If words base is null - return
+     * <code>null</code>
+     *
+     * @return words base object of current document
+     */
+    public WordsBase getWordsBasePart() {
+        return this.wordsBase;
+    }
+
+    /**
+     * Setter for words base object. Throw
+     * {@link ru.sondar.documentmodel.exception.DocumentAlreadyInitException}
+     * (RunTime) if words base already exist
+     *
+     * @param wordsBase
+     * @throws DocumentAlreadyInitException
+     */
+    public void setWordsBasePart(WordsBase wordsBase) {
+        if (this.wordsBase != null) {
+            throw new DocumentAlreadyInitException("Trying to reinitialize document part \"wordsBase\". Denied!");
+        }
+        this.wordsBase = wordsBase;
     }
 
     /**
@@ -164,11 +193,15 @@ public class SDDocument {
      * already initializing.
      */
     public void loadDocument(SDDOMParser parser, SDSequenceObject sequence) throws ObjectStructureException {
-        if (this.sequence != null || this.headPart != null || this.logPart != null || this.dependency != null) {
+        if (this.sequence != null || this.headPart != null
+                || this.logPart != null || this.dependency != null
+                || this.wordsBase != null) {
             throw new DocumentAlreadyInitException("Trying to reload document. Denied!");
         }
         headPart = new SDHeadPart();
         parser.getHeadPart(headPart);
+        wordsBase = new WordsBase();
+        parser.getWordsBasePart(wordsBase);
         this.sequence = sequence;
         parser.getSequence(sequence);
         dependency = new DependencyPart();
@@ -186,11 +219,14 @@ public class SDDocument {
      * @param fileModule
      */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
-        if (this.sequence == null || this.headPart == null || this.logPart == null || this.dependency == null) {
-            throw new DocumentNotInitException("head : " + this.headPart + " : sequence : " + this.sequence + " : dependency : " + this.dependency + " : log : " + this.logPart + " ;");
+        if (this.sequence == null || this.headPart == null
+                || this.logPart == null || this.dependency == null
+                || this.wordsBase == null) {
+            throw new DocumentNotInitException("head : " + this.headPart + " : sequence : " + this.sequence + " : dependency : " + this.dependency + " : log : " + this.logPart + " : wordsBase : " + this.wordsBase + " ;");
         }
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
+        this.wordsBase.printObjectToXML(fileModule);
         this.sequence.printSequence(fileModule);
         this.dependency.printObjectToXML(fileModule);
         this.logPart.printObjectToXML(fileModule);

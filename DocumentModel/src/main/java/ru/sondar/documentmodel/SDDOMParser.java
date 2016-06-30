@@ -9,6 +9,7 @@ import ru.sondar.core.DOMParser;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.objectmodel.WordsBase;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -31,7 +32,7 @@ public class SDDOMParser extends DOMParser {
      * @throws ObjectStructureException
      */
     public void getSequence(SDSequenceObject xmlSequence) throws ObjectStructureException {
-        NodeList nList = document.getElementsByTagName("XMLSequence");
+        NodeList nList = document.getElementsByTagName(SDSequenceObject.Sequence_MainTag);
         Element sequence = ((Element) nList.item(0));
         xmlSequence.parseSequence(sequence);
     }
@@ -43,9 +44,21 @@ public class SDDOMParser extends DOMParser {
      * @throws ObjectStructureException
      */
     public void getHeadPart(SDHeadPart headPart) throws ObjectStructureException {
-        NodeList nList = document.getElementsByTagName("head");
+        NodeList nList = document.getElementsByTagName(SDHeadPart.Tag_MainObject);
         Element head = ((Element) nList.item(0));
         headPart.parseObjectFromXML(head);
+    }
+
+    /**
+     * Get words base part of document
+     *
+     * @param wordsBase get words base part from document by "%fileName%"
+     * @throws ObjectStructureException
+     */
+    public void getWordsBasePart(WordsBase wordsBase) throws ObjectStructureException {
+        NodeList nList = document.getElementsByTagName(WordsBase.Tag_MainObject);
+        Element head = ((Element) nList.item(0));
+        wordsBase.parseObjectFromXML(head);
     }
 
     /**
@@ -55,7 +68,7 @@ public class SDDOMParser extends DOMParser {
      * @throws ObjectStructureException
      */
     public void getLogPart(SDLogPart logPart) throws ObjectStructureException {
-        NodeList nList = document.getElementsByTagName("Log");
+        NodeList nList = document.getElementsByTagName(SDLogPart.Log_MainTag);
         Element log = ((Element) nList.item(0));
         logPart.parseObjectFromXML(log);
     }
@@ -67,7 +80,7 @@ public class SDDOMParser extends DOMParser {
      * @throws ObjectStructureException
      */
     public void getDependencyPart(DependencyPart dependencyPart) throws ObjectStructureException {
-        NodeList nList = document.getElementsByTagName("DependencyPart");
+        NodeList nList = document.getElementsByTagName(DependencyPart.Dependency_MainTag);
         Element log = ((Element) nList.item(0));
         dependencyPart.parseItemFromXML(log);
     }

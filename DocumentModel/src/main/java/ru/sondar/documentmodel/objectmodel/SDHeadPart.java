@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -16,6 +17,11 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 public class SDHeadPart extends SDMainObject {
 
     /**
+     * Tag for print and parse dataList field
+     */
+    public static String Tag_MainObject = "head";
+
+    /**
      * UUID for document. Set position in DataBase. Set
      * 00000000-0000-0000-0000-000000000000 if document new and have not
      * protection in DataBase.
@@ -23,7 +29,7 @@ public class SDHeadPart extends SDMainObject {
     private UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     /**
-     * Plugin UUID. Used in DocumentManager for plugin indentefication.
+     * Plug-in UUID. Used in DocumentManager for plug-in identification.
      */
     private UUID plugin = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
@@ -35,7 +41,7 @@ public class SDHeadPart extends SDMainObject {
 
     /**
      * Time and Date of document last modification. Use it, if you have two
-     * document with equal time creation but wrong context, to choise last
+     * document with equal time creation but wrong context, to choice last
      * document version.
      */
     private Date lastModificationTime = new Date();
@@ -59,7 +65,7 @@ public class SDHeadPart extends SDMainObject {
     }
 
     /**
-     * Getter for plugin UUID
+     * Getter for plug-in UUID
      *
      * @return
      */
@@ -68,7 +74,7 @@ public class SDHeadPart extends SDMainObject {
     }
 
     /**
-     * Setter for plugin UUID
+     * Setter for plug-in UUID
      *
      * @param pluginName
      */
@@ -123,12 +129,14 @@ public class SDHeadPart extends SDMainObject {
         if (list.item(0) != null) {
             this.setUUID(UUID.fromString(list.item(0).getTextContent()));
         } else {
+            Config.Log("parser", "Missing \"documentUUID\" field in head object. Set default value \"00000000-0000-...\"");
             this.setUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         }
         list = element.getElementsByTagName("pluginUUID");
         if (list.item(0) != null) {
             this.setPluginUUID(UUID.fromString(list.item(0).getTextContent()));
         } else {
+            Config.Log("parser", "Missing \"pluginUUID\" field in head object. Set default value \"00000000-0000-...\"");
             this.setPluginUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         }
         list = element.getElementsByTagName("creationTime");
@@ -136,12 +144,14 @@ public class SDHeadPart extends SDMainObject {
             this.setCreationTime(new Date(Long.parseLong(list.item(0).getTextContent())));
 
         } else {
+            Config.Log("parser", "Missing \"creationTime\" field in head object. Set current date.");
             this.setCreationTime(new Date());
         }
         list = element.getElementsByTagName("lastModificationTime");
         if (list.item(0) != null) {
             this.setLastModificationTime(new Date(Long.parseLong(list.item(0).getTextContent())));
         } else {
+            Config.Log("parser", "Missing \"lastModificationTime\" field in head object. Set current date.");
             this.setLastModificationTime(new Date());
         }
     }
@@ -153,12 +163,12 @@ public class SDHeadPart extends SDMainObject {
 
     @Override
     protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<head>\n"
+        fileModule.write("<" + Tag_MainObject + ">\n"
                 + "<documentUUID>" + this.uuid.toString() + "</documentUUID>\n"
                 + "<pluginUUID>" + this.plugin.toString() + "</pluginUUID>\n"
                 + "<creationTime>" + this.creationTime.getTime() + "</creationTime>\n"
                 + "<lastModificationTime>" + this.lastModificationTime.getTime() + "</lastModificationTime>\n"
-                + "</head>\n");
+                + "</" + Tag_MainObject + ">\n");
     }
 
 }

@@ -17,7 +17,7 @@ public class SDLogPart extends SDMainObject {
     /**
      * Main tag to writing log object
      */
-    public String Log_MainTag = "Log";
+    public static String Log_MainTag = "Log";
 
     /**
      * log file list field

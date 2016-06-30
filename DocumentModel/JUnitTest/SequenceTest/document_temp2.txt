@@ -5,6 +5,8 @@
 <creationTime>1465588035197</creationTime>
 <lastModificationTime>1465588035197</lastModificationTime>
 </head>
+<WordsBase>
+</WordsBase>
 <XMLSequence>
 <object type="Text" id="0">
 <text>hello</text>

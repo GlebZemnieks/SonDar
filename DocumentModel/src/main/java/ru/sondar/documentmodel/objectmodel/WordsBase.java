@@ -42,10 +42,12 @@ public class WordsBase {
     }
 
     /**
-     * Getter for strings list field
+     * Getter for strings list field. If base with <code>key</code> not exist
+     * throw RunTimeException
      *
-     * @param key
+     * @param key Name of words base
      * @return
+     * @throws RuntimeException
      */
     public ArrayList<String> getList(String key) {
         if (wordsBase.containsKey(key)) {
@@ -56,10 +58,12 @@ public class WordsBase {
     }
 
     /**
-     * Add new words base to object
+     * Add new words base to object. If base with <code>name</code> already
+     * exist in list throw RunTimeException
      *
      * @param name
      * @param base
+     * @throws RuntimeException
      */
     public void addNewBase(String name, ArrayList<String> base) {
         if (!wordsBase.containsKey(name)) {
