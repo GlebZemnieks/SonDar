@@ -1,7 +1,0 @@
-<object type="Spinner" id="0">
-<dataList>
-<item>item1</item>
-<item>item2</item>
-</dataList>
-<ItemSelected>1</ItemSelected>
-</object>

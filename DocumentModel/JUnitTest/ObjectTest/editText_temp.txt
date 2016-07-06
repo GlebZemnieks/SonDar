@@ -1,4 +1,0 @@
-<object type="EditText" id="12">
-<textEdit>test</textEdit>
-<textLength>20</textLength>
-</object>

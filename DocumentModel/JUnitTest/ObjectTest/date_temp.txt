@@ -1,3 +1,0 @@
-<object type="Date" id="11">
-<date>1467320964228</date>
-</object>

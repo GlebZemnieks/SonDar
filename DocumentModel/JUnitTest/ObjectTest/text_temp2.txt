@@ -1,3 +1,0 @@
-<object type="Text" id="14">
-<text>test</text>
-</object>

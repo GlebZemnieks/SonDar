@@ -1,5 +1,0 @@
-<Log>
-<log>test</log>
-<log>test2</log>
-<log>test3</log>
-</Log>

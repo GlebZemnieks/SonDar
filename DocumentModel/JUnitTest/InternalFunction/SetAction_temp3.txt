@@ -1,1 +1,0 @@
-<Action actionType="setAction" name="test" targetId="test" value="Xoxoxo"></Action>
