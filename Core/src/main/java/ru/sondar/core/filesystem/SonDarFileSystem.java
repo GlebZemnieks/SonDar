@@ -1,6 +1,6 @@
 package ru.sondar.core.filesystem;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.UUID;
 import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.*;
@@ -30,13 +30,14 @@ public class SonDarFileSystem {
      */
     public SonDarFileSystem(String folderName) {
         this.globalFolder = folderName;
+        this.folderList = new ArrayList<>();
         Config.Log(logTag, "FileSystem create. Add folder and call method init");
     }
 
     /**
      * Folder list
      */
-    private SonDarFolder[] folderList;
+    private ArrayList<SonDarFolder> folderList;
 
     /**
      * Add new folder in file system
@@ -46,21 +47,8 @@ public class SonDarFileSystem {
     public void addFolder(String folderName) {
         Config.Log(logTag, "add '" + folderName + "' folder to fileSystem '" + this.globalFolder + "';");
         SonDarFolder folder = new SonDarFolder(globalFolder, folderName);
-        SonDarFolder[] temp;
-        if (this.folderList == null) {
-            temp = new SonDarFolder[1];
-            temp[0] = folder;
-            folder.isInSystem = true;
-            this.folderList = temp;
-            Config.Log(logTag, "folder add successful");
-            return;
-        }
-        temp = new SonDarFolder[this.folderList.length + 1];
-        System.arraycopy(this.folderList, 0, temp, 0, this.folderList.length);
-        folder.setGlobalFolder(this.globalFolder);
+        folderList.add(folder);
         folder.isInSystem = true;
-        temp[this.folderList.length] = folder;
-        this.folderList = temp;
         Config.Log(logTag, "folder add successful");
     }
 
@@ -71,11 +59,11 @@ public class SonDarFileSystem {
      * @return
      */
     public SonDarFolder getFolderByName(String folderName) {
-        if (this.folderList == null) {
+        if (this.folderList.isEmpty()) {
             Config.Log(logTag, "This FileSystem empty");
             throw new FolderNotFoundException();
         }
-        Config.Log(logTag, "Get folder " + folderName + " from list : " + Arrays.toString(this.folderList));
+        Config.Log(logTag, "Get folder " + folderName + " from list : " + this.folderList.toString());
         for (SonDarFolder folderList1 : this.folderList) {
             if (folderName == null ? folderList1.getFolderName() == null : folderList1.getFolderName().equals(folderName)) {
                 return folderList1;
@@ -91,7 +79,7 @@ public class SonDarFileSystem {
      * @param fileModule
      */
     public void init(FileModuleInterface fileModule) {
-        Config.Log(logTag, "Init file system '" + this.globalFolder + "' with folder list : " + Arrays.toString(this.folderList));
+        Config.Log(logTag, "Init file system '" + this.globalFolder + "' with folder list : " + this.folderList.toString());
         for (SonDarFolder folderList1 : this.folderList) {
             try {
                 folderList1.init(fileModule);
@@ -113,8 +101,7 @@ public class SonDarFileSystem {
     public FileModuleWriteThreadInterface addFile(FileModuleInterface fileModule, String folderName, String fileName) {
         Config.Log(logTag, "Add file '" + fileName + "'to folder '" + folderName + "'");
         SonDarFolder temp = this.getFolderByName(folderName);
-        FileModuleWriteThreadInterface tempThread = temp.addFile(fileModule, fileName);
-        return tempThread;
+        return temp.addFile(fileModule, fileName);
     }
 
     /**
