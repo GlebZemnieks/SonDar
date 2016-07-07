@@ -117,7 +117,7 @@ public class SDDocument {
     }
 
     /**
-     * Getter for dependency part object. If head is null - return
+     * Getter for dependency part object. If dependency is null - return
      * <code>null</code>
      *
      * @return dependency object of current document

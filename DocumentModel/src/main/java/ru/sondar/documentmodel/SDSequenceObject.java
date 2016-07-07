@@ -1,10 +1,12 @@
 package ru.sondar.documentmodel;
 
 import java.util.ArrayList;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.internalfunction.exception.ObjectNotFountException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -68,13 +70,14 @@ public class SDSequenceObject extends SDMainObject {
                 return temp;
             }
             if (temp.getObjectType() == SDMainObjectType.DivContainer) {
-                SDMainObject temp2 = ((SDSequenceObject) temp).getXMLObjectByName(name);
-                if (temp2 != null) {
-                    return temp2;
+                try {
+                    return ((SDSequenceObject) temp).getXMLObjectByName(name);
+                } catch (ObjectNotFountException error) {
+                    //Do nothing and go to next iteration
                 }
             }
         }
-        return null;
+        throw new ObjectNotFountException("Object with name \"" + name + "\" not found in sequence");
     }
 
     /**
@@ -192,7 +195,7 @@ public class SDSequenceObject extends SDMainObject {
             if (tempList.item(count).getNodeName().equals("object")) {
                 Element tempElement = (Element) tempList.item(count);
                 SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
-                SDMainObject tempObject = getObjectByType(newObjectType);
+                SDMainObject tempObject = newObjectType.getObjectByType();
                 tempObject.sequence = this;
                 tempObject.parseObjectFromXML(tempElement);
                 AddXMLObject(tempObject);
@@ -225,33 +228,4 @@ public class SDSequenceObject extends SDMainObject {
             this.getXMLObject(count + this.ID + 1).printObjectToXML(fileModule);
         }
     }
-
-    /**
-     * Return object by type.
-     *
-     * @param type {@link ru.sondar.documentmodel.objectmodel.SDMainObjectType}
-     * by object which should be returned
-     * @return
-     */
-    public SDMainObject getObjectByType(SDMainObjectType type) {
-        switch (type) {
-            case Text:
-                return new SDText();
-            case Spinner:
-                return new SDSpinner();
-            case CheckBox:
-                return new SDCheckBox();
-            case EndLn:
-                return new SDEndln();
-            case Date:
-                return new SDDate();
-            case EditText:
-                return new SDEditText();
-            case DivContainer:
-                return new SDSequenceObject();
-            default:
-                return null;
-        }
-    }
-
 }

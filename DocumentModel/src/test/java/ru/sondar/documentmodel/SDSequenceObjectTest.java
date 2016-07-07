@@ -135,13 +135,13 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testGetObjectByType() {
-        assertEquals(SDCheckBox.class, sequence.getObjectByType(SDMainObjectType.CheckBox).getClass());
-        assertEquals(SDDate.class, sequence.getObjectByType(SDMainObjectType.Date).getClass());
-        assertEquals(SDSequenceObject.class, sequence.getObjectByType(SDMainObjectType.DivContainer).getClass());
-        assertEquals(SDEditText.class, sequence.getObjectByType(SDMainObjectType.EditText).getClass());
-        assertEquals(SDEndln.class, sequence.getObjectByType(SDMainObjectType.EndLn).getClass());
-        assertEquals(SDSpinner.class, sequence.getObjectByType(SDMainObjectType.Spinner).getClass());
-        assertEquals(SDText.class, sequence.getObjectByType(SDMainObjectType.Text).getClass());
+        assertEquals(SDCheckBox.class, SDMainObjectType.CheckBox.getObjectByType().getClass());
+        assertEquals(SDDate.class, SDMainObjectType.Date.getObjectByType().getClass());
+        assertEquals(SDSequenceObject.class, SDMainObjectType.DivContainer.getObjectByType().getClass());
+        assertEquals(SDEditText.class, SDMainObjectType.EditText.getObjectByType().getClass());
+        assertEquals(SDEndln.class, SDMainObjectType.EndLn.getObjectByType().getClass());
+        assertEquals(SDSpinner.class, SDMainObjectType.Spinner.getObjectByType().getClass());
+        assertEquals(SDText.class, SDMainObjectType.Text.getObjectByType().getClass());
     }
 
 }

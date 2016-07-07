@@ -1,5 +1,7 @@
 package ru.sondar.documentmodel.objectmodel;
 
+import ru.sondar.documentmodel.SDSequenceObject;
+
 /**
  * Description of possible types of objects
  *
@@ -39,4 +41,30 @@ public enum SDMainObjectType {
      * Just text filed. Without activity
      */
     Text;
+
+    /**
+     * Return object by type.
+     *
+     * @return
+     */
+    public SDMainObject getObjectByType() {
+        switch (this) {
+            case Text:
+                return new SDText();
+            case Spinner:
+                return new SDSpinner();
+            case CheckBox:
+                return new SDCheckBox();
+            case EndLn:
+                return new SDEndln();
+            case Date:
+                return new SDDate();
+            case EditText:
+                return new SDEditText();
+            case DivContainer:
+                return new SDSequenceObject();
+            default:
+                throw new UnsupportedOperationException("Object with type \"" + this.toString() + "\" not supported");
+        }
+    }
 }
