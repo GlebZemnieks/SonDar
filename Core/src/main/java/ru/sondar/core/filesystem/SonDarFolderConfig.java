@@ -47,14 +47,13 @@ public class SonDarFolderConfig {
     /**
      * Constructor
      *
-     * @param fileModule
      * @param globalFolder
      * @param folderName
      * @throws ConfigFileFormatException
      */
-    public SonDarFolderConfig(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
+    public SonDarFolderConfig(String globalFolder, String folderName) throws ConfigFileFormatException {
         this.configFileList = new ArrayList<>();
-        this.getConfigList(fileModule, globalFolder, folderName);
+        this.getConfigList(globalFolder, folderName);
     }
 
     /**
@@ -70,7 +69,7 @@ public class SonDarFolderConfig {
      * Reset file list
      */
     public void resetFileList() {
-        this.configFileList = null;
+        this.configFileList = new ArrayList<>();
     }
 
     /**
@@ -82,7 +81,7 @@ public class SonDarFolderConfig {
      * @param folderName
      * @throws ConfigFileFormatException
      */
-    private void getConfigList(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
+    private void getConfigList(String globalFolder, String folderName) throws ConfigFileFormatException {
         DOMParser parser;
         try {
             parser = new DOMParser(globalFolder + "/" + folderName + "/" + configFileName);

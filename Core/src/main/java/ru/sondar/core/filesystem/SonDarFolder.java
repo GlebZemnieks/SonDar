@@ -132,7 +132,7 @@ public class SonDarFolder {
         //check config file
         Config.Log(logTag, "check config file in folder '" + folderName + "'");
         try {
-            config = new SonDarFolderConfig(fileModule, globalFolder, folderName);
+            config = new SonDarFolderConfig(globalFolder, folderName);
         } catch (SonDarFileNotFoundException error) {
             Config.Log(logTag, "Config file in " + folderName + " folder not exist");
             SomeTroubleWithFolderException next = new FirstFolderUseException();
@@ -150,12 +150,12 @@ public class SonDarFolder {
         Config.Log(logTag, "check file consist in folder '" + folderName + "';");
         boolean allRight = true;
         MissFileInFolderException missFileError = new MissFileInFolderException();
-        for (int count = 0; (config.configFileList != null) && (count < config.configFileList.size()); count++) {
-            Config.Log(logTag, "check file : " + config.configFileList.get(count));
+        for (String fileName : config.configFileList) {
+            Config.Log(logTag, "check file : " + fileName);
             try {
-                FileModuleReadThreadInterface readThread = fileModule.getReadThread(globalFolder + "/" + folderName + "/" + config.configFileList.get(count));
+                fileModule.getReadThread(globalFolder + "/" + folderName + "/" + fileName);
             } catch (SonDarFileNotFoundException error) {
-                Config.Log(logTag, "trouble with file " + config.configFileList.get(count));
+                Config.Log(logTag, "trouble with file " + fileName);
                 allRight = false;
                 missFileError.addSuppressed(error);
             }
@@ -197,16 +197,7 @@ public class SonDarFolder {
             Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
-        if (this.config.configFileList == null) {
-            throw new FileNotFoundInFolderException();
-        }
-        boolean isInFolder = false;
-        for (String temp : this.config.configFileList) {
-            if (temp.equals(fileName)) {
-                isInFolder = true;
-            }
-        }
-        if (!isInFolder) {
+        if (!this.config.configFileList.contains(fileName)) {
             throw new FileNotFoundInFolderException();
         }
         FileModuleReadThreadInterface temp = fileModule.getReadThread(getGlobalFileName(fileName));
