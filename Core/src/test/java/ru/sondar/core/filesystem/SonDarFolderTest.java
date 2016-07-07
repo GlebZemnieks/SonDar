@@ -49,7 +49,7 @@ public class SonDarFolderTest extends TestCase {
         try {
             instance.init(fileModule);
             assertEquals(instance.getState(), SonDarFolderState.ReduildPending);
-        } catch (FirstFolderUseException error) {
+        } catch (SomeTroubleWithFolderException error) {
             return;
         }
         fail("No Ecxeption");
@@ -69,9 +69,9 @@ public class SonDarFolderTest extends TestCase {
         instance.init(fileModule);
         assertEquals(SonDarFolderState.None, instance.getState());
         String[] ex = {"test.txt"};
-        assertEquals(ex.length, instance.config.configFileList.length);
-        for (int i = 0; i < instance.config.configFileList.length; i++) {
-            assertEquals(ex[i], instance.config.configFileList[i]);
+        assertEquals(ex.length, instance.config.configFileList.size());
+        for (int i = 0; i < instance.config.configFileList.size(); i++) {
+            assertEquals(ex[i], instance.config.configFileList.get(i));
         }
     }
 
@@ -137,11 +137,11 @@ public class SonDarFolderTest extends TestCase {
         SonDarFolder instance2 = new SonDarFolder(TESTDATAFOLDER, "TestFolder5");
         instance2.isInSystem = true;
         instance2.init(fileModule);
-        assertEquals(instance2.config.configFileList.length, 2);
+        assertEquals(instance2.config.configFileList.size(), 2);
         String[] ex = {"test.txt", "test2.txt"};
-        assertEquals(ex.length, instance2.config.configFileList.length);
-        for (int count = 0; count < instance2.config.configFileList.length; count++) {
-            assertEquals(ex[count], instance2.config.configFileList[count]);
+        assertEquals(ex.length, instance2.config.configFileList.size());
+        for (int count = 0; count < instance2.config.configFileList.size(); count++) {
+            assertEquals(ex[count], instance2.config.configFileList.get(count));
         }
     }
 }

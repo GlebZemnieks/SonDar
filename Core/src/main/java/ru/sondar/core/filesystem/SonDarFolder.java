@@ -1,6 +1,6 @@
 package ru.sondar.core.filesystem;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filemodule.exception.*;
@@ -85,7 +85,7 @@ public class SonDarFolder {
      *
      * @return
      */
-    public String[] getFileList() {
+    public ArrayList<String> getFileList() {
         if (this.isInit != SonDarFolderState.None) {
             Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
@@ -111,7 +111,7 @@ public class SonDarFolder {
             }
         }
         if (!isInFolder) {
-            Config.Log(logTag, "File '" + fileName + "' not found in folder. FileList : " + Arrays.toString(this.config.configFileList));
+            Config.Log(logTag, "File '" + fileName + "' not found in folder. FileList : " + this.config.configFileList.toString());
             throw new FileNotFoundInFolderException();
         }
         return this.globalFolder + "/" + this.folderName + "/" + fileName;
@@ -150,12 +150,12 @@ public class SonDarFolder {
         Config.Log(logTag, "check file consist in folder '" + folderName + "';");
         boolean allRight = true;
         MissFileInFolderException missFileError = new MissFileInFolderException();
-        for (int count = 0; (config.configFileList != null) && (count < config.configFileList.length); count++) {
-            Config.Log(logTag, "check file : " + config.configFileList[count]);
+        for (int count = 0; (config.configFileList != null) && (count < config.configFileList.size()); count++) {
+            Config.Log(logTag, "check file : " + config.configFileList.get(count));
             try {
-                FileModuleReadThreadInterface readThread = fileModule.getReadThread(globalFolder + "/" + folderName + "/" + config.configFileList[count]);
+                FileModuleReadThreadInterface readThread = fileModule.getReadThread(globalFolder + "/" + folderName + "/" + config.configFileList.get(count));
             } catch (SonDarFileNotFoundException error) {
-                Config.Log(logTag, "trouble with file " + config.configFileList[count]);
+                Config.Log(logTag, "trouble with file " + config.configFileList.get(count));
                 allRight = false;
                 missFileError.addSuppressed(error);
             }
@@ -245,7 +245,8 @@ public class SonDarFolder {
     }
 
     /**
-     * Delete File. Delete file from folder object, configuration file and disk space.
+     * Delete File. Delete file from folder object, configuration file and disk
+     * space.
      *
      * @param fileModule
      * @param fileName

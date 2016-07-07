@@ -181,17 +181,4 @@ public class SonDarFileSystem {
     public UUID getUUID() {
         return UUID.randomUUID();
     }
-
-    public static String getTagContent(String Is, String tag) {
-        int start = (Is.indexOf("<" + tag + ">") + ("<" + tag + ">").length());
-        int end = Is.indexOf("</" + tag + ">");
-        // TODO Need Exception
-        if (start == -1 || end == -1) {
-            return null;
-        }
-        char temp[] = new char[end - start];
-        Is.getChars(start, end, temp, 0);
-        String tempR = new String(temp, 0, temp.length);
-        return tempR;
-    }
 }

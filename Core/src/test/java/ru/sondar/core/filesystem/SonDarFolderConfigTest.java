@@ -1,5 +1,6 @@
 package ru.sondar.core.filesystem;
 
+import java.util.ArrayList;
 import junit.framework.TestCase;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filemodule.pc.*;
@@ -31,7 +32,7 @@ public class SonDarFolderConfigTest extends TestCase {
      */
     public void testConfigList1() throws ConfigFileFormatException {
         SonDarFolderConfig config = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder1");
-        String[] ex = null;
+        ArrayList<String> ex = new ArrayList();
         assertEquals(ex, config.configFileList);
     }
 
@@ -46,7 +47,7 @@ public class SonDarFolderConfigTest extends TestCase {
         System.out.println("setLogger");
         try {
             SonDarFolderConfig config = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder2");
-        } catch (SonDarFileNotFoundException error) {
+        } catch (ConfigFileFormatException error) {
             return;
         }
         fail("No exception");
@@ -62,9 +63,9 @@ public class SonDarFolderConfigTest extends TestCase {
     public void testConfigList3() throws ConfigFileFormatException {
         SonDarFolderConfig config = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder3");
         String[] ex = {"test.txt"};
-        assertEquals(ex.length, config.configFileList.length);
-        for (int i = 0; i < config.configFileList.length; i++) {
-            assertEquals(ex[i], config.configFileList[i]);
+        assertEquals(ex.length, config.configFileList.size());
+        for (int i = 0; i < config.configFileList.size(); i++) {
+            assertEquals(ex[i], config.configFileList.get(i));
         }
     }
 
@@ -98,9 +99,9 @@ public class SonDarFolderConfigTest extends TestCase {
         config.update(fileModule, TESTDATAFOLDER, "TestFolder3");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder3");
         String[] ex = {"test.txt"};
-        assertEquals(ex.length, config2.configFileList.length);
-        for (int i = 0; i < config2.configFileList.length; i++) {
-            assertEquals(ex[i], config2.configFileList[i]);
+        assertEquals(ex.length, config2.configFileList.size());
+        for (int i = 0; i < config2.configFileList.size(); i++) {
+            assertEquals(ex[i], config2.configFileList.get(i));
         }
     }
 
@@ -117,7 +118,7 @@ public class SonDarFolderConfigTest extends TestCase {
         SonDarFolderConfig config = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder1");
         config.update(fileModule, TESTDATAFOLDER, "TestFolder1");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder1");
-        assertEquals(null, config2.configFileList);
+        assertEquals(new ArrayList(), config2.configFileList);
     }
 
     /**
@@ -136,9 +137,9 @@ public class SonDarFolderConfigTest extends TestCase {
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder5", "test2.txt");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder5");
         String[] ex = {"test.txt", "test2.txt"};
-        assertEquals(ex.length, config2.configFileList.length);
-        for (int i = 0; i < config2.configFileList.length; i++) {
-            assertEquals(ex[i], config2.configFileList[i]);
+        assertEquals(ex.length, config2.configFileList.size());
+        for (int i = 0; i < config2.configFileList.size(); i++) {
+            assertEquals(ex[i], config2.configFileList.get(i));
         }
     }
 
@@ -162,9 +163,9 @@ public class SonDarFolderConfigTest extends TestCase {
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder5", "test2.txt");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder5");
         String[] ex = {"test.txt", "test2.txt"};
-        assertEquals(ex.length, config2.configFileList.length);
-        for (int i = 0; i < config2.configFileList.length; i++) {
-            assertEquals(ex[i], config2.configFileList[i]);
+        assertEquals(ex.length, config2.configFileList.size());
+        for (int i = 0; i < config2.configFileList.size(); i++) {
+            assertEquals(ex[i], config2.configFileList.get(i));
         }
     }
 
@@ -191,17 +192,17 @@ public class SonDarFolderConfigTest extends TestCase {
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test3.txt");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder6");
         String[] ex = {"test2.txt", "test3.txt"};
-        assertEquals(ex.length, config2.configFileList.length);
-        for (int i = 0; i < config2.configFileList.length; i++) {
-            assertEquals(ex[i], config2.configFileList[i]);
+        assertEquals(ex.length, config2.configFileList.size());
+        for (int i = 0; i < config2.configFileList.size(); i++) {
+            assertEquals(ex[i], config2.configFileList.get(i));
         }
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test4.txt");
         config.DeleteFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test3.txt");
         SonDarFolderConfig config3 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder6");
         String[] ex2 = {"test2.txt", "test4.txt"};
-        assertEquals(ex.length, config3.configFileList.length);
-        for (int i = 0; i < config3.configFileList.length; i++) {
-            assertEquals(ex2[i], config3.configFileList[i]);
+        assertEquals(ex.length, config3.configFileList.size());
+        for (int i = 0; i < config3.configFileList.size(); i++) {
+            assertEquals(ex2[i], config3.configFileList.get(i));
         }
     }
 
@@ -231,22 +232,22 @@ public class SonDarFolderConfigTest extends TestCase {
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test3.txt");
         SonDarFolderConfig config2 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder6");
         String[] ex = {"test2.txt", "test3.txt"};
-        assertEquals(ex.length, config2.configFileList.length);
-        for (int i = 0; i < config2.configFileList.length; i++) {
-            assertEquals(ex[i], config2.configFileList[i]);
+        assertEquals(ex.length, config2.configFileList.size());
+        for (int i = 0; i < config2.configFileList.size(); i++) {
+            assertEquals(ex[i], config2.configFileList.get(i));
         }
         config.addFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test4.txt");
         config.DeleteFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test3.txt");
         config.DeleteFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test2.txt");
         SonDarFolderConfig config3 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder6");
         String[] ex2 = {"test4.txt"};
-        assertEquals(ex2.length, config3.configFileList.length);
-        for (int i = 0; i < config3.configFileList.length; i++) {
-            assertEquals(ex2[i], config3.configFileList[i]);
+        assertEquals(ex2.length, config3.configFileList.size());
+        for (int i = 0; i < config3.configFileList.size(); i++) {
+            assertEquals(ex2[i], config3.configFileList.get(i));
         }
         config.DeleteFile(fileModule, TESTDATAFOLDER, "TestFolder6", "test4.txt");
         SonDarFolderConfig config4 = new SonDarFolderConfig(fileModule, TESTDATAFOLDER, "TestFolder6");
-        assertEquals(null, config4.configFileList);
+        assertEquals(new ArrayList(), config4.configFileList);
     }
 
 }

@@ -203,9 +203,9 @@ public class SonDarFileSystemTest extends TestCase {
         instance2.addFolder(folderName);
         instance2.init(fileModule);
         SonDarFolder temp = instance2.getFolderByName(folderName);
-        assertEquals(ex.length, temp.getFileList().length);
-        for (int i = 0; i < temp.getFileList().length; i++) {
-            assertEquals(ex[i], temp.getFileList()[i]);
+        assertEquals(ex.length, temp.getFileList().size());
+        for (int i = 0; i < temp.getFileList().size(); i++) {
+            assertEquals(ex[i], temp.getFileList().get(i));
         }
     }
 
@@ -244,9 +244,9 @@ public class SonDarFileSystemTest extends TestCase {
         instance2.addFolder(folderName);
         instance2.init(fileModule);
         SonDarFolder temp = instance2.getFolderByName(folderName);
-        assertEquals(ex.length, temp.getFileList().length);
-        for (int i = 0; i < temp.getFileList().length; i++) {
-            assertEquals(ex[i], temp.getFileList()[i]);
+        assertEquals(ex.length, temp.getFileList().size());
+        for (int i = 0; i < temp.getFileList().size(); i++) {
+            assertEquals(ex[i], temp.getFileList().get(i));
         }
         instance2.deleteFile(fileModule, folderName, fileName);
         SonDarFileSystem instance3 = new SonDarFileSystem(TESTDATAFOLDER);
@@ -255,9 +255,9 @@ public class SonDarFileSystemTest extends TestCase {
         SonDarFolder temp2 = instance3.getFolderByName(folderName);
 
         String[] ex2 = {"test.txt"};
-        assertEquals(ex2.length, temp2.getFileList().length);
-        for (int i = 0; i < temp2.getFileList().length; i++) {
-            assertEquals(ex2[i], temp2.getFileList()[i]);
+        assertEquals(ex2.length, temp2.getFileList().size());
+        for (int i = 0; i < temp2.getFileList().size(); i++) {
+            assertEquals(ex2[i], temp2.getFileList().get(i));
         }
     }
 
@@ -294,8 +294,8 @@ public class SonDarFileSystemTest extends TestCase {
         result.close();
         instance.moveFile(fileModule, folderName1, fileName, folderName2, fileName);
         SonDarFolder temp = instance.getFolderByName(folderName2);
-        assertEquals(temp.getFileList().length, 1);
-        assertEquals(temp.getFileList()[0], "hello.txt");
+        assertEquals(temp.getFileList().size(), 1);
+        assertEquals(temp.getFileList().get(0), "hello.txt");
         instance.getFolderByName(folderName2).getFile(fileModule, fileName);
 
     }

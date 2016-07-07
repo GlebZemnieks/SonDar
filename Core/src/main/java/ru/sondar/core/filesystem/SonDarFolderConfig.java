@@ -1,9 +1,14 @@
 package ru.sondar.core.filesystem;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import ru.sondar.core.Config;
+import ru.sondar.core.DOMParser;
 import ru.sondar.core.filemodule.*;
-import static ru.sondar.core.filesystem.SonDarFileSystem.getTagContent;
 import ru.sondar.core.filesystem.exception.*;
 
 /**
@@ -37,7 +42,7 @@ public class SonDarFolderConfig {
     /**
      * List of file on folder
      */
-    public String[] configFileList;
+    public ArrayList<String> configFileList;
 
     /**
      * Constructor
@@ -48,6 +53,7 @@ public class SonDarFolderConfig {
      * @throws ConfigFileFormatException
      */
     public SonDarFolderConfig(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
+        this.configFileList = new ArrayList<>();
         this.getConfigList(fileModule, globalFolder, folderName);
     }
 
@@ -77,34 +83,19 @@ public class SonDarFolderConfig {
      * @throws ConfigFileFormatException
      */
     private void getConfigList(FileModuleInterface fileModule, String globalFolder, String folderName) throws ConfigFileFormatException {
-        FileModuleReadThreadInterface readThread = fileModule.getReadThread(globalFolder + "/" + folderName + "/" + configFileName);
-        String[] result = new String[1];
-        readThread.read();
-        String temp = readThread.read();
-        if (temp != null && !temp.contains(configTag)) {
-            result[0] = getTagContent(temp, configFileTag);
-        } else {
-            Config.Log(logTag, "Final config list is empty");
-            return;
+        DOMParser parser;
+        try {
+            parser = new DOMParser(globalFolder + "/" + folderName + "/" + configFileName);
+        } catch (SAXException | IOException | ParserConfigurationException ex) {
+            throw new ConfigFileFormatException("Trouble with parse \"" + this.configFileName + "\" file");
         }
-        temp = readThread.read();
-        while (temp != null) {
-            if (getTagContent(temp, configFileTag) != null) {
-                String[] resultTemp = new String[result.length + 1];
-                System.arraycopy(result, 0, resultTemp, 0, result.length);
-                resultTemp[result.length] = getTagContent(temp, configFileTag);
-                result = resultTemp;
-            } else {
-                if (!temp.contains(configTag)) {
-                    throw new ConfigFileFormatException();
-                }
-                break;
-            }
-            temp = readThread.read();
+        Element element = parser.getRootElement();
+        NodeList tempList = element.getElementsByTagName(this.configFileTag);
+        for (int count = 0; count < tempList.getLength(); count++) {
+            Element tempElement = (Element) tempList.item(count);
+            this.configFileList.add(((Element) tempList.item(count)).getTextContent());
         }
-        readThread.close();
-        configFileList = result;
-        Config.Log(logTag, "Final config list " + Arrays.toString(configFileList));
+        Config.Log(logTag, "Final config list " + configFileList.toString());
     }
 
     /**
@@ -117,23 +108,10 @@ public class SonDarFolderConfig {
      * @param fileName
      */
     public void addFile(FileModuleInterface fileModule, String globalFolder, String folderName, String fileName) {
-        String[] temp;
-        if (this.configFileList == null) {
-            temp = new String[1];
-            temp[0] = fileName;
-            this.configFileList = temp;
-            this.update(fileModule, globalFolder, folderName);
+        if (this.configFileList.contains(fileName)) {
             return;
         }
-        for (String file : this.configFileList) {
-            if (file.equals(fileName)) {
-                return;
-            }
-        }
-        temp = new String[this.configFileList.length + 1];
-        System.arraycopy(this.configFileList, 0, temp, 0, this.configFileList.length);
-        temp[this.configFileList.length] = fileName;
-        this.configFileList = temp;
+        this.configFileList.add(fileName);
         this.update(fileModule, globalFolder, folderName);
     }
 
@@ -148,32 +126,10 @@ public class SonDarFolderConfig {
      * @param fileName
      */
     public void DeleteFile(FileModuleInterface fileModule, String globalFolder, String folderName, String fileName) {
-        if (this.configFileList == null) {
+        if (!this.configFileList.contains(fileName)) {
             throw new FileNotFoundInFolderException();
         }
-        int Id = 0;
-        boolean isFileInFolder = false;
-        for (int count = 0; !isFileInFolder && count < this.configFileList.length; count++) {
-            if (this.configFileList[count].equals(fileName)) {
-                isFileInFolder = true;
-                Id = count;
-            }
-        }
-        if (!isFileInFolder) {
-            throw new FileNotFoundInFolderException();
-        }
-        if (this.configFileList.length == 1) {
-            this.configFileList = null;
-            this.update(fileModule, globalFolder, folderName);
-            return;
-        }
-        String[] temp;
-        temp = new String[this.configFileList.length - 1];
-        System.arraycopy(this.configFileList, 0, temp, 0, Id);
-        for (int count = Id + 1; count < this.configFileList.length; count++) {
-            temp[count - 1] = this.configFileList[count];
-        }
-        this.configFileList = temp;
+        this.configFileList.remove(fileName);
         this.update(fileModule, globalFolder, folderName);
     }
 
@@ -187,11 +143,6 @@ public class SonDarFolderConfig {
     public void update(FileModuleInterface fileModule, String globalFolder, String folderName) {
         FileModuleWriteThreadInterface writeThread = fileModule.getWriteThread(globalFolder + "/" + folderName + "/" + configFileName);
         writeThread.write("<" + configTag + ">\n");
-        if (this.configFileList == null) {
-            writeThread.write("</" + configTag + ">");
-            writeThread.close();
-            return;
-        }
         for (String configList1 : this.configFileList) {
             writeThread.write("<" + configFileTag + ">" + configList1 + "</" + configFileTag + ">\n");
         }
