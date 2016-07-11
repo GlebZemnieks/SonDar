@@ -3,7 +3,7 @@ package ru.sondar.documentmodel.internalfunction.action;
 import ru.sondar.documentmodel.internalfunction.Action;
 import ru.sondar.documentmodel.internalfunction.ActionType;
 import ru.sondar.documentmodel.internalfunction.exception.IncorrectObjectTypeException;
-import ru.sondar.documentmodel.internalfunction.exception.ObjectNotFountException;
+import ru.sondar.documentmodel.exception.ObjectNotFountException;
 import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
 import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface;
 

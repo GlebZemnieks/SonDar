@@ -14,5 +14,5 @@ public interface SetterInterface {
      *
      * @param obj
      */
-    void setValue(Object obj);
+    void setValueByAction(Object obj);
 }

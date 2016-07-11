@@ -1,12 +1,12 @@
 package ru.sondar.documentmodel;
 
 import java.util.ArrayList;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.exception.ObjectNotFountException;
+import ru.sondar.documentmodel.exception.ObjectNotFountException;
+import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -15,7 +15,8 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDSequenceObject extends SDMainObject {
+public class SDSequenceObject extends SDMainObject
+        implements NavigatorInterface {
 
     /**
      * Tag for print and parse Sequence object
@@ -179,6 +180,17 @@ public class SDSequenceObject extends SDMainObject {
         this.sequenceArrayLength++;
         this.sequenceArray.add(newObject);
     }
+
+    // Start NavigatorInterface Interface
+    @Override
+    public Object getObject(Object obj) {
+        try {
+            return getXMLObjectByName((String) obj);
+        } catch (ObjectNotFountException ex) {
+            throw new ObjectNotFountException(ex.getMessage() + "; Used by NavigatorInterface", ex);
+        }
+    }
+    // End NavigatorInterface Interface
 
     /**
      * Method for parse sequence.

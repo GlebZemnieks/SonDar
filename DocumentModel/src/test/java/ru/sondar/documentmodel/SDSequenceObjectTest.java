@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.documentmodel.exception.ObjectNotFountException;
 import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import ru.sondar.documentmodel.objectmodel.SDDate;
 import ru.sondar.documentmodel.objectmodel.SDEditText;
@@ -27,6 +28,7 @@ public class SDSequenceObjectTest {
         sequence = new SDSequenceObject();
         SDText text = new SDText();
         text.setText("test");
+        text.setObjectName("text1");
         sequence.AddXMLObject(text);
         SDCheckBox box = new SDCheckBox();
         box.setText("test");
@@ -34,6 +36,7 @@ public class SDSequenceObjectTest {
         sequence.AddXMLObject(box);
         SDEditText edit = new SDEditText();
         edit.setText("test");
+        edit.setObjectName("edit1");
         edit.setTextLength(10);
         sequence.AddXMLObject(edit);
         sequence.enumirateSequence(0);
@@ -44,6 +47,21 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testGetXMLObjectByName() {
+        assertEquals(SDText.class, sequence.getXMLObjectByName("text1").getClass());
+        assertEquals(SDEditText.class, sequence.getXMLObjectByName("edit1").getClass());
+    }
+
+    /**
+     * Test of getXMLObjectByName method, of class SDSequenceObject.
+     */
+    @Test
+    public void testGetXMLObjectByName2() {
+        try {
+            sequence.getXMLObjectByName("test");
+        } catch (ObjectNotFountException error) {
+            return;
+        }
+        fail("No exception");
     }
 
     /**
@@ -94,13 +112,6 @@ public class SDSequenceObjectTest {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\sequence_temp.txt", false);
         this.sequence.printSequence(fileModule);
         fileModule.close();
-    }
-
-    /**
-     * Test of printSequence method, of class SDSequenceObject.
-     */
-    @Test
-    public void testPrintSequence() {
     }
 
     /**

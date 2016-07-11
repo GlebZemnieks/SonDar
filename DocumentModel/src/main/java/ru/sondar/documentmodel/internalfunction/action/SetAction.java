@@ -38,7 +38,7 @@ public class SetAction extends Action {
         if (!((this.condition != null) && (!(boolean) ((CheckAction) this.condition).makeAction()))) {
             Object temp = navigator.getObject(targetId);
             if (temp instanceof SetterInterface) {
-                ((SetterInterface) temp).setValue(value);
+                ((SetterInterface) temp).setValueByAction(value);
             } else {
                 throw new IncorrectObjectTypeException("Need implemented interface \"SetterInterface\" in object with id " + this.targetId);
             }

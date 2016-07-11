@@ -36,7 +36,7 @@ public class CustomFunctionTest extends TestCase {
         public String test = "before";
 
         @Override
-        public void setValue(Object obj) {
+        public void setValueByAction(Object obj) {
             try {
                 this.test = (String) obj;
             } catch (ClassCastException error) {
