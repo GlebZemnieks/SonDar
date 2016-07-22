@@ -41,7 +41,28 @@ public class SDSpinner extends SDMainObject
     /**
      * Data list field
      */
-    private ArrayList<String> dataList;
+    private WordBase dataList;
+
+    private String activeFilter;
+
+    public void setActiveFilter(String filter) {
+        if (!dataList.isFilterExist(filter)) {
+            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+        }
+        this.activeFilter = filter;
+        this.defaultItemSelected = 0;
+    }
+
+    public String getActiveFilter() {
+        return activeFilter;
+    }
+
+    private String getActiveFilterAttribute() {
+        if (activeFilter != null) {
+            return " activeFilter=\"" + activeFilter + "\"";
+        }
+        return "";
+    }
 
     /**
      * Getter for data list
@@ -49,18 +70,7 @@ public class SDSpinner extends SDMainObject
      * @return
      */
     public ArrayList<String> getList() {
-        return dataList;
-    }
-
-    /**
-     * Setter for data list
-     *
-     * @param dataList in String sequence format
-     */
-    public void setList(String[] dataList) {
-        ArrayList<String> temp = new ArrayList<>();
-        temp.addAll(Arrays.asList(dataList));
-        this.dataList = temp;
+        return dataList.getList(activeFilter);
     }
 
     /**
@@ -68,7 +78,7 @@ public class SDSpinner extends SDMainObject
      *
      * @param dataList In ArrayList format
      */
-    public void setList(ArrayList<String> dataList) {
+    public void setList(WordBase dataList) {
         this.dataList = dataList;
     }
 
@@ -87,7 +97,11 @@ public class SDSpinner extends SDMainObject
      * @param defaultItemSelected
      */
     public void setDefaultItemSelected(int defaultItemSelected) {
-        this.defaultItemSelected = defaultItemSelected;
+        if (defaultItemSelected >= 0 && defaultItemSelected < this.dataList.getList(activeFilter).size()) {
+            this.defaultItemSelected = defaultItemSelected;
+        } else {
+            throw new IllegalArgumentException("Try to set \"" + defaultItemSelected + "\" to list with length \"" + this.dataList.getList(activeFilter).size() + "\"");
+        }
     }
 
     /**
@@ -96,7 +110,7 @@ public class SDSpinner extends SDMainObject
      * @return
      */
     public String getSelectedItem() {
-        return this.dataList.get(this.defaultItemSelected);
+        return this.dataList.getList(activeFilter).get(this.defaultItemSelected);
     }
 
     /**
@@ -106,7 +120,7 @@ public class SDSpinner extends SDMainObject
 
     private String getWordsBaseNameAttribute() {
         if (wordsBaseName != null) {
-            return " baseName=\"wordsBaseName\"";
+            return " baseName=\"" + wordsBaseName + "\"";
         }
         return "";
     }
@@ -116,9 +130,10 @@ public class SDSpinner extends SDMainObject
      */
     public SDSpinner() {
         this.objectType = SDMainObjectType.Spinner;
-        this.dataList = new ArrayList<>();
+        this.dataList = new WordBase();
         this.dataList.add("item1");
         this.dataList.add("item2");
+        this.activeFilter = null;
     }
 
     // Start SupportDependency Interface
@@ -129,12 +144,7 @@ public class SDSpinner extends SDMainObject
 
     @Override
     public void setValue(Object object) {
-        int value = Integer.parseInt((String) object);
-        if (value >= 0 && value < this.dataList.size()) {
-            this.defaultItemSelected = value;
-        } else {
-            throw new IllegalArgumentException("Try to set \"" + value + "\" to list with length \"" + this.dataList.size() + "\"");
-        }
+        this.setDefaultItemSelected(Integer.parseInt((String) object));
     }
     // End SupportDependency Interface
 
@@ -155,16 +165,17 @@ public class SDSpinner extends SDMainObject
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(Spinner_DataList);
-        if (list.item(0) != null) {
-            if (((Element) list.item(0)).hasAttribute("baseName")) {
-                //Have link to words base
-                this.setList(this.sequence.document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
-            } else {
-                //All words base in current object
-                this.setList(getStringArray((Element) list.item(0)));
-            }
-        } else {
+        if (list.item(0) == null) {
             throw new NoFieldException("Missing \"dataList\" field");
+        }
+        if (((Element) list.item(0)).getAttribute("baseName").equals("")) {
+            throw new NoFieldException("Missing \"baseName\" attribute");
+        }
+        this.setList(this.sequence.document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
+        if (!((Element) list.item(0)).getAttribute("activeFilter").equals("")) {
+            this.activeFilter = ((Element) list.item(0)).getAttribute("activeFilter");
+        } else {
+            this.activeFilter = null;
         }
         list = element.getElementsByTagName(Spinner_defaultItemSelected);
         if (list.item(0) != null) {
@@ -174,30 +185,9 @@ public class SDSpinner extends SDMainObject
         }
     }
 
-    /**
-     * Parse data list from internal object
-     *
-     * @param element
-     * @return
-     */
-    private String[] getStringArray(Element element) {
-        NodeList list = element.getElementsByTagName(Spinner_Item);
-        String[] tempArray = new String[list.getLength()];
-        for (int i = 0; i < list.getLength(); i++) {
-            tempArray[i] = list.item(i).getTextContent();
-        }
-        return tempArray;
-    }
-
     @Override
     protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + ">\n");
-        if (wordsBaseName == null) {
-            for (String data : this.dataList) {
-                fileModule.write("<" + Spinner_Item + ">" + data + "</" + Spinner_Item + ">\n");
-            }
-        }
-        fileModule.write("</" + Spinner_DataList + ">\n"
+        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + getActiveFilterAttribute() + ">" + "</" + Spinner_DataList + ">\n"
                 + "<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
     }
 

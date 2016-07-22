@@ -1,0 +1,19 @@
+<dataList name="test">
+
+	<item>hello</item>
+
+	<item>hello2</item>
+	
+	<filter name="one">
+		<item>hello3</item>
+
+	</filter>
+	<filter name="two">
+		<item>hello4</item>
+
+		<item>hello5</item>
+
+		<item>hello6</item>
+
+	</filter>
+</dataList>

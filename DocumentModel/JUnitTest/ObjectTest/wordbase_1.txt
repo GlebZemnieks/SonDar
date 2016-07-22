@@ -1,0 +1,9 @@
+<dataList name="test">
+
+	<item>hello</item>
+
+	<item>hello2</item>
+	
+	<item>hello3</item>
+
+</dataList>

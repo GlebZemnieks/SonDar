@@ -8,7 +8,7 @@ import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
-import ru.sondar.documentmodel.objectmodel.WordsBase;
+import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -31,7 +31,7 @@ public class SDDocumentTest {
         dependency.addDependencyItem("test2", 1);
         document.setDependencyPart(dependency);
         document.setLogPart(new SDLogPart());
-        document.wordsBase = new WordsBase();
+        document.wordsBase = new SDWordsBasePart();
     }
 
     /**

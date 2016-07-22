@@ -179,6 +179,7 @@ public class SDSequenceObject extends SDMainObject
         }
         this.sequenceArrayLength++;
         this.sequenceArray.add(newObject);
+        newObject.sequence = this;
     }
 
     // Start NavigatorInterface Interface
@@ -208,7 +209,6 @@ public class SDSequenceObject extends SDMainObject
                 Element tempElement = (Element) tempList.item(count);
                 SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
                 SDMainObject tempObject = newObjectType.getObjectByType();
-                tempObject.sequence = this;
                 tempObject.parseObjectFromXML(tempElement);
                 AddXMLObject(tempObject);
             }

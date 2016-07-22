@@ -36,7 +36,7 @@ public class SDDocument {
     /**
      * WordsBase object of this document
      */
-    protected WordsBase wordsBase;
+    protected SDWordsBasePart wordsBase;
 
     /**
      * Getter for sequence object
@@ -60,6 +60,7 @@ public class SDDocument {
             throw new DocumentAlreadyInitException("Trying to reinitialize document part \"sequence\". Denied!");
         }
         this.sequence = sequence;
+        this.sequence.document = this;
     }
 
     /**
@@ -132,7 +133,7 @@ public class SDDocument {
      *
      * @return words base object of current document
      */
-    public WordsBase getWordsBasePart() {
+    public SDWordsBasePart getWordsBasePart() {
         return this.wordsBase;
     }
 
@@ -144,7 +145,7 @@ public class SDDocument {
      * @param wordsBase
      * @throws DocumentAlreadyInitException
      */
-    public void setWordsBasePart(WordsBase wordsBase) {
+    public void setWordsBasePart(SDWordsBasePart wordsBase) {
         if (this.wordsBase != null) {
             throw new DocumentAlreadyInitException("Trying to reinitialize document part \"wordsBase\". Denied!");
         }
@@ -198,7 +199,7 @@ public class SDDocument {
         }
         headPart = new SDHeadPart();
         parser.getHeadPart(headPart);
-        wordsBase = new WordsBase();
+        wordsBase = new SDWordsBasePart();
         parser.getWordsBasePart(wordsBase);
         this.sequence = sequence;
         this.sequence.document = this;

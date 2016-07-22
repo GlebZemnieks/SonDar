@@ -13,6 +13,7 @@ import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -25,7 +26,12 @@ public class SDSpinnerTest {
 
     @Before
     public void setUp() {
+        SDDocument document = new SDDocument();
+        SDSequenceObject sequence = new SDSequenceObject();
+        document.setSequence(sequence);
+        document.setWordsBasePart(getBasePart());
         spinner = new SDSpinner();
+        sequence.AddXMLObject(spinner);
         spinner.setDefaultItemSelected(1);
     }
 
@@ -47,7 +53,11 @@ public class SDSpinnerTest {
         ArrayList<String> test = spinner.getList();
         assertEquals("item1", test.get(0));
         assertEquals("item2", test.get(1));
-        spinner.setList(new String[]{"item1", "item2", "item3"});
+        WordBase base = new WordBase();
+        base.add(null, "item1");
+        base.add(null, "item2");
+        base.add(null, "item3");
+        spinner.setList(base);
         test = spinner.getList();
         assertEquals("item1", test.get(0));
         assertEquals("item2", test.get(1));
@@ -137,9 +147,14 @@ public class SDSpinnerTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
+        try {
+            this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
+        } catch (NoFieldException error) {
+            return;
+        }
+        fail("No exception");
     }
-    
+
     /**
      * 3 Test of parseCurrentObjectField method, of class SDSpinner.
      *
@@ -148,19 +163,19 @@ public class SDSpinnerTest {
     @Test
     public void testParseWordsBase() throws Exception {
         SDDocument document = new SDDocument();
-        WordsBase base = new WordsBase();
-        ArrayList<String> list = new ArrayList<>();
-        list.add("test1");
-        list.add("test2");
-        base.addNewBase("test", list);
+        SDWordsBasePart base = new SDWordsBasePart();
+        WordBase base1 = new WordBase();
+        base1.add(null, "test1");
+        base1.add(null, "test2");
+        base.addNewBase("test", base1);
         document.setWordsBasePart(base);
         SDSequenceObject sequence = new SDSequenceObject();
         spinner.sequence = sequence;
         sequence.document = document;
         this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
-        assertEquals(spinner.getList().size(), list.size());
-        assertEquals(spinner.getList().get(0), list.get(0));
-        assertEquals(spinner.getList().get(1), list.get(1));
+        assertEquals(spinner.getList().size(), 2);
+        assertEquals(spinner.getList().get(0), "test1");
+        assertEquals(spinner.getList().get(1), "test2");
     }
 
     /**
@@ -175,13 +190,59 @@ public class SDSpinnerTest {
         this.spinner.printObjectToXML(fileModule);
         fileModule.close();
         SDSpinner spinner2 = new SDSpinner();
-        spinner2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
-        assertEquals(spinner.getList().size(), spinner2.getList().size());
-        assertEquals(spinner.getList().get(0), spinner2.getList().get(0));
-        assertEquals(spinner.getList().get(1), spinner2.getList().get(1));
-        assertEquals(spinner.getDefaultItemSelected(), spinner2.getDefaultItemSelected());
-        assertEquals(spinner.getSelectedItem(), spinner2.getSelectedItem());
-
+        try {
+            spinner2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
+        } catch (NoFieldException error) {
+            return;
+        }
+        fail("No exception");
     }
-
+    
+    public SDWordsBasePart getBasePart(){
+        SDWordsBasePart wordsBase = new SDWordsBasePart();
+        WordBase base = new WordBase();
+        wordsBase.addNewBase("test", base);
+        WordBase base2 = new WordBase();
+        base2.add("test");
+        base2.add("test2");
+        wordsBase.addNewBase("test2", base2);
+        WordBase base3 = new WordBase();
+        base3.add("test");
+        base3.add("test2");
+        base3.add("a1","test3");
+        base3.add("a1","test4");
+        wordsBase.addNewBase("test3", base3);
+        WordBase base4 = new WordBase();
+        base4.add("test");
+        base4.add("test2");
+        base4.add("a1","test3");
+        base4.add("a1","test4");
+        base4.add("a2","test5");
+        base4.add("a2","test6");
+        base4.add("a2","test7");
+        base4.add("a2","test8");
+        wordsBase.addNewBase("test4", base4);
+        return wordsBase;
+    }
+    
+    /**
+     * Test of getSelectedItem method, of class SDSpinner.
+     */
+    @Test
+    public void testFilter() {
+        spinner.setList(spinner.sequence.document.getWordsBasePart().getList("test4"));
+        assertEquals(null, spinner.getActiveFilter());
+        assertEquals(8, spinner.getList().size());
+        assertEquals(1, spinner.getDefaultItemSelected());
+        assertEquals("test2", spinner.getSelectedItem());
+        spinner.setActiveFilter("a1");
+        assertEquals("a1", spinner.getActiveFilter());
+        assertEquals(0, spinner.getDefaultItemSelected());
+        spinner.setDefaultItemSelected(3);
+        assertEquals("test4", spinner.getSelectedItem());
+        spinner.setActiveFilter("a2");
+        assertEquals(0, spinner.getDefaultItemSelected());
+        spinner.setDefaultItemSelected(3);
+        assertEquals("test6", spinner.getSelectedItem());
+    }
 }

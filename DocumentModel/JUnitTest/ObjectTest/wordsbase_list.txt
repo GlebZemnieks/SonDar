@@ -1,0 +1,54 @@
+<WordsBase>
+
+	<dataList name="base3">
+
+		<item>test3</item>
+
+		<item>test4</item>
+
+		<filter name="a1">
+			<item>test3</item>
+
+			<item>test4</item>
+
+		</filter>
+
+		<filter name="a3">
+
+			<item>test3</item>
+
+			<item>test4</item>
+
+			<item>test3</item>
+
+			<item>test4</item>
+
+		</filter>
+
+		<filter name="a4">
+
+			<item>test3</item>
+
+			<item>test4</item>
+
+		</filter>
+
+	</dataList>
+
+	<dataList name="base1">
+
+		<item>test1</item>
+
+		<item>test2</item>
+
+	</dataList>
+
+	<dataList name="base2">
+
+		<item>test3</item>
+
+		<item>test4</item>
+
+	</dataList>
+
+</WordsBase>

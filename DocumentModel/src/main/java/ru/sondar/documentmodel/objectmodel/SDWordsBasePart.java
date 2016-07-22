@@ -13,7 +13,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
  * @author GlebZemnieks
  * @since SonDar-1.1
  */
-public class WordsBase {
+public class SDWordsBasePart {
 
     /**
      * Tag for print and parse dataList field
@@ -24,20 +24,16 @@ public class WordsBase {
      * Tag for print and parse dataList field
      */
     public static String Tag_DataList = "dataList";
-    /**
-     * Tag for print and parse item filed
-     */
-    public static String Tag_Item = "item";
 
     /**
-     * Words base object
+     * Words base object. (WordsBaseName, WordBase)
      */
-    private Map<String, ArrayList<String>> wordsBase;
+    private Map<String, WordBase> wordsBase;
 
     /**
      * Constructor
      */
-    public WordsBase() {
+    public SDWordsBasePart() {
         wordsBase = new HashMap<>();
     }
 
@@ -49,7 +45,7 @@ public class WordsBase {
      * @return
      * @throws RuntimeException
      */
-    public ArrayList<String> getList(String key) {
+    public WordBase getList(String key) {
         if (wordsBase.containsKey(key)) {
             return wordsBase.get(key);
         } else {
@@ -65,8 +61,9 @@ public class WordsBase {
      * @param base
      * @throws RuntimeException
      */
-    public void addNewBase(String name, ArrayList<String> base) {
+    public void addNewBase(String name, WordBase base) {
         if (!wordsBase.containsKey(name)) {
+            base.setBaseName(name);
             this.wordsBase.put(name, base);
         } else {
             throw new RuntimeException("Base with name \"" + name + "\" already exist in list");
@@ -81,11 +78,8 @@ public class WordsBase {
     public void parseObjectFromXML(Element element) {
         NodeList list = element.getElementsByTagName(Tag_DataList);
         for (int i = 0; i < list.getLength(); i++) {
-            NodeList list2 = ((Element) list.item(i)).getElementsByTagName(Tag_Item);
-            ArrayList<String> temp = new ArrayList<>();
-            for (int j = 0; j < list2.getLength(); j++) {
-                temp.add(((Element) list2.item(j)).getTextContent());
-            }
+            WordBase temp = new WordBase();
+            temp.parseObjectFromXML((Element) list.item(i));
             String name = ((Element) list.item(i)).getAttribute("name");
             addNewBase(name, temp);
         }
@@ -98,12 +92,8 @@ public class WordsBase {
      */
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + this.Tag_MainObject + ">\n");
-        for (Object object : this.wordsBase.keySet()) {
-            fileModule.write("<" + Tag_DataList + " name=\"" + object.toString() + "\">\n");
-            for (String item : this.wordsBase.get(object)) {
-                fileModule.write("<" + Tag_Item + ">" + item + "</" + Tag_Item + ">\n");
-            }
-            fileModule.write("</" + Tag_DataList + ">\n");
+        for (WordBase base : this.wordsBase.values()) {
+            base.printObjectToXML(fileModule);
         }
         fileModule.write("</" + Tag_MainObject + ">\n");
     }

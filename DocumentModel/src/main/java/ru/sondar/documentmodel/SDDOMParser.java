@@ -9,7 +9,7 @@ import ru.sondar.core.DOMParser;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
-import ru.sondar.documentmodel.objectmodel.WordsBase;
+import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -55,8 +55,8 @@ public class SDDOMParser extends DOMParser {
      * @param wordsBase get words base part from document by "%fileName%"
      * @throws ObjectStructureException
      */
-    public void getWordsBasePart(WordsBase wordsBase) throws ObjectStructureException {
-        NodeList nList = document.getElementsByTagName(WordsBase.Tag_MainObject);
+    public void getWordsBasePart(SDWordsBasePart wordsBase) throws ObjectStructureException {
+        NodeList nList = document.getElementsByTagName(SDWordsBasePart.Tag_MainObject);
         Element head = ((Element) nList.item(0));
         wordsBase.parseObjectFromXML(head);
     }
