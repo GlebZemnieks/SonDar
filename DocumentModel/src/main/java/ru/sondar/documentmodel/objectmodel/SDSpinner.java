@@ -1,7 +1,6 @@
 package ru.sondar.documentmodel.objectmodel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
@@ -41,12 +40,12 @@ public class SDSpinner extends SDMainObject
     /**
      * Data list field
      */
-    private WordBase dataList;
+    private WordBase wordBase;
 
     private String activeFilter;
 
     public void setActiveFilter(String filter) {
-        if (!dataList.isFilterExist(filter)) {
+        if (!wordBase.isFilterExist(filter)) {
             throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
         this.activeFilter = filter;
@@ -70,7 +69,7 @@ public class SDSpinner extends SDMainObject
      * @return
      */
     public ArrayList<String> getList() {
-        return dataList.getList(activeFilter);
+        return wordBase.getList(activeFilter);
     }
 
     /**
@@ -79,7 +78,7 @@ public class SDSpinner extends SDMainObject
      * @param dataList In ArrayList format
      */
     public void setList(WordBase dataList) {
-        this.dataList = dataList;
+        this.wordBase = dataList;
     }
 
     /**
@@ -97,10 +96,10 @@ public class SDSpinner extends SDMainObject
      * @param defaultItemSelected
      */
     public void setDefaultItemSelected(int defaultItemSelected) {
-        if (defaultItemSelected >= 0 && defaultItemSelected < this.dataList.getList(activeFilter).size()) {
+        if (defaultItemSelected >= 0 && defaultItemSelected < this.wordBase.getList(activeFilter).size()) {
             this.defaultItemSelected = defaultItemSelected;
         } else {
-            throw new IllegalArgumentException("Try to set \"" + defaultItemSelected + "\" to list with length \"" + this.dataList.getList(activeFilter).size() + "\"");
+            throw new IllegalArgumentException("Try to set \"" + defaultItemSelected + "\" to list with length \"" + this.wordBase.getList(activeFilter).size() + "\"");
         }
     }
 
@@ -110,7 +109,7 @@ public class SDSpinner extends SDMainObject
      * @return
      */
     public String getSelectedItem() {
-        return this.dataList.getList(activeFilter).get(this.defaultItemSelected);
+        return this.wordBase.getList(activeFilter).get(this.defaultItemSelected);
     }
 
     /**
@@ -130,9 +129,9 @@ public class SDSpinner extends SDMainObject
      */
     public SDSpinner() {
         this.objectType = SDMainObjectType.Spinner;
-        this.dataList = new WordBase();
-        this.dataList.add("item1");
-        this.dataList.add("item2");
+        this.wordBase = new WordBase();
+        this.wordBase.add("item1");
+        this.wordBase.add("item2");
         this.activeFilter = null;
     }
 

@@ -1,15 +1,12 @@
 package ru.sondar.documentmodel.documentfactory;
 
-import ru.sondar.documentmodel.objectmodel.SDHeadPart;
-import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
-import ru.sondar.documentmodel.documentfactory.structure.CompositeObject;
-import ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory;
+import ru.sondar.documentmodel.documentfactory.structure.*;
+import ru.sondar.documentmodel.objectmodel.*;
+import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.addCompositeObjectList;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.enter;
-import ru.sondar.documentmodel.documentfactory.structure.TextAndEditTextList;
-import ru.sondar.documentmodel.documentfactory.structure.TextAndSpinnerList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 
@@ -21,17 +18,46 @@ public class SpaceForYourCreativity {
 
     public static String pathToFileCreate = "E:\\test.txt";
 
-    public static void main(String[] args) {
+    public static String documentUUID = "69f08553-bf07-405f-b849-0bea1423ed1c";
+
+    public static void main(String... args) {
         SDDocument document = new SDDocument();
-        //head
-        SDHeadPart head = SDObjectFactory.getHeadPart("69f08553-bf07-405f-b849-0bea1423ed1c");
+        SDHeadPart head = SDObjectFactory.getHeadPart(documentUUID);
         document.setHeadPart(head);
-        //sequence
+        SDWordsBasePart baseList = getWordsBase();
+        document.setWordsBasePart(baseList);
+        SDSequenceObject sequenceObject = getSequence(baseList);
+        document.setSequence(sequenceObject);
+
+        DependencyPart dependency = getDependencyPart(sequenceObject);
+        document.setDependencyPart(dependency);
+
+        SDLogPart log = new SDLogPart();
+        document.setLogPart(log);
+        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(pathToFileCreate, false);
+        document.saveDocument(fileModule);
+        fileModule.close();
+    }
+
+    public static SDWordsBasePart getWordsBase() {
+        SDWordsBasePart baseList = new SDWordsBasePart();
+        WordBase base1 = new WordBase();
+        base1.add("test");
+        base1.add("test", "test");
+        baseList.addNewBase("test", base1);
+        return baseList;
+    }
+
+    public static DependencyPart getDependencyPart(SDSequenceObject sequenceObject) {
+        DependencyPart dependency = new DependencyPart();
+        dependency.addDependencyItemWithValidation(sequenceObject, "test", 0);
+        dependency.addDependencyItemWithValidation(sequenceObject, "test2", 1);
+        return dependency;
+    }
+
+    public static SDSequenceObject getSequence(SDWordsBasePart baseList) {
         SDSequenceObject sequence = new SDSequenceObject();
-        String[] listValue = new String[]{"1", "2", "3"};
-        /*
-         Part.1
-         */
+        String listValue = "test";
         sequence.AddXMLObject(SDObjectFactory.getDate()); //TODO 
         sequence.AddXMLObject(SDObjectFactory.getText("произведена фискация технического состояния"));
         sequence.AddXMLObject(SDObjectFactory.getText("многоквартирного дома по адресу:"));
@@ -53,9 +79,7 @@ public class SpaceForYourCreativity {
         enter(sequence);
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("Категория жилищного фонда",
-            new String[]{"Частный", "Муниципальный", "Областной",
-                "Федеральный", "Смешанный"}, 1, "")
+            new TextAndSpinnerList("Категория жилищного фонда", baseList, "test", 1, "")
         });
         addCompositeObjectList(sequence, new CompositeObject[]{
             new TextAndEditTextList("принадлежность", "123123123123", 30, "")
@@ -70,8 +94,7 @@ public class SpaceForYourCreativity {
         enter(sequence);
         //TODO Переделать в числовое поле с ограничениями 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("2.Этажность",
-            new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"}, 0, "")
+            new TextAndSpinnerList("2.Этажность", baseList, listValue, 0, "")
         });
         enter(sequence);
         //TODO Переделать в числовое поле с ограничениями. 
@@ -127,9 +150,9 @@ public class SpaceForYourCreativity {
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("8. Конструкция/Материал фундамента",
-            new String[]{"Ленточный", "Столбчатый", "Блочный"}, 0, "",
-            new String[]{"Деревянный", "Бутовый", "Железо-бетонный"}, 0, "")
+            new TextAndSpinnerList("8. Конструкция/Материал фундамента", baseList,
+            listValue, 0, "",
+            listValue, 0, "")
         });
         enter(sequence);
         addProsentWithText(sequence, "");
@@ -137,10 +160,9 @@ public class SpaceForYourCreativity {
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("9. Конструкция/Материал стен",
-            new String[]{"Каркасная", "Панельная", "Обложенная кирпичем",
-                "С вентилируемым фасадом"}, 0, "",
-            new String[]{"Кирпич", "Дерево", "Бетон", "Шлако-бетон"}, 0, "")
+            new TextAndSpinnerList("9. Конструкция/Материал стен", baseList,
+            listValue, 0, "",
+            listValue, 0, "")
         });
         enter(sequence);
         addProsentWithText(sequence, "фасада");
@@ -148,10 +170,9 @@ public class SpaceForYourCreativity {
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("10. Конструкция/Материал кровли",
-            new String[]{"Двух-скатная", "Скатная-сложная", "Совмещенная"}, 0, "",
-            new String[]{"Наплавляемый", "Осбесто-цементный волнистый",
-                "Осбесто-цементный плоский", "Металочерепица", "Проф-настил"}, 0, "")
+            new TextAndSpinnerList("10. Конструкция/Материал кровли", baseList,
+            listValue, 0, "",
+            listValue, 0, "")
         });
         enter(sequence);
         addProsentWithText(sequence, "кровли");
@@ -159,49 +180,49 @@ public class SpaceForYourCreativity {
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("11. Конструкция/Материал водостока",
+            new TextAndSpinnerList("11. Конструкция/Материал водостока", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("12. Конструкция/Материал цокольного перекрытия",
-            listValue, 0, "", listValue, 0, "")
-        });
-        enter(sequence);
-
-        //TODO Вынести словарные базы в конфигурацию.
-        addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("13. Конструкция/Материал межэтажного перекрытия",
-            listValue, 0, "", listValue, 0, "")
-        });
-        enter(sequence);
-
-        //TODO Вынести словарные базы в конфигурацию.
-        addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("14. Конструкция/Материал чердачного перекрытия",
-            listValue, 0, "", listValue, 0, "")
-        });
-        enter(sequence);
-
-        //TODO Вынести словарные базы в конфигурацию.
-        addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("15. Материал утепляющего слоя",
+            new TextAndSpinnerList("12. Конструкция/Материал цокольного перекрытия", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("16. Наличие/Характеристия чердака(тех.этажа)",
+            new TextAndSpinnerList("13. Конструкция/Материал межэтажного перекрытия", baseList,
+            listValue, 0, "")
+        });
+        enter(sequence);
+
+        //TODO Вынести словарные базы в конфигурацию.
+        addCompositeObjectList(sequence, new CompositeObject[]{
+            new TextAndSpinnerList("14. Конструкция/Материал чердачного перекрытия", baseList,
+            listValue, 0, "")
+        });
+        enter(sequence);
+
+        //TODO Вынести словарные базы в конфигурацию.
+        addCompositeObjectList(sequence, new CompositeObject[]{
+            new TextAndSpinnerList("15. Материал утепляющего слоя", baseList,
+            listValue, 0, "")
+        });
+        enter(sequence);
+
+        //TODO Вынести словарные базы в конфигурацию.
+        addCompositeObjectList(sequence, new CompositeObject[]{
+            new TextAndSpinnerList("16. Наличие/Характеристия чердака(тех.этажа)", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("17. Наличие/Характеристия цокольный(подвальных) помещений",
+            new TextAndSpinnerList("17. Наличие/Характеристия цокольный(подвальных) помещений", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
@@ -210,35 +231,35 @@ public class SpaceForYourCreativity {
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("18. Наличи дренажной системы",
+            new TextAndSpinnerList("18. Наличи дренажной системы", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("19. Наличие дренажных насосов",
+            new TextAndSpinnerList("19. Наличие дренажных насосов", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("20. Материал/Конструкция полов мест общего пользования первого этажа",
+            new TextAndSpinnerList("20. Материал/Конструкция полов мест общего пользования первого этажа", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("21. Материал/Конструкция полов мест общего пользования других этажей",
+            new TextAndSpinnerList("21. Материал/Конструкция полов мест общего пользования других этажей", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("22. Материал/Конструкция лестниц мест общего пользования",
+            new TextAndSpinnerList("22. Материал/Конструкция лестниц мест общего пользования", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
@@ -246,83 +267,83 @@ public class SpaceForYourCreativity {
         //TODO Вынести словарные базы в конфигурацию.
         //TODO Refactoring using internalFunction.OpenNewDocument()
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("23. Балконы(Лоджии)",
+            new TextAndSpinnerList("23. Балконы(Лоджии)", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("конструкция оснований",
+            new TextAndSpinnerList("конструкция оснований", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("ограждение",
+            new TextAndSpinnerList("ограждение", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("остекление",
+            new TextAndSpinnerList("остекление", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("козырьки",
+            new TextAndSpinnerList("козырьки", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("24.Входные площадки",
+            new TextAndSpinnerList("24.Входные площадки", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("Надподъездные козырьки",
+            new TextAndSpinnerList("Надподъездные козырьки", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("25.Материал/Конструкция окон мест общего пользования",
+            new TextAndSpinnerList("25.Материал/Конструкция окон мест общего пользования", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("26.Материал/Конструкция входных дверей мест общего пользования",
+            new TextAndSpinnerList("26.Материал/Конструкция входных дверей мест общего пользования", baseList,
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("27. Наличие входного тамбура", listValue, 0, "")
+            new TextAndSpinnerList("27. Наличие входного тамбура", baseList, listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("28. Оборудованность для доступа инвалидов", listValue, 0, "")
+            new TextAndSpinnerList("28. Оборудованность для доступа инвалидов", baseList, listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("29. Отделка наружняя",
+            new TextAndSpinnerList("29. Отделка наружняя", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("цокольная",
+            new TextAndSpinnerList("цокольная", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("карнизов",
+            new TextAndSpinnerList("карнизов", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("подъездов",
+            new TextAndSpinnerList("подъездов", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("30.Наличие архитектурных элементов: наружных",
+            new TextAndSpinnerList("30.Наличие архитектурных элементов: наружных", baseList,
             listValue, 0, ""),
-            new TextAndSpinnerList("подъездных",
+            new TextAndSpinnerList("подъездных", baseList,
             listValue, 0, "")
         });
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("31.Наличие/материал окрытия: парапетов", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("31.Наличие/материал окрытия: парапетов", baseList, listValue, 0, "", listValue, 0, "")
         });
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("поясков(сандриков)", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("поясков(сандриков)", baseList, listValue, 0, "", listValue, 0, "")
         });
 
         //TODO Уточнить формат входных данных
@@ -334,157 +355,157 @@ public class SpaceForYourCreativity {
 
         //TODO переделать во внутренние функции с открытием нового экрана
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("a)Отопление", listValue, 0, ""),
-            new TextAndSpinnerList("вид топлива", listValue, 0, ""),
-            new TextAndSpinnerList("Кол-во вводов", listValue, 0, ""),
-            new TextAndSpinnerList("объем посребления", listValue, 0, ""),
-            new TextAndSpinnerList("расположение запорных устройств", listValue, 0, ""),
-            new TextAndSpinnerList("схема теплоснабжения", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие циркулярного насоса", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/вид учета узла", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("расположение стояков", listValue, 0, ""),
-            new TextAndSpinnerList("наличие элеваторов", listValue, 0, ""),
-            new TextAndSpinnerList("Вид отопительных приборов", listValue, 0, ""),
-            new TextAndSpinnerList("Вид розлива", listValue, 0, ""),
-            new TextAndSpinnerList("Материал трубопроводов: розлива", listValue, 0, ""),
-            new TextAndSpinnerList("стояков", listValue, 0, ""),
-            new TextAndSpinnerList("Отопление подъедов", listValue, 0, ""),
-            new TextAndSpinnerList("Подача теплоносителей в полотенцесушители", listValue, 0, "")
+            new TextAndSpinnerList("a)Отопление", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("вид топлива", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Кол-во вводов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("объем посребления", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение запорных устройств", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("схема теплоснабжения", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие циркулярного насоса", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/вид учета узла", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("расположение стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("наличие элеваторов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Вид отопительных приборов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Вид розлива", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Материал трубопроводов: розлива", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Отопление подъедов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Подача теплоносителей в полотенцесушители", baseList, listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         //TODO переделать во внутренние функции с открытием нового экрана
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("б)Водоснабжение", listValue, 0, ""),
-            new TextAndSpinnerList("ХВС", listValue, 0, ""),
-            new TextAndSpinnerList("кол-во вводов", listValue, 0, ""),
-            new TextAndSpinnerList("расположение запорных устройств", listValue, 0, ""),
-            new TextAndSpinnerList("расположение стояков", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/Вид узла учета", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Материал трубопроводов: розлива ХВС", listValue, 0, ""),
-            new TextAndSpinnerList("стояков ХВС", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие повысительного насоса", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие поквартирного учета", listValue, 0, "")
+            new TextAndSpinnerList("б)Водоснабжение", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("ХВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("кол-во вводов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение запорных устройств", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/Вид узла учета", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Материал трубопроводов: розлива ХВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("стояков ХВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие повысительного насоса", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("ГВС", listValue, 0, ""),
-            new TextAndSpinnerList(" Кол-во вводов", listValue, 0, ""),
-            new TextAndSpinnerList("Схема ГВС", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/Вид узла учета", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("расположение запорных устройств", listValue, 0, ""),
-            new TextAndSpinnerList("расположение стояков", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие бойлеров", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/вид элеваторов", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Материал трубопроводов: розлива ГВС", listValue, 0, ""),
-            new TextAndSpinnerList("стояков ГВС", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие повысительного насоса", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие поквартирного учета", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие пожарного водопровода", listValue, 0, "")
+            new TextAndSpinnerList("ГВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList(" Кол-во вводов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Схема ГВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/Вид узла учета", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("расположение запорных устройств", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие бойлеров", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/вид элеваторов", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Материал трубопроводов: розлива ГВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("стояков ГВС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие повысительного насоса", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие пожарного водопровода", baseList, listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("в)Водоотведение", listValue, 0, ""),
-            new TextAndSpinnerList("кол-во выпусков", listValue, 0, ""),
-            new TextAndSpinnerList("расположение стояков", listValue, 0, ""),
-            new TextAndSpinnerList("наличие фекальных стояков", listValue, 0, ""),
-            new TextAndSpinnerList("разделение кухонных и фекальных стояков", listValue, 0, ""),
-            new TextAndSpinnerList("материал трубопроводов водоотведение: стояков", listValue, 0, ""),
-            new TextAndSpinnerList("лежаков", listValue, 0, "")
+            new TextAndSpinnerList("в)Водоотведение", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("кол-во выпусков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("наличие фекальных стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("разделение кухонных и фекальных стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("материал трубопроводов водоотведение: стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("лежаков", baseList, listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("г)Газоснабжение", listValue, 0, ""),
-            new TextAndSpinnerList("Кол-во вводов", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие узла учета", listValue, 0, ""),
-            new TextAndSpinnerList("расположение стояков", listValue, 0, ""),
-            new TextAndSpinnerList("Вид газового оборудования (плиты/колонки(котлы))", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие поквартирного учета", listValue, 0, "")
+            new TextAndSpinnerList("г)Газоснабжение", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Кол-во вводов", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие узла учета", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение стояков", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Вид газового оборудования (плиты/колонки(котлы))", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("д)вентиляция", listValue, 0, ""),
-            new TextAndSpinnerList("расположение/материал вентканалов", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("д)вентиляция", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("расположение/материал вентканалов", baseList, listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("е)Наличие мусоропроводов/число стволов", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("е)Наличие мусоропроводов/число стволов", baseList, listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("ж)Наличие ливтов пасажирских/грузовых", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("ж)Наличие ливтов пасажирских/грузовых", baseList, listValue, 0, "", listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("з)Электроснабжение", listValue, 0, ""),
-            new TextAndSpinnerList("Входное напряжение/кол-ва фаз", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Кол-во / Вид вводов", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/расположение ВРУ", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие прибора учета", listValue, 0, ""),
-            new TextAndSpinnerList("Прокладка/кол-во фаз/расположение стояков", listValue, 0, "", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие заземлений", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие СУП", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие подвального освещения", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие чердачного освежения", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие придомового освещения", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие автоматики на освещении", listValue, 0, ""),
-            new TextAndSpinnerList("Вид применяемых ламп", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/расположение поквартирного учета", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие автоматики на силовой проводке", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие системы дымоудаления", listValue, 0, ""),
-            new TextAndSpinnerList("Электроснабжение насоса/приводов задвижек пожарного водопровода",
+            new TextAndSpinnerList("з)Электроснабжение", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Входное напряжение/кол-ва фаз", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Кол-во / Вид вводов", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/расположение ВРУ", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие прибора учета", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Прокладка/кол-во фаз/расположение стояков", baseList, listValue, 0, "", listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие заземлений", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие СУП", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие подвального освещения", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие чердачного освежения", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие придомового освещения", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие автоматики на освещении", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Вид применяемых ламп", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие/расположение поквартирного учета", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Наличие автоматики на силовой проводке", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие системы дымоудаления", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Электроснабжение насоса/приводов задвижек пожарного водопровода", baseList,
             listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие/способ электроснабжения электрических плит", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("Наличие/способ электроснабжения электрических плит", baseList, listValue, 0, "", listValue, 0, "")
         });
         addProsentWithText(sequence, "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("и)Наличие коммуникационных сетей и сигнализаций", listValue, 0, ""),
-            new TextAndSpinnerList("ОДС", listValue, 0, ""),
-            new TextAndSpinnerList("Пожарная сигнализация", listValue, 0, ""),
-            new TextAndSpinnerList("радио", listValue, 0, ""),
-            new TextAndSpinnerList("телефон", listValue, 0, ""),
-            new TextAndSpinnerList("ТВ_антенна", listValue, 0, ""),
-            new TextAndSpinnerList("Кабельное ТВ", listValue, 0, "", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("Домофон", listValue, 0, ""),
-            new TextAndSpinnerList("КИП", listValue, 0, ""),
-            new TextAndSpinnerList("Интернет провайдеров", listValue, 0, "", listValue, 0, "", listValue, 0, "", listValue, 0, "")
+            new TextAndSpinnerList("и)Наличие коммуникационных сетей и сигнализаций", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("ОДС", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Пожарная сигнализация", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("радио", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("телефон", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("ТВ_антенна", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Кабельное ТВ", baseList, listValue, 0, "", listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("Домофон", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("КИП", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Интернет провайдеров", baseList, listValue, 0, "", listValue, 0, "", listValue, 0, "", listValue, 0, "")
         });
         SDStructureFactory.enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("к)Элементы блгоустройства", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие сформированного земельного участка", listValue, 0, ""),
-            new TextAndSpinnerList("Кадастровый номер", listValue, 0, ""),
-            new TextAndSpinnerList("Площать привомового жилищного участка", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие надворных построек: туалеты", listValue, 0, ""),
-            new TextAndSpinnerList("помойницы", listValue, 0, ""),
-            new TextAndSpinnerList("сараи", listValue, 0, ""),
-            new TextAndSpinnerList("площадки для ТБО", listValue, 0, ""),
-            new TextAndSpinnerList("Строения: для инженерного оборудования", listValue, 0, ""),
-            new TextAndSpinnerList("для хранения топлива", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие привомового проезда/парковки", listValue, 0, "", listValue, 0, ""),
-            new TextAndSpinnerList("пешеходных дорожек", listValue, 0, ""),
-            new TextAndSpinnerList("Уборочная часть", listValue, 0, ""),
-            new TextAndSpinnerList("Наличие площадок:хозяйственной", listValue, 0, ""),
-            new TextAndSpinnerList("спортивной", listValue, 0, ""),
-            new TextAndSpinnerList("детской", listValue, 0, ""),
-            new TextAndSpinnerList("для отдыха", listValue, 0, ""),
-            new TextAndSpinnerList("Число малых форм", listValue, 0, "")
+            new TextAndSpinnerList("к)Элементы блгоустройства", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие сформированного земельного участка", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Кадастровый номер", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Площать привомового жилищного участка", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие надворных построек: туалеты", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("помойницы", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("сараи", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("площадки для ТБО", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Строения: для инженерного оборудования", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("для хранения топлива", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие привомового проезда/парковки", baseList, listValue, 0, "", listValue, 0, ""),
+            new TextAndSpinnerList("пешеходных дорожек", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Уборочная часть", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Наличие площадок:хозяйственной", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("спортивной", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("детской", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("для отдыха", baseList, listValue, 0, ""),
+            new TextAndSpinnerList("Число малых форм", baseList, listValue, 0, "")
         });
         enter(sequence);
 
@@ -501,15 +522,8 @@ public class SpaceForYourCreativity {
         enter(sequence);
          */
         enter(sequence);
-
         sequence.enumirateSequence(0);
-        document.setSequence(sequence);
-        //log 
-        SDLogPart log = new SDLogPart();
-        document.setLogPart(log);
-        FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(pathToFileCreate, false);
-        document.saveDocument(fileModule);
-        fileModule.close();
+        return sequence;
     }
 
     private static void addProsentWithText(SDSequenceObject sequenceObject, String text) {

@@ -41,6 +41,21 @@ public class SDSequenceObjectTest {
         sequence.AddXMLObject(edit);
         sequence.enumirateSequence(0);
     }
+    
+    /**
+     * Test of getXMLObjectByName method, of class SDSequenceObject.
+     */
+    @Test
+    public void testisExistByName() {
+        assertEquals(true, sequence.isObjectWithNameExist("text1"));
+        assertEquals(true, sequence.isObjectWithNameExist("edit1"));
+        assertEquals(false, sequence.isObjectWithNameExist(""));
+        assertEquals(false, sequence.isObjectWithNameExist("123"));
+        assertEquals(false, sequence.isObjectWithNameExist("a1"));
+        assertEquals(false, sequence.isObjectWithNameExist("1a"));
+        assertEquals(false, sequence.isObjectWithNameExist("evrilhbevlhbefklvhbdlkfbvlkehbrlhvbdlfkbhv'sdb;dscvi"));
+        assertEquals(false, sequence.isObjectWithNameExist("test"));
+    }
 
     /**
      * Test of getXMLObjectByName method, of class SDSequenceObject.

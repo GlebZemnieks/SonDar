@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.documentmodel.objectmodel.WordBase;
 
 /**
@@ -131,6 +132,14 @@ public class SDObjectFactory {
 
     public static SDSpinner getSpinner(WordBase base) {
         return getSpinner(base, 0);
+    }
+
+    public static SDSpinner getSpinner(SDWordsBasePart baseList, String baseName) {
+        return getSpinner(baseList.getList(baseName), 0);
+    }
+
+    public static SDSpinner getSpinner(SDWordsBasePart baseList, String baseName, int itemSelected) {
+        return getSpinner(baseList.getList(baseName), itemSelected);
     }
 
     public static SDSpinner getSpinner(WordBase base, int itemSelected) {

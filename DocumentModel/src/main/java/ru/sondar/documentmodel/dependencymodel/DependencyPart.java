@@ -6,6 +6,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import static ru.sondar.documentmodel.dependencymodel.DependencyItem.DependencyItem_xmlTag;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.SDSequenceObject;
+import ru.sondar.documentmodel.exception.ObjectNotFountException;
 
 /**
  * Object for store dependency item and iteration for them
@@ -27,6 +29,13 @@ public class DependencyPart implements Iterable<DependencyItem> {
 
     public void addDependencyItem(String name, int cellId) {
         this.dependencyList.add(new DependencyItem(name, cellId));
+    }
+
+    public void addDependencyItemWithValidation(SDSequenceObject sequence, String name, int cellId) {
+        if (!sequence.isObjectWithNameExist(name)) {
+            throw new ObjectNotFountException("Try to set dependency to object with name \"" + name + "\" fail. Object not found.");
+        }
+        addDependencyItem(name, cellId);
     }
 
     /**

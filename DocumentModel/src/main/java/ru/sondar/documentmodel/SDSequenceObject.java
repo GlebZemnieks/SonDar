@@ -80,6 +80,15 @@ public class SDSequenceObject extends SDMainObject
         }
         throw new ObjectNotFountException("Object with name \"" + name + "\" not found in sequence");
     }
+    
+    public boolean isObjectWithNameExist(String name){
+        try {
+            getXMLObjectByName(name);
+        } catch (ObjectNotFountException error){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get object by id. Enumeration by id is global. So index of element in
