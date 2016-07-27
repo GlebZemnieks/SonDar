@@ -1,8 +1,8 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -51,6 +51,34 @@ public class SDWordsBasePart {
         } else {
             throw new RuntimeException("Base with name \"" + key + "\" not exist in list");
         }
+    }
+
+    /**
+     * Getter for strings list field. If base with <code>key</code> not exist
+     * throw RunTimeException
+     *
+     * @param i
+     * @return
+     * @throws RuntimeException
+     */
+    public WordBase getList(int i) {
+        if (i < wordsBase.size()) {
+            return (WordBase) (wordsBase.values().toArray()[i]);
+        } else {
+            throw new RuntimeException("Base with id \"" + i + "\" not exist in list");
+        }
+    }
+
+    public void remove(String baseName) {
+        this.wordsBase.remove(baseName);
+    }
+
+    public int size() {
+        return wordsBase.size();
+    }
+
+    public Set<String> getBaseNames() {
+        return wordsBase.keySet();
     }
 
     /**

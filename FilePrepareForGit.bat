@@ -22,6 +22,10 @@ git add Core\src\main\java\*.java
 git add Core\src\test\java\*.java
 git add Core\pom.xml
 
+git add WordsBaseEditor\src\main\java\*.java
+git add WordsBaseEditor\src\test\java\*.java
+git add WordsBaseEditor\pom.xml
+
 git add Client\app\src\main\*.java
 git add Client\app\src\main\*.xml
 git add Client/settings.gradle

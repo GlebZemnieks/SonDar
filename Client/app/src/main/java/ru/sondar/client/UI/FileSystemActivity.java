@@ -94,7 +94,7 @@ public class FileSystemActivity extends Activity {
 		SonDarFolder temp = fileSystem.getFolderByName(Folder.temp.toString());
 		if(temp.getFileList()!=null){
 		    Intent intent = new Intent(this, DocumentSessionActivity.class); 
-		    intent.putExtra("fileName",temp.getFileList()[0]);
+		    intent.putExtra("fileName",temp.getFileList().get(0));
 		    intent.putExtra("logUUID",logUUID.toString());
 			Config.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
 		    startActivity(intent);
@@ -115,16 +115,16 @@ public class FileSystemActivity extends Activity {
 		OnClickListener createNewOnClickListener = new OnClickListener() {
 	       @Override
 	       public void onClick(View v) {
-               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().length == 1) {
-                   String newFileName = fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0].replace(".xml", "") + "_" + fileSystem.getUUID() + ".xml";
-                   fileSystem.copyFile(fileModule, Folder.example.toString(), fileSystem.getFolderByName(Folder.example.toString()).getFileList()[0], Folder.temp.toString(), newFileName);
+               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().size() == 1) {
+                   String newFileName = fileSystem.getFolderByName(Folder.example.toString()).getFileList().get(0).replace(".xml", "") + "_" + fileSystem.getUUID() + ".xml";
+                   fileSystem.copyFile(fileModule, Folder.example.toString(), fileSystem.getFolderByName(Folder.example.toString()).getFileList().get(0), Folder.temp.toString(), newFileName);
                    Intent intent = new Intent(oldActivity, DocumentSessionActivity.class);
                    intent.putExtra("fileName", newFileName);
                    intent.putExtra("logUUID", logUUID.toString());
                    startActivity(intent);
                    finish();
                }
-               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().length > 1){
+               if(fileSystem.getFolderByName(Folder.example.toString()).getFileList().size() > 1){
                    Intent intent = new Intent(oldActivity, ChoiceFileFromList.class);
                    intent.putExtra("folderName",Folder.example.toString());
                    intent.putExtra("logUUID",logUUID.toString());

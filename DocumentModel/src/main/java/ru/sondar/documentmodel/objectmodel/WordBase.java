@@ -8,6 +8,7 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -42,6 +43,7 @@ public class WordBase {
 
     public WordBase() {
         base = new HashMap<>();
+        base.put(null, new ArrayList<String>());
     }
 
     public void add(String item) {
@@ -55,11 +57,45 @@ public class WordBase {
     public int size() {
         return this.getList(null).size();
     }
-    
-    public boolean isFilterExist(String name){
+
+    public boolean isFilterExist(String name) {
         return base.containsKey(name);
     }
 
+    public Set<String> getFilterNames() {
+        return base.keySet();
+    }
+
+    public void addFilter(String filter) {
+        if (isFilterExist(filter)) {
+            throw new RuntimeException("Filter with name \"" + filter + "\" already exist in words base");
+        }
+        base.put(filter, new ArrayList<String>());
+    }
+
+    public void removeFilter(String filter) {
+        if (!isFilterExist(filter)) {
+            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+        }
+        base.remove(filter);
+    }
+
+    public void removeItem(String filter, String item) {
+        if (!isFilterExist(filter)) {
+            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+        }
+        System.out.println(this);
+        System.out.println("try to remove object : " + item + " fron filter : " + filter);
+        this.base.get(filter).remove(item);
+        System.out.println(this);
+    }
+    
+    public static void main(String... args){
+        ArrayList<String> obj = new ArrayList<>();
+        obj.add("test");
+        obj.add("test2");
+        System.out.println(obj.toString());
+    }
     public void add(String filter, String item) {
         if (isFilterExist(filter)) {
             //Add element to current filter list
@@ -77,7 +113,6 @@ public class WordBase {
             throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
         ArrayList<String> temp = new ArrayList<>();
-        System.out.println("Key list : " + base.keySet().toString());
         if (filter == null) {
             for (String name : base.keySet()) {
                 temp.addAll(base.get(name));
@@ -87,6 +122,10 @@ public class WordBase {
             temp.addAll(base.get(filter));
         }
         return temp;
+    }
+
+    public ArrayList<String> getListRaw(String filter) {
+        return base.get(filter);
     }
 
     public void parseObjectFromXML(Element element) {
@@ -120,5 +159,14 @@ public class WordBase {
             }
         }
         fileModule.write("</" + Tag_DataList + ">\n");
+    }
+
+    @Override
+    public String toString() {
+        String temp = wordBaseName + ":\n";
+        for (String filter : base.keySet()) {
+            temp += "Filter : " + filter + " : " + base.get(filter).toString() + "\n";
+        }
+        return temp;
     }
 }
