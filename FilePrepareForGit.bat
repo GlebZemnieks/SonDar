@@ -23,6 +23,7 @@ git add Core\src\test\java\*.java
 git add Core\pom.xml
 
 git add WordsBaseEditor\src\main\java\*.java
+git add WordsBaseEditor\src\main\java\*.form
 git add WordsBaseEditor\src\test\java\*.java
 git add WordsBaseEditor\pom.xml
 
