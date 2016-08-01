@@ -33,6 +33,11 @@ public abstract class PluginConfigurator {
      * Plug-in UUID for identification
      */
     protected UUID pluginUUID;
+    
+    /**
+     * Plug-in name to show Users
+     */
+    public String pluginName;
 
     /**
      * Global folder path
@@ -61,9 +66,9 @@ public abstract class PluginConfigurator {
         if (!localFolder.exists()) {
             localFolder.mkdir();
         }
-        Element element = (new DOMParser(globalPluginFolder + "\\" + localFolderName + "\\" + pluginConfigurationFileName)).getRootElement();
-        NodeList nList = element.getElementsByTagName("properties");
-        this.pluginUUID = UUID.fromString(((Element) (((Element) nList.item(0)).getElementsByTagName("PluginUUID").item(0))).getTextContent());
+        Element properties = (Element)((new DOMParser(globalPluginFolder + "\\" + localFolderName + "\\" + pluginConfigurationFileName)).getRootElement().getElementsByTagName("properties").item(0));
+        this.pluginName = (properties.getElementsByTagName("PluginName").item(0)).getTextContent();
+        this.pluginUUID = UUID.fromString((properties.getElementsByTagName("PluginUUID").item(0)).getTextContent());
     }
 
     /**
