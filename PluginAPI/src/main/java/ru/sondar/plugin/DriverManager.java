@@ -20,6 +20,7 @@ import ru.sondar.plugin.driver.exception.NoSheetAttributeException;
  *
  * @author GlebZemnieks
  */
+
 public class DriverManager {
 
     /**
@@ -56,9 +57,7 @@ public class DriverManager {
      * @throws ParserConfigurationException
      */
     public DriverManager(String globalFolder, String pluginConfigurationFileName) throws SAXException, IOException, ParserConfigurationException {
-        Element element = (new DOMParser(globalFolder + "\\" + pluginConfigurationFileName)).getRootElement();
-        NodeList nList = element.getElementsByTagName("drivers");
-        nList = ((Element) nList.item(0)).getElementsByTagName("driver");
+        NodeList nList = (new DOMParser(globalFolder + "\\" + pluginConfigurationFileName)).getNodeList("drivers", "driver");
         for (int i = 0; i < nList.getLength(); i++) {
             DriverName name;
             if (!"".equals((((Element) nList.item(i)).getAttribute("type")))) {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.xml.parsers.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -51,5 +52,28 @@ public class DOMParser {
      */
     public Element getRootElement() {
         return document.getDocumentElement();
+    }
+
+    /**
+     * Return NodeList by format <code><br>
+     * (rootTag)<br>
+     * (subTag)<br>
+     * (tag)Node(/tag)<br>
+     * (tag)Node2(/tag)<br>
+     * .
+     * ..<br>
+     * (/subTag)<br>
+     * (/rootTag)<br>
+     * </code> Support only one subTag in root object. Count of tag not limit.
+     *
+     * @param subTag
+     * @param tag
+     * @return
+     */
+    public NodeList getNodeList(String subTag, String tag) {
+        Element element = this.getRootElement();
+        NodeList temp = element.getElementsByTagName(subTag);
+        temp = ((Element) temp.item(0)).getElementsByTagName(tag);
+        return temp;
     }
 }
