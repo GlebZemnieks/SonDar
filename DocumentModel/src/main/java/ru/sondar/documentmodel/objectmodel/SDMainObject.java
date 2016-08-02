@@ -4,7 +4,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
-import ru.sondar.documentmodel.internalfunction.*;
 import ru.sondar.documentmodel.objectmodel.exception.*;
 
 /**
@@ -42,12 +41,6 @@ public abstract class SDMainObject {
     protected SDMainObjectType objectType;
 
     /**
-     * InternalFunction object. This function make possible to change current or
-     * another object by trigger of this function.
-     */
-    protected InternalFunction function = null;
-
-    /**
      * Object name. Use for relative calls from another object and to access
      * from plugin whose answering of this document
      */
@@ -60,30 +53,6 @@ public abstract class SDMainObject {
      */
     public SDMainObjectType getObjectType() {
         return this.objectType;
-    }
-
-    /**
-     * Method to set InternalFunction for this object. Return current object for
-     * usability
-     *
-     * @param function
-     * @return
-     */
-    public SDMainObject setInternalFunction(InternalFunction function) {
-        this.function = function;
-        return this;
-    }
-
-    /**
-     * Call of internal object
-     *
-     * @param trigger
-     */
-    public void startInternalFunction(TriggerType trigger) {
-        //Do nothing if internal function not set in this object
-        if (this.function != null) {
-            this.function.makeFunction(trigger);
-        }
     }
 
     /**
@@ -181,16 +150,6 @@ public abstract class SDMainObject {
     public void parseObjectFromXML(Element element) throws ObjectStructureException {
         this.parseAttribute(element);
         this.parseCurrentObjectField(element);
-        this.parseInternalFunction(element);
-    }
-
-    public void parseInternalFunction(Element element) {
-        NodeList tempList = element.getElementsByTagName("InternalFunction");
-        if (tempList.getLength() > 0) {
-            Element tempElement = (Element) tempList.item(0);
-            this.function = new InternalFunction();
-            function.parseXMLString(tempElement);
-        }
     }
 
     /**
@@ -213,19 +172,7 @@ public abstract class SDMainObject {
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
-        this.printInternalFunction(fileModule);
         fileModule.write("</" + Object_MainTag + ">\n");
-    }
-
-    /**
-     * If function was set, print it
-     *
-     * @param fileModule
-     */
-    public void printInternalFunction(FileModuleWriteThreadInterface fileModule) {
-        if (this.function != null) {
-            function.printXMLString(fileModule);
-        }
     }
 
     /**

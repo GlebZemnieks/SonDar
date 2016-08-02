@@ -6,10 +6,6 @@ import static org.junit.Assert.*;
 import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.documentfactory.InternalFunctionFactory;
-import ru.sondar.documentmodel.internalfunction.Function;
-import ru.sondar.documentmodel.internalfunction.InternalFunction;
-import ru.sondar.documentmodel.internalfunction.function.CustomFunction;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
@@ -160,52 +156,6 @@ public class SDMainObjectTest {
         fileModule.delFile();
         fileModule.close();
         this.object.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
-        assertEquals(15, this.object.getID());
-    }
-
-    /**
-     * 2 Test of PrintCurrentObjectField method, of class SDMainObject.
-     *
-     * @throws
-     * ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
-     */
-    @Test
-    public void testPrintCurrentObjectField3() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp2.txt", false);
-        this.object.setID(15);
-        InternalFunction function = InternalFunctionFactory.getInternalFunction();
-        function.AddXMLObject(InternalFunctionFactory.getCustomFunction());
-        this.object.setInternalFunction(function);
-        this.object.printObjectToXML(fileModule);
-        fileModule.delFile();
-        fileModule.close();
-        this.object.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "abstract_temp2.txt"));
-        System.out.println(this.object.function.toString());
-        assertEquals(15, this.object.getID());
-    }
-
-    /**
-     * 2 Test of PrintCurrentObjectField method, of class SDMainObject.
-     *
-     * @throws ObjectStructureException
-     */
-    @Test
-    public void testPrintCurrentObjectField4() throws ObjectStructureException {
-        FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp3.txt", false);
-        this.object.setID(15);
-        InternalFunction function = InternalFunctionFactory.getInternalFunction();
-        Function custom = InternalFunctionFactory.getCustomFunction();
-        custom.AddAction(InternalFunctionFactory.getCheckerAction(null, null, null));
-        custom.AddAction(InternalFunctionFactory.getCheckerAction(null, 12, "test", "hello"));
-        custom.AddAction(InternalFunctionFactory.getSetterAction(null, null, null));
-        custom.AddAction(InternalFunctionFactory.getSetterAction(null, 11, "test2", InternalFunctionFactory.getCheckerAction(null, null, null)));
-        custom.AddAction(InternalFunctionFactory.getSetterAction(null, 10, "test3", null, "hello"));
-        function.AddXMLObject(custom);
-        this.object.setInternalFunction(function);
-        this.object.printObjectToXML(fileModule);
-        fileModule.delFile();
-        fileModule.close();
-        System.out.println(this.object.function.toString());
         assertEquals(15, this.object.getID());
     }
 }

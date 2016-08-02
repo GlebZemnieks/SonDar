@@ -6,7 +6,6 @@ import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.exception.ObjectNotFountException;
-import ru.sondar.documentmodel.internalfunction.interfaces.NavigatorInterface;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
@@ -15,8 +14,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDSequenceObject extends SDMainObject
-        implements NavigatorInterface {
+public class SDSequenceObject extends SDMainObject {
 
     /**
      * Tag for print and parse Sequence object
@@ -80,11 +78,11 @@ public class SDSequenceObject extends SDMainObject
         }
         throw new ObjectNotFountException("Object with name \"" + name + "\" not found in sequence");
     }
-    
-    public boolean isObjectWithNameExist(String name){
+
+    public boolean isObjectWithNameExist(String name) {
         try {
             getXMLObjectByName(name);
-        } catch (ObjectNotFountException error){
+        } catch (ObjectNotFountException error) {
             return false;
         }
         return true;
@@ -191,23 +189,11 @@ public class SDSequenceObject extends SDMainObject
         newObject.sequence = this;
     }
 
-    // Start NavigatorInterface Interface
-    @Override
-    public Object getObject(Object obj) {
-        try {
-            return getXMLObjectByName((String) obj);
-        } catch (ObjectNotFountException ex) {
-            throw new ObjectNotFountException(ex.getMessage() + "; Used by NavigatorInterface", ex);
-        }
-    }
-    // End NavigatorInterface Interface
-
     /**
      * Method for parse sequence.
      *
      * @param element
-     * @throws
-     * ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
+     * @throws ObjectStructureException
      */
     public void parseSequence(Element element) throws ObjectStructureException {
         this.sequenceArray = new ArrayList<>();

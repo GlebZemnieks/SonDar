@@ -4,7 +4,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.interfaces.SetterInterface;
 import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -14,8 +13,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDEditText extends SDMainObject
-        implements SupportDependencyInterface, SetterInterface {
+public class SDEditText extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag for print and parse text filed
@@ -90,13 +88,6 @@ public class SDEditText extends SDMainObject
         this.Text = (String) object;
     }
     // End SupportDependency Interface
-
-    // Start SetterInterface Interface
-    @Override
-    public void setValueByAction(Object obj) {
-        this.setValue(obj);
-    }
-    // End SetterInterface Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

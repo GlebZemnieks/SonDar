@@ -4,7 +4,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface;
 import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -14,8 +13,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDCheckBox extends SDMainObject
-        implements SupportDependencyInterface, ValueCheckerInterface {
+public class SDCheckBox extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag to print and parse text field
@@ -87,13 +85,6 @@ public class SDCheckBox extends SDMainObject
     @Override
     public void setValue(Object object) {
         this.checked = Boolean.valueOf((String) object);
-    }
-    // End SupportDependency Interface
-
-    // Start SupportDependency Interface
-    @Override
-    public boolean ifValue(Object obj) {
-        return (boolean) obj == this.checked;
     }
     // End SupportDependency Interface
 

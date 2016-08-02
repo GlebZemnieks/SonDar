@@ -5,7 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.interfaces.SetterInterface;
 import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -15,8 +14,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDDate extends SDMainObject
-        implements SupportDependencyInterface, SetterInterface {
+public class SDDate extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag to print and parse date field
@@ -71,13 +69,6 @@ public class SDDate extends SDMainObject
         this.date = new Date(Long.parseLong((String) object));
     }
     // End SupportDependency Interface
-
-    // Start SetterInterface Interface
-    @Override
-    public void setValueByAction(Object obj) {
-        this.setValue(obj);
-    }
-    // End SetterInterface Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

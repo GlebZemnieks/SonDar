@@ -5,8 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.internalfunction.interfaces.SetterInterface;
-import ru.sondar.documentmodel.internalfunction.interfaces.ValueCheckerInterface;
 import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -16,8 +14,7 @@ import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDSpinner extends SDMainObject
-        implements SupportDependencyInterface, SetterInterface, ValueCheckerInterface {
+public class SDSpinner extends SDMainObject implements SupportDependencyInterface{
 
     /**
      * Tag for print and parse dataList field
@@ -146,20 +143,6 @@ public class SDSpinner extends SDMainObject
         this.setDefaultItemSelected(Integer.parseInt((String) object));
     }
     // End SupportDependency Interface
-
-    // Start SetterInterface Interface
-    @Override
-    public void setValueByAction(Object obj) {
-        this.setValue(obj);
-    }
-    // End SetterInterface Interface
-
-    // Start ValueCheckerInterface Interface
-    @Override
-    public boolean ifValue(Object obj) {
-        return (int) obj == this.defaultItemSelected;
-    }
-    // End ValueCheckerInterface Interface
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
