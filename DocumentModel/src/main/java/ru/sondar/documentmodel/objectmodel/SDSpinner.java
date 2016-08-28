@@ -153,7 +153,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         if (((Element) list.item(0)).getAttribute("baseName").equals("")) {
             throw new NoFieldException("Missing \"baseName\" attribute");
         }
-        this.setList(this.sequence.document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
+        this.setList(this.getSequence().document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
         if (!((Element) list.item(0)).getAttribute("activeFilter").equals("")) {
             this.activeFilter = ((Element) list.item(0)).getAttribute("activeFilter");
         } else {

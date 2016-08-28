@@ -185,8 +185,8 @@ public class SDSequenceObject extends SDMainObject {
             this.sequenceArrayLength += ((SDSequenceObject) newObject).sequenceArrayLength;
         }
         this.sequenceArrayLength++;
+        newObject.setSequence(this);
         this.sequenceArray.add(newObject);
-        newObject.sequence = this;
     }
 
     /**
@@ -203,12 +203,16 @@ public class SDSequenceObject extends SDMainObject {
             if (tempList.item(count).getNodeName().equals("object")) {
                 Element tempElement = (Element) tempList.item(count);
                 SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
-                SDMainObject tempObject = newObjectType.getObjectByType();
-                tempObject.parseObjectFromXML(tempElement);
+                SDMainObject tempObject = this.getObjectByType(newObjectType);
                 AddXMLObject(tempObject);
+                tempObject.parseObjectFromXML(tempElement);
             }
         }
         this.enumirateSequence(0);
+    }
+    
+    public SDMainObject getObjectByType(SDMainObjectType type){
+        return type.getObjectByType();
     }
 
     /**

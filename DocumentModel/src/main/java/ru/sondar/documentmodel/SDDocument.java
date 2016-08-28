@@ -203,7 +203,7 @@ public class SDDocument {
         parser.getWordsBasePart(wordsBase);
         this.sequence = sequence;
         this.sequence.document = this;
-        parser.getSequence(sequence);
+        parser.getSequence(this.sequence);
         dependency = new DependencyPart();
         parser.getDependencyPart(dependency);
         logPart = new SDLogPart();

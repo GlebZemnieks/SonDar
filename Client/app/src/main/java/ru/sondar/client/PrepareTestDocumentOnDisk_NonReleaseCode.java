@@ -15,7 +15,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<fileName>Example1.xml</fileName>\n"
 				+ "<fileName>Example2.xml</fileName>\n"
 				+ "<fileName>Example3.xml</fileName>\n"
-		+ "</configFile>" );
+				+ "</configFile>" );
 		writeThreadConfig.close();
 		FileModuleWriteThreadInterface writeThread = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/example/" + "Example1.xml");
 		writeThread.write("<Document>\n"
@@ -25,6 +25,8 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<creationTime>45780364596876</creationTime>\n"
 				+ "<lastModificationTime>248657685765234</lastModificationTime>\n"
 				+ "</head>\n"
+				+ "<WordsBase>\n"
+				+ "</WordsBase>\n"
 				+ "<XMLSequence>\n"
 				+ "<object type=\"CheckBox\" id=\"0\">\n"
 				+ "<text>Test Data Xoxoxo</text>\n"
@@ -62,6 +64,8 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<creationTime>45780364596876</creationTime>\n"
 				+ "<lastModificationTime>248657685765234</lastModificationTime>\n"
 				+ "</head>\n"
+				+ "<WordsBase>\n"
+				+ "</WordsBase>\n"
 				+ "<XMLSequence>\n"
 				+ "<object type=\"Text\" id=\"0\">\n"
 				+ "<text>Test Data Xoxoxo</text>\n"
@@ -81,6 +85,21 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				"<creationTime>1466359747967</creationTime>\n" +
 				"<lastModificationTime>1466359747967</lastModificationTime>\n" +
 				"</head>\n" +
+				"<WordsBase>\n" +
+					"<dataList name=\"test\">\n" +
+						"<item>01.03.02</item>\n" +
+						"<item>01.04.02</item>\n" +
+						"<item>09.03.01</item>\n" +
+						"<item>09.03.02</item>\n" +
+						"<item>01.04.01</item>\n" +
+						"<item>01.04.02</item>\n" +
+					"</dataList>" +
+					"<dataList name=\"test2\">\n" +
+						"<item>Бакалавр</item>\n" +
+						"<item>Магистр</item>\n" +
+						"<item>Специалист</item>\n" +
+					"</dataList>" +
+				"</WordsBase>\n" +
 				"<XMLSequence>\n" +
 				"<object type=\"Text\" id=\"0\">\n" +
 				"<text>Выписка из протокола № </text>\n" +
@@ -91,7 +110,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				"</object>\n" +
 				"<object type=\"Text\" id=\"2\">\n" +
 				"<text> от </text>\n" +
-				"</object>\n" +
+				"</object>\n" + "" +
 				"<object type=\"Date\" id=\"3\" name=\"protocolDate\">\n" +
 				"<date>1466359747997</date>\n" +
 				"</object>\n" +
@@ -104,13 +123,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				"<text>по специальности(направлению) :</text>\n" +
 				"</object>\n" +
 				"<object type=\"Spinner\" id=\"7\" name=\"specialtiesCode\">\n" +
-				"<dataList>\n" +
-				"<item>01.03.02</item>\n" +
-				"<item>01.04.02</item>\n" +
-				"<item>09.03.01</item>\n" +
-				"<item>09.03.02</item>\n" +
-				"<item>01.04.01</item>\n" +
-				"<item>01.04.02</item>\n" +
+				"<dataList baseName=\"test\">" +
 				"</dataList>\n" +
 				"<ItemSelected>0</ItemSelected>\n" +
 				"</object>\n" +
@@ -147,10 +160,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				"<text>степень </text>\n" +
 				"</object>\n" +
 				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
-				"<dataList>\n" +
-				"<item>Бакалавр</item>\n" +
-				"<item>Магистр</item>\n" +
-				"<item>Специалист</item>\n" +
+				"<dataList baseName=\"test2\">" +
 				"</dataList>\n" +
 				"<ItemSelected>0</ItemSelected>\n" +
 				"</object>\n" +

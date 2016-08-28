@@ -1,7 +1,12 @@
 package ru.sondar.client.UI;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -40,11 +45,12 @@ public class FileSystemActivity extends Activity {
      * Session UUID
      */
 	UUID logUUID;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Config.setLogger(new ALogging());
+		prepare();
         this.logUUID = UUID.randomUUID();
 		Config.Log(logTag,"start");
 		Config.Log(logTag,"File module prepare");
@@ -55,7 +61,7 @@ public class FileSystemActivity extends Activity {
 		fileSystem.addFolder(Folder.temp.toString());
 		fileSystem.addFolder(Folder.done.toString());
 		fileSystem.addFolder(Folder.log.toString());
-		
+
 	}
 
     /**
@@ -92,12 +98,12 @@ public class FileSystemActivity extends Activity {
      */
 	public void isSomeDocumentInTemp(SonDarFileSystem fileSystem){
 		SonDarFolder temp = fileSystem.getFolderByName(Folder.temp.toString());
-		if(temp.getFileList()!=null){
-		    Intent intent = new Intent(this, DocumentSessionActivity.class); 
-		    intent.putExtra("fileName",temp.getFileList().get(0));
-		    intent.putExtra("logUUID",logUUID.toString());
+		if(temp.getFileList().size()!=0){
 			Config.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
-		    startActivity(intent);
+			Intent intent = new Intent(this, DocumentSessionActivity.class);
+			intent.putExtra("fileName",temp.getFileList().get(0));
+			intent.putExtra("logUUID",logUUID.toString());
+			startActivity(intent);
 			finish();
 		}
 	}
@@ -135,7 +141,7 @@ public class FileSystemActivity extends Activity {
 	          }
 		};
         SonDarFolder example = fileSystem.getFolderByName(Folder.example.toString());
-        if(example.getFileList()==null){
+        if(example.isEmpty()){
             createNew.setEnabled(false);
             this.isApplicationActive = false;
         }
@@ -164,7 +170,7 @@ public class FileSystemActivity extends Activity {
 		       }
 			};
 		SonDarFolder work = fileSystem.getFolderByName(Folder.work.toString());
-		if(work.getFileList()==null){
+		if(work.isEmpty()){
 			open.setEnabled(false);
 		}
 		open.setOnClickListener(createNewOnClickListener);
@@ -189,7 +195,7 @@ public class FileSystemActivity extends Activity {
             }
         };
         SonDarFolder work = fileSystem.getFolderByName(Folder.work.toString());
-        if(work.getFileList()==null){
+		if(work.isEmpty()){
             open.setEnabled(false);
         }
         open.setOnClickListener(createNewOnClickListener);
@@ -201,37 +207,48 @@ public class FileSystemActivity extends Activity {
      */
 	public void prepare(){
 		File mainDir = new File(Environment.getExternalStorageDirectory()+"/sondar");
+		mainDir.delete();
 		mainDir.mkdir();
 	    File file = new File(Environment.getExternalStorageDirectory()+"/sondar/example");
+		file.delete();
 		file.mkdir();
 		file = new File(Environment.getExternalStorageDirectory()+"/sondar/done");
+		file.delete();
 		file.mkdir();
 		file = new File(Environment.getExternalStorageDirectory()+"/sondar/work");
+		file.delete();
 		file.mkdir();
 		file = new File(Environment.getExternalStorageDirectory()+"/sondar/log");
+		file.delete();
 		file.mkdir();
 		file = new File(Environment.getExternalStorageDirectory()+"/sondar/temp");
+		file.delete();
 		file.mkdir();
 		try {
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/example/config.txt");
 			file.delete();
-			file.createNewFile();
+			prepareConfigFile(file);
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/done/config.txt");
 			file.delete();
-			file.createNewFile();
+			prepareConfigFile(file);
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/work/config.txt");
 			file.delete();
-			file.createNewFile();
+			prepareConfigFile(file);
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/log/config.txt");
 			file.delete();
-			file.createNewFile();
+			prepareConfigFile(file);
 			file = new File(Environment.getExternalStorageDirectory()+"/sondar/temp/config.txt");
 			file.delete();
-			file.createNewFile();
+			prepareConfigFile(file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		new PrepareTestDocumentOnDisk_NonReleaseCode(this);
+	}
+	private void prepareConfigFile(File file) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"));
+		out.write("<configFile>\n</configFile>\n");
+		out.close();
 	}
 }

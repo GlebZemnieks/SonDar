@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import org.w3c.dom.Element;
 
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
@@ -115,6 +116,11 @@ public abstract class AXMLMainObject extends SDMainObject {
      * Update object fields from view fields
      */
     public abstract void updateState();
+
+    public void setSequence(SDSequenceObject sequence){
+        super.setSequence(sequence);
+        this.sdMainObject.setSequence(sequence);
+    }
 
     @Override
     protected void parseCurrentObjectField(Element element) throws ObjectStructureException {

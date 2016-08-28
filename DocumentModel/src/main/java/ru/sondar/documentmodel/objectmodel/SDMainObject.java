@@ -32,7 +32,15 @@ public abstract class SDMainObject {
     /**
      * Domain sequence
      */
-    public SDSequenceObject sequence;
+    private SDSequenceObject sequence;
+    
+    public void setSequence(SDSequenceObject sequence){
+        this.sequence = sequence;
+    }
+    
+    public SDSequenceObject getSequence(){
+        return this.sequence;
+    }
 
     /**
      * Object type to access personal and overloaded methods. Set once when

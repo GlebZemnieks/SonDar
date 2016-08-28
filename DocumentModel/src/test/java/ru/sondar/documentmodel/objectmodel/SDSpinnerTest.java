@@ -170,7 +170,7 @@ public class SDSpinnerTest {
         base.addNewBase("test", base1);
         document.setWordsBasePart(base);
         SDSequenceObject sequence = new SDSequenceObject();
-        spinner.sequence = sequence;
+        spinner.setSequence(sequence);
         sequence.document = document;
         this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
         assertEquals(spinner.getList().size(), 2);
@@ -230,7 +230,7 @@ public class SDSpinnerTest {
      */
     @Test
     public void testFilter() {
-        spinner.setList(spinner.sequence.document.getWordsBasePart().getList("test4"));
+        spinner.setList(spinner.getSequence().document.getWordsBasePart().getList("test4"));
         assertEquals(null, spinner.getActiveFilter());
         assertEquals(8, spinner.getList().size());
         assertEquals(1, spinner.getDefaultItemSelected());

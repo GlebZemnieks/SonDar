@@ -4,6 +4,7 @@ import ru.sondar.documentmodel.objectmodel.SDText;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDText;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;

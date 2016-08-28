@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -165,7 +166,7 @@ public class DocumentSessionActivity extends Activity {
 			super.onPause();
 			finish();
 		}catch(Exception error){
-			Config.Log(logTag, "Error");
+			Config.Log(logTag, "Error : " + error.getMessage());
 			super.onPause();
 		}
 		

@@ -93,6 +93,10 @@ public class SonDarFolder {
         return this.config.configFileList;
     }
 
+    public boolean isEmpty() {
+        return (this.config.isEmpty());
+    }
+    
     /**
      * Return global file name if it exist in this folder
      *
