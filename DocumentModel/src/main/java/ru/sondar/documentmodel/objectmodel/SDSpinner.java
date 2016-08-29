@@ -3,10 +3,11 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.documentmodel.objectmodel.exception.NoFieldException;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
+import ru.sondar.core.parser.exception.NoFieldException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * SDSpinner object
@@ -43,7 +44,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
 
     public void setActiveFilter(String filter) {
         if (!wordBase.isFilterExist(filter)) {
-            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+            throw new SonDarRuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
         this.activeFilter = filter;
         this.defaultItemSelected = 0;

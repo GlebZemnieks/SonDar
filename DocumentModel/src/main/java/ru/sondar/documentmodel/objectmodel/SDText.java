@@ -1,5 +1,7 @@
 package ru.sondar.documentmodel.objectmodel;
 
+import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.parser.exception.NoFieldException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;

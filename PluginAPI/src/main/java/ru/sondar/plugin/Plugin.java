@@ -3,6 +3,7 @@ package ru.sondar.plugin;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
+import org.w3c.dom.Element;
 import ru.sondar.documentmodel.dependencymodel.DependencyItem;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.documentmodel.SDDocument;
@@ -19,6 +20,12 @@ import ru.sondar.plugin.driver.exception.RowNotFoundException;
  */
 public abstract class Plugin {
 
+    public Plugin(Element plugin){
+        if(!plugin.hasAttribute("folderName")){
+            throw new 
+        }
+    }
+    
     /**
      * Plug-in configuration object
      */

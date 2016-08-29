@@ -7,7 +7,7 @@ import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.exception.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.*;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * Document model

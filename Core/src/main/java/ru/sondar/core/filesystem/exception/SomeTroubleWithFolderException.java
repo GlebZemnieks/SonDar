@@ -1,5 +1,7 @@
 package ru.sondar.core.filesystem.exception;
 
+import ru.sondar.core.exception.SonDarException;
+
 /**
  * Main exception to throws above.<br>
  * {@link ru.sondar.core.filesystem.exception.ConfigFileFormatException}<br>
@@ -9,7 +11,7 @@ package ru.sondar.core.filesystem.exception;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SomeTroubleWithFolderException extends Exception {
+public class SomeTroubleWithFolderException extends SonDarException {
 
     public SomeTroubleWithFolderException() {
         super();

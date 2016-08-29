@@ -1,4 +1,4 @@
-package ru.sondar.documentmodel.objectmodel.exception;
+package ru.sondar.core.parser.exception;
 
 /**
  * Throw when you can't find object's field

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDEditText;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  *
@@ -104,7 +104,7 @@ public class SDEditTextTest {
     /**
      * Test of printCurrentObjectField method, of class SDEditText.
      *
-     * @throws ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException
+     * @throws ru.sondar.core.parser.exception.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {

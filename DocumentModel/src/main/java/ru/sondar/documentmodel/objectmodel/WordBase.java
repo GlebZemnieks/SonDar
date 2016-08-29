@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
 import java.util.ArrayList;
@@ -11,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import static ru.sondar.documentmodel.objectmodel.SDWordsBasePart.Tag_DataList;
 
@@ -68,26 +64,23 @@ public class WordBase {
 
     public void addFilter(String filter) {
         if (isFilterExist(filter)) {
-            throw new RuntimeException("Filter with name \"" + filter + "\" already exist in words base");
+            throw new SonDarRuntimeException("Filter with name \"" + filter + "\" already exist in words base");
         }
         base.put(filter, new ArrayList<String>());
     }
 
     public void removeFilter(String filter) {
         if (!isFilterExist(filter)) {
-            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+            throw new SonDarRuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
         base.remove(filter);
     }
 
     public void removeItem(String filter, String item) {
         if (!isFilterExist(filter)) {
-            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+            throw new SonDarRuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
-        System.out.println(this);
-        System.out.println("try to remove object : " + item + " fron filter : " + filter);
         this.base.get(filter).remove(item);
-        System.out.println(this);
     }
     
     public static void main(String... args){
@@ -110,7 +103,7 @@ public class WordBase {
 
     public ArrayList<String> getList(String filter) {
         if (!isFilterExist(filter)) {
-            throw new RuntimeException("Filter with name \"" + filter + "\" not exist in words base");
+            throw new SonDarRuntimeException("Filter with name \"" + filter + "\" not exist in words base");
         }
         ArrayList<String> temp = new ArrayList<>();
         if (filter == null) {

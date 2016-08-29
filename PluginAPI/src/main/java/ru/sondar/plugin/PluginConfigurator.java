@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.sondar.core.DOMParser;
 import ru.sondar.documentmodel.SDDocument;
