@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDDate;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  *

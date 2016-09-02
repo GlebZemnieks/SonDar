@@ -4,8 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoFieldException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * SDEditText object
@@ -111,6 +111,11 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
         this.Text = this.Text.replaceAll("\n", "Zzz");
         fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n"
                 + "<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " : editText(" + this.textLength + ") : " + this.Text;
     }
 
 }

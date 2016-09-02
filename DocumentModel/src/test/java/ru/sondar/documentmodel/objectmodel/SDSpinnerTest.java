@@ -13,8 +13,8 @@ import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoFieldException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  *
@@ -182,7 +182,7 @@ public class SDSpinnerTest {
      * Test of printCurrentObjectField method, of class SDSpinner.
      *
      * @throws
-     * ru.sondar.core.parser.exception.ObjectStructureException
+     * ru.sondar.core.exception.parser.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {

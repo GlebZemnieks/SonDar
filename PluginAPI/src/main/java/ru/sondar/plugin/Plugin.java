@@ -1,17 +1,22 @@
 package ru.sondar.plugin;
 
+import ru.sondar.core.exception.parser.NoFieldException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
-import ru.sondar.documentmodel.dependencymodel.DependencyItem;
-import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import ru.sondar.core.Config;
+import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.documentmodel.dependencymodel.*;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.plugin.driver.DBDriverInterface;
-import ru.sondar.plugin.driver.DBRowInterface;
-import ru.sondar.plugin.driver.exception.DataBaseFileNotFoundException;
-import ru.sondar.plugin.driver.exception.RowNotFoundException;
+import ru.sondar.plugin.driver.*;
+import ru.sondar.plugin.driver.exception.*;
 
 /**
  * Abstract class for customer plug-in
@@ -20,16 +25,27 @@ import ru.sondar.plugin.driver.exception.RowNotFoundException;
  */
 public abstract class Plugin {
 
-    public Plugin(Element plugin){
-        if(!plugin.hasAttribute("folderName")){
-            throw new 
+    public String folderNameTag = "folderName";
+
+    public String versionTag = "version";
+
+    public Plugin(Element plugin) throws NoFieldException, SAXException, IOException, ParserConfigurationException {
+        NodeList list = plugin.getElementsByTagName(folderNameTag);
+        if (list.item(0) == null) {
+            throw new NoFieldException("Missing \"folderName\" field");
         }
+        list = plugin.getElementsByTagName(versionTag);
+        if (list.item(0) == null) {
+            throw new NoFieldException("Missing \"version\" field");
+        }
+        this.configurator = new PluginConfigurator(Config.getAbsolutePath(), plugin.getElementsByTagName(folderNameTag).item(0).getTextContent());
+        this.manager = new DriverManager(this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName, this.configurator.pluginConfigurationFileName);
     }
-    
+
     /**
      * Plug-in configuration object
      */
-    protected PluginConfigurator configurator;
+    public PluginConfigurator configurator;
 
     /**
      * Getter for plug-in UUID fields
@@ -43,15 +59,25 @@ public abstract class Plugin {
     /**
      * Driver manager object
      */
-    protected DriverManager manager;
+    public DriverManager manager;
 
     /**
      * Getter for supported drivers list
      *
      * @return
      */
-    public Set<DriverName> getDriversList() {
-        return this.manager.getDriversList();
+    public ArrayList<DriverName> getDriversList() {
+        ArrayList<DriverName> temp = new ArrayList<>();
+        temp.addAll(this.manager.getDriversList());
+        return temp;
+    }
+
+    public ArrayList<Object> getKeyList(DriverName driver) throws DataBaseFileNotFoundException {
+        DBDriverInterface driverObject = this.manager.getDriver(driver);
+        driverObject.connectToDB();
+        ArrayList<Object> temp = this.manager.getDriver(driver).getKeyList();
+        driverObject.closeConnection();
+        return temp;
     }
 
     /**
@@ -66,7 +92,7 @@ public abstract class Plugin {
     public SDDocument importDocumentFromDB(DriverName name, String key) throws DataBaseFileNotFoundException, RowNotFoundException {
         DBDriverInterface driver = this.manager.getDriver(name);
         driver.connectToDB();
-        SDDocument document = this.configurator.getExampleDocument();
+        SDDocument document = this.getExampleDocument();
         DBRowInterface row = driver.getRowByKey(key);
         document.getHeadPart().setUUID(UUID.fromString(key));
         Iterator<DependencyItem> iterator = document.getDependencyPart().iterator();
@@ -124,4 +150,26 @@ public abstract class Plugin {
      */
     protected abstract void cutsomExportParameters(DriverName name, SDDocument document);
 
+    /**
+     * Generate default file in plug-in folder
+     */
+    public void generateExampleFile() {
+        SDDocument document = this.getExampleDocument();
+        FileModuleWriteThread fileThread = new FileModuleWriteThread(this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\\Demo.xml", false);
+        document.saveDocument(fileThread);
+        fileThread.close();
+    }
+
+    /**
+     * Abstract method for building current document model
+     *
+     * @return
+     */
+    public abstract SDDocument getExampleDocument();
+
+    @Override
+    public String toString() {
+        return "Global folder : \"" + this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\"\n"
+                + "pluginList : " + this.manager.supportedDrivers.toString();
+    }
 }

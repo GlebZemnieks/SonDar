@@ -7,15 +7,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import ru.sondar.core.DOMParser;
-import ru.sondar.documentmodel.SDDocument;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 
 /**
  * Plug-in configuration abstract class
  *
  * @author GlebZemnieks
  */
-public abstract class PluginConfigurator {
+public class PluginConfigurator {
 
     /**
      * Plug-in folder name
@@ -33,6 +31,10 @@ public abstract class PluginConfigurator {
      */
     protected UUID pluginUUID;
     
+    public UUID getPluginUUID(){
+        return this.pluginUUID;
+    }
+    
     /**
      * Plug-in name to show Users
      */
@@ -41,7 +43,7 @@ public abstract class PluginConfigurator {
     /**
      * Global folder path
      */
-    private String globalPluginFolder = null;
+    public String globalPluginFolder = null;
 
     public PluginConfigurator(String globalFolder, String localFoldeName) throws SAXException, IOException, ParserConfigurationException {
         this.globalPluginFolder = globalFolder;
@@ -66,24 +68,6 @@ public abstract class PluginConfigurator {
             localFolder.mkdir();
         }
         Element properties = (Element)((new DOMParser(globalPluginFolder + "\\" + localFolderName + "\\" + pluginConfigurationFileName)).getRootElement().getElementsByTagName("properties").item(0));
-        this.pluginName = (properties.getElementsByTagName("PluginName").item(0)).getTextContent();
         this.pluginUUID = UUID.fromString((properties.getElementsByTagName("PluginUUID").item(0)).getTextContent());
     }
-
-    /**
-     * Generate default file in plug-in folder
-     */
-    public void generateExampleFile() {
-        SDDocument document = this.getExampleDocument();
-        FileModuleWriteThread fileThread = new FileModuleWriteThread(this.globalPluginFolder + "\\" + this.localFolderName + "\\Demo.xml", false);
-        document.saveDocument(fileThread);
-        fileThread.close();
-    }
-
-    /**
-     * Abstract method for building current document model
-     *
-     * @return
-     */
-    public abstract SDDocument getExampleDocument();
 }

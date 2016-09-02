@@ -8,7 +8,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  *
@@ -118,7 +118,7 @@ public class SDMainObjectTest {
      * 2 Test of ParseCurrentObjectField method, of class SDMainObject.
      *
      * @throws
-     * ru.sondar.core.parser.exception.ObjectStructureException
+     * ru.sondar.core.exception.parser.ObjectStructureException
      */
     @Test
     public void testParseCurrentObjectField2() throws ObjectStructureException {
@@ -130,7 +130,7 @@ public class SDMainObjectTest {
      * Test of PrintCurrentObjectField method, of class SDMainObject.
      *
      * @throws
-     * ru.sondar.core.parser.exception.ObjectStructureException
+     * ru.sondar.core.exception.parser.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
@@ -146,7 +146,7 @@ public class SDMainObjectTest {
      * 2 Test of PrintCurrentObjectField method, of class SDMainObject.
      *
      * @throws
-     * ru.sondar.core.parser.exception.ObjectStructureException
+     * ru.sondar.core.exception.parser.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {

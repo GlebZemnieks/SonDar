@@ -7,7 +7,7 @@ import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.exception.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.*;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * Document model
@@ -237,4 +237,23 @@ public class SDDocument {
         fileModule.write("</Document>\n");
     }
 
+    public static boolean isInFormat(String fileName) {
+        //Now - validation using read document. No exception - Valid!
+        //Later - after XMLScheme integration use it!
+        try {
+            SDDocument document = new SDDocument();
+            document.loadDocument(fileName);
+
+        } catch (SAXException | IOException | ParserConfigurationException | ObjectStructureException ex) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public String toString(){
+        String temp = "Document : " + this.headPart.toString();
+        temp += "Sequence : " + this.sequence.toString();
+        return temp;
+    }
 }

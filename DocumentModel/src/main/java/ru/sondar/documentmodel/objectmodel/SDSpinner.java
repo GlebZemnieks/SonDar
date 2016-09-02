@@ -6,8 +6,8 @@ import org.w3c.dom.NodeList;
 import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoFieldException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * SDSpinner object

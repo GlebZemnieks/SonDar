@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * SDHeadPart object
@@ -169,6 +169,11 @@ public class SDHeadPart extends SDMainObject {
                 + "<creationTime>" + this.creationTime.getTime() + "</creationTime>\n"
                 + "<lastModificationTime>" + this.lastModificationTime.getTime() + "</lastModificationTime>\n"
                 + "</" + Tag_MainObject + ">\n");
+    }
+
+    @Override
+    public String toString() {
+        return "Id : " + this.getUUID().toString() + " : plugin : " + this.getPluginUUID().toString() + "\n";
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.sondar.core.parser.exception;
+package ru.sondar.core.exception.parser;
 
 /**
  * Throw if parsing attribute value is null

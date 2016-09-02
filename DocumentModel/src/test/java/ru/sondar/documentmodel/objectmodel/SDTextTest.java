@@ -8,8 +8,8 @@ import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDText;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.parser.exception.NoAttributeException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoAttributeException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  *

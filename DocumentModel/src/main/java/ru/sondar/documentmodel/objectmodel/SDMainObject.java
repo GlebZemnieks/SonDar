@@ -1,9 +1,8 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.core.parser.exception.NoAttributeException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoAttributeException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.exception.*;
@@ -35,12 +34,12 @@ public abstract class SDMainObject {
      * Domain sequence
      */
     private SDSequenceObject sequence;
-    
-    public void setSequence(SDSequenceObject sequence){
+
+    public void setSequence(SDSequenceObject sequence) {
         this.sequence = sequence;
     }
-    
-    public SDSequenceObject getSequence(){
+
+    public SDSequenceObject getSequence() {
         return this.sequence;
     }
 
@@ -199,7 +198,8 @@ public abstract class SDMainObject {
      */
     @Override
     public String toString() {
-        return "ObjectType:" + this.objectType + ":id:" + this.ID + ":name:" + this.objectName;
+        return "ObjectType : " + this.objectType + " : id : " + this.ID
+                + " : name : " + this.objectName;
     }
 
 }

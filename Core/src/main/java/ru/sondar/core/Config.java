@@ -1,5 +1,6 @@
 package ru.sondar.core;
 
+import java.io.File;
 import ru.sondar.core.logging.*;
 
 /**
@@ -43,5 +44,10 @@ public class Config {
      */
     public static void Log(String tag, String msg) {
         Config.logger.Log(tag, msg);
+    }
+    
+    public static String getAbsolutePath(){
+        File file = new File("");
+        return file.getAbsolutePath();
     }
 }

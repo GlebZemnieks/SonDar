@@ -41,11 +41,26 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                E:\Development\SonDar\PluginAPI\target\libs
+                                E:\Development\SonDar\PluginAPI\target\lib
                             </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>ru.sondar.plugin.DriverName</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>

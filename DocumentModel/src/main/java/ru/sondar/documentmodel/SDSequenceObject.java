@@ -6,7 +6,7 @@ import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.exception.ObjectNotFountException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * Objects sequence object
@@ -210,8 +210,8 @@ public class SDSequenceObject extends SDMainObject {
         }
         this.enumirateSequence(0);
     }
-    
-    public SDMainObject getObjectByType(SDMainObjectType type){
+
+    public SDMainObject getObjectByType(SDMainObjectType type) {
         return type.getObjectByType();
     }
 
@@ -238,5 +238,14 @@ public class SDSequenceObject extends SDMainObject {
         for (int count = 0; count < this.sequenceArray.size(); count++) {
             this.getXMLObject(count + this.ID + 1).printObjectToXML(fileModule);
         }
+    }
+
+    @Override
+    public String toString() {
+        String temp = "Obj Count : " + this.sequenceArrayLength + " : \n";
+        for (SDMainObject sDMainObject : sequenceArray) {
+            temp += sDMainObject.toString() + "\n";
+        }
+        return temp;
     }
 }

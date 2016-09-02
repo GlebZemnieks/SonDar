@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,6 +115,27 @@ public class ExcelDBDriver implements DBDriverInterface {
     }
 
     @Override
+    public DBDriverConfiguration getConfiguration() {
+        return this.configuration;
+    }
+
+    @Override
+    public ArrayList<Object> getKeyList() {
+        HSSFSheet sheet = this.workBook.getSheetAt(activeSheet);
+        Iterator<Row> rows = sheet.rowIterator();
+        if (rows.hasNext()) {
+            rows.next();
+        }
+        ArrayList<Object> temp = new ArrayList<>();
+        while (rows.hasNext()) {
+            HSSFRow row = (HSSFRow) rows.next();
+            HSSFCell keyCell = row.getCell(this.configuration.getKeyCellId(activeSheet));
+            temp.add(keyCell.getStringCellValue());
+        }
+        return temp;
+    }
+
+    @Override
     public void closeConnection() {
         try {
             this.fileSystem.writeFilesystem(new FileOutputStream(dataBase));
@@ -127,9 +149,9 @@ public class ExcelDBDriver implements DBDriverInterface {
 
     @Override
     public String toString() {
-        String temp = "Excel driver : ";
+        String temp = "Excel driver : \n";
         for (int i = 0; i < this.configuration.sheetConfigurations.size(); i++) {
-            temp += ("\n " + this.configuration.sheetConfigurations.get(i).toString());
+            temp += (this.configuration.sheetConfigurations.get(i).toString());
         }
         return temp;
     }

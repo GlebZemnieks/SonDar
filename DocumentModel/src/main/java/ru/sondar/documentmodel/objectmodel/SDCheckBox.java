@@ -4,8 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.core.exception.parser.NoFieldException;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 
 /**
  * SDCheckBox object
@@ -109,5 +109,9 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
         fileModule.write("<" + CheckBox_textFieldTag + ">" + this.Text + "</" + CheckBox_textFieldTag + ">\n"
                 + "<" + CheckBox_defaultCheck + ">" + this.checked + "</" + CheckBox_defaultCheck + ">\n");
     }
-
+    
+    @Override
+    public String toString() {
+        return super.toString() + " : boolean : " + this.checked;
+    }
 }

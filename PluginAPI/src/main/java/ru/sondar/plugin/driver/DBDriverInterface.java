@@ -1,5 +1,6 @@
 package ru.sondar.plugin.driver;
 
+import java.util.ArrayList;
 import ru.sondar.plugin.driver.exception.DataBaseFileNotFoundException;
 import ru.sondar.plugin.driver.exception.RowNotFoundException;
 
@@ -36,6 +37,20 @@ public interface DBDriverInterface {
      * @return
      */
     DBRowInterface createNewRowInDB(Object newKey);
+
+    /**
+     * Get list of value by key row.
+     *
+     * @return
+     */
+    ArrayList<Object> getKeyList();
+
+    /**
+     * Return configuration object of this driver
+     *
+     * @return
+     */
+    DBDriverConfiguration getConfiguration();
 
     /**
      * Close data base connection with transactions
