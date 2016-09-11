@@ -2,11 +2,13 @@ package ru.sondar.client.documentmodel.android;
 
 import android.content.Context;
 import android.widget.LinearLayout;
+
+import ru.sondar.core.Config;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDDOMParser;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 public class AXMLDocument extends SDDocument {
 
@@ -47,7 +49,12 @@ public class AXMLDocument extends SDDocument {
      */
 	public LinearLayout getStartLayout(){
 		getSequense().resetView();
-		return generator.generateLayout(this.context, getSequense(), 0, footer);
+		try {
+			return generator.generateLayout(this.context, getSequense(), 0, footer);
+		} catch (XMLSequenceIndexOverflowException error){
+			Config.Log("getStartLayout","Try to open empty document(No object defined). Something wrong, but 'okay' - return empty layout. If this problem in log unexpected -> GLOBAL WARNING, suspected dataloss");
+			return new LinearLayout(this.context);
+		}
 	}
 
 	/**
@@ -57,7 +64,7 @@ public class AXMLDocument extends SDDocument {
 	public LinearLayout getNextLayout(){
 		((AXMLSequenceObject) sequence).updateState();
 		((AXMLSequenceObject) sequence).resetView();
-		return generator.generateLayout(this.context, ((AXMLSequenceObject) sequence), ((AXMLSequenceObject) sequence).getLastIdInDomain()+1, footer);
+		return generator.generateLayout(this.context, ((AXMLSequenceObject) sequence), ((AXMLSequenceObject) sequence).getLastIdInDomain() + 1, footer);
 	}
 
 	/**
@@ -74,20 +81,14 @@ public class AXMLDocument extends SDDocument {
 	}
 
 	@Override
-	public void loadDocument(SDDOMParser parser, SDSequenceObject sequence) throws ObjectStructureException {
-		super.loadDocument(parser, sequence);
-	}
-
-	@Override
 	public void saveDocument(FileModuleWriteThreadInterface fileModule) {
 		((AXMLSequenceObject) sequence).updateState();
 		super.saveDocument(fileModule);
-		
     }
 
 	@Override
     public AXMLSequenceObject getSequense() {
-        return (AXMLSequenceObject)sequence;
+        return (AXMLSequenceObject) sequence;
     }
 	
 	

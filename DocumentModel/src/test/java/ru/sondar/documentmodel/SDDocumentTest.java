@@ -10,6 +10,7 @@ import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
 
 /**
  *
@@ -25,6 +26,10 @@ public class SDDocumentTest {
         document.setHeadPart(new SDHeadPart());
         SDSequenceObject sequence = new SDSequenceObject();
         sequence.parseSequence(TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
+        for (int i = 0; i < 6; i++) {
+            SDMainObject obj = sequence.getXMLObject(i);
+            assertEquals(i, obj.getID());
+        }
         document.setSequence(sequence);
         DependencyPart dependency = new DependencyPart();
         dependency.addDependencyItem("test", 0);

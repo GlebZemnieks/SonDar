@@ -71,7 +71,7 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
     // End SupportDependency Interface
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(Date_DateFieldTag);
         if (list.item(0) != null) {
             this.setDate(new Date(Long.parseLong(list.item(0).getTextContent())));
@@ -81,7 +81,7 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<date>" + this.date.getTime() + "</date>\n");
     }
 

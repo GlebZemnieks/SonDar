@@ -90,7 +90,7 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     // End SupportDependency Interface
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(EditText_textFieldTag);
         if (list.item(0) != null) {
             this.setText(list.item(0).getTextContent());
@@ -107,10 +107,10 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         this.Text = this.Text.replaceAll("\n", "Zzz");
-        fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n"
-                + "<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");
+        fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n");
+        fileModule.write("<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");
     }
 
     @Override

@@ -3,6 +3,7 @@ package ru.sondar.documentmodel;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import ru.sondar.core.Config;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.exception.*;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -219,6 +220,7 @@ public class SDDocument {
      * @param fileModule
      */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
+        Config.Log("SDDOcument::saveDocument", "Start");
         if (this.sequence == null || this.headPart == null
                 || this.logPart == null || this.dependency == null
                 || this.wordsBase == null) {
@@ -228,6 +230,7 @@ public class SDDocument {
                     + " : log : " + this.logPart
                     + " : wordsBase : " + this.wordsBase + " ;");
         }
+        Config.Log("SDDOcument::saveDocument", "Document ready to writing");
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
         this.wordsBase.printObjectToXML(fileModule);
@@ -235,6 +238,7 @@ public class SDDocument {
         this.dependency.printObjectToXML(fileModule);
         this.logPart.printObjectToXML(fileModule);
         fileModule.write("</Document>\n");
+        Config.Log("SDDOcument::saveDocument", "Document writted");
     }
 
     public static boolean isInFormat(String fileName) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.Config;
 import static ru.sondar.documentmodel.dependencymodel.DependencyItem.DependencyItem_xmlTag;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
@@ -59,6 +60,7 @@ public class DependencyPart implements Iterable<DependencyItem> {
      * @param fileModule
      */
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
+        Config.Log("DependencyPart::printObjectToXML", "Write dependency : " + this.toString());
         fileModule.write("<" + Dependency_MainTag + ">\n");
         for (int i = 0; i < this.dependencyList.size(); i++) {
             this.dependencyList.get(i).printObjectToXML(fileModule);

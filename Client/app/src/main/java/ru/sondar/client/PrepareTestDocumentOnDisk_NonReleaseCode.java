@@ -17,6 +17,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "<fileName>Example3.xml</fileName>\n"
 				+ "</configFile>" );
 		writeThreadConfig.close();
+
 		FileModuleWriteThreadInterface writeThread = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/example/" + "Example1.xml");
 		writeThread.write("<Document>\n"
 				+ "<head>\n"
@@ -77,6 +78,7 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				+ "</Log>\n"
 				+ "</Document>\n");
 		writeThread.close();
+
 		writeThread = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/example/" + "Example3.xml");
 		writeThread.write("<Document>\n" +
 				"<head>\n" +

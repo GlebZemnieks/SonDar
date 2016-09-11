@@ -50,7 +50,7 @@ public class SDText extends SDMainObject {
     }
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(Text_textFieldTag);
         if (list.item(0) != null) {
             this.setText(list.item(0).getTextContent());
@@ -60,12 +60,12 @@ public class SDText extends SDMainObject {
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Text_textFieldTag + ">" + this.Text + "</" + Text_textFieldTag + ">\n");
     }
 
     @Override
     public String toString() {
-        return super.toString() + ":text:" + this.Text;
+        return super.toString() + " : text : " + this.Text;
     }
 }

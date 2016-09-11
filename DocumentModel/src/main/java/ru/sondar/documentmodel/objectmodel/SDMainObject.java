@@ -139,7 +139,7 @@ public abstract class SDMainObject {
      * @param element
      * @throws NoAttributeException throw when some of attribute missed
      */
-    protected void parseAttribute(Element element) throws ObjectStructureException {
+    public void parseAttribute(Element element) throws ObjectStructureException {
         if (!"".equals(element.getAttribute("id"))) {
             this.setID(Integer.valueOf(element.getAttribute("id")));
         } else {
@@ -167,9 +167,9 @@ public abstract class SDMainObject {
      * @param element
      * @throws ObjectStructureException
      */
-    protected abstract void parseCurrentObjectField(Element element) throws ObjectStructureException;
+    public abstract void parseCurrentObjectField(Element element) throws ObjectStructureException;
 
-    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
+    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Object_MainTag + " type=\"" + this.objectType.toString() + "\" id=\"" + this.getID() + "\"" + this.getObjectNameTag() + ">\n");
     }
 
@@ -189,7 +189,7 @@ public abstract class SDMainObject {
      *
      * @param fileModule
      */
-    protected abstract void printCurrentObjectField(FileModuleWriteThreadInterface fileModule);
+    public abstract void printCurrentObjectField(FileModuleWriteThreadInterface fileModule);
 
     /**
      * To string

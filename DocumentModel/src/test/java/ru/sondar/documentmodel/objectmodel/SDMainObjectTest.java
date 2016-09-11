@@ -23,7 +23,7 @@ public class SDMainObjectTest {
         }
 
         @Override
-        protected void parseCurrentObjectField(Element element) {
+        public void parseCurrentObjectField(Element element) {
         }
 
         @Override

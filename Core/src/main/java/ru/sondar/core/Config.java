@@ -46,6 +46,10 @@ public class Config {
         Config.logger.Log(tag, msg);
     }
     
+    public static void Log(String tag, String msg, Throwable error){
+        Config.logger.Log(tag, msg, error);
+    }
+    
     public static String getAbsolutePath(){
         File file = new File("");
         return file.getAbsolutePath();

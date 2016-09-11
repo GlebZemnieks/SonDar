@@ -3,6 +3,7 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.exception.parser.ObjectStructureException;
 
@@ -47,7 +48,7 @@ public class SDLogPart extends SDMainObject {
     }
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList tempList = element.getElementsByTagName("log");
         logFileName = new ArrayList<>();
         for (int i = 0; i < tempList.getLength(); i++) {
@@ -62,12 +63,12 @@ public class SDLogPart extends SDMainObject {
     }
 
     @Override
-    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
+    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Log_MainTag + ">\n");
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         if (this.logFileName != null) {
             for (String log : this.logFileName) {
                 fileModule.write("<log>" + log + "</log>\n");
@@ -77,6 +78,7 @@ public class SDLogPart extends SDMainObject {
 
     @Override
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
+        Config.Log("SDLogPart::printObjectToXML", "Write logPart : " + this.toString());
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</" + Log_MainTag + ">\n");

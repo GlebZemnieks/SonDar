@@ -34,6 +34,11 @@ public class SDHeadPart extends SDMainObject {
     private UUID plugin = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     /**
+     * User Friendly document name. Use for display document for user
+     */
+    private String documentName = uuid.toString();
+
+    /**
      * Time and Date of document creation. Using if you wont to know if this
      * document are equals;
      */
@@ -83,6 +88,24 @@ public class SDHeadPart extends SDMainObject {
     }
 
     /**
+     * Getter for documentName field
+     *
+     * @return
+     */
+    public String getDocumentName() {
+        return this.documentName;
+    }
+
+    /**
+     * Setter for documentName field
+     *
+     * @param newName
+     */
+    public void setDocumentName(String newName) {
+        this.documentName = newName;
+    }
+
+    /**
      * Getter for creation time
      *
      * @return
@@ -124,7 +147,7 @@ public class SDHeadPart extends SDMainObject {
     }
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName("documentUUID");
         if (list.item(0) != null) {
             this.setUUID(UUID.fromString(list.item(0).getTextContent()));
@@ -138,6 +161,13 @@ public class SDHeadPart extends SDMainObject {
         } else {
             Config.Log("parser", "Missing \"pluginUUID\" field in head object. Set default value \"00000000-0000-...\"");
             this.setPluginUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+        }
+        list = element.getElementsByTagName("documentName");
+        if (list.item(0) != null) {
+            this.setDocumentName(list.item(0).getTextContent());
+        } else {
+            Config.Log("parser", "Missing \"documentName\" field in head object. Set default value \"" + this.uuid.toString() + "\"");
+            this.setDocumentName(this.uuid.toString());
         }
         list = element.getElementsByTagName("creationTime");
         if (list.item(0) != null) {
@@ -158,14 +188,16 @@ public class SDHeadPart extends SDMainObject {
 
     @Override
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
+        Config.Log("SDHeadPart::printObjectToXML", "Write headPart : " + this.toString());
         this.printCurrentObjectField(fileModule);
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Tag_MainObject + ">\n"
                 + "<documentUUID>" + this.uuid.toString() + "</documentUUID>\n"
                 + "<pluginUUID>" + this.plugin.toString() + "</pluginUUID>\n"
+                + "<documentName>" + this.documentName + "</documentName>\n"
                 + "<creationTime>" + this.creationTime.getTime() + "</creationTime>\n"
                 + "<lastModificationTime>" + this.lastModificationTime.getTime() + "</lastModificationTime>\n"
                 + "</" + Tag_MainObject + ">\n");
@@ -173,7 +205,10 @@ public class SDHeadPart extends SDMainObject {
 
     @Override
     public String toString() {
-        return "Id : " + this.getUUID().toString() + " : plugin : " + this.getPluginUUID().toString() + "\n";
+        return "Id : " + this.getUUID().toString()
+                + " : Name : " + this.documentName
+                + " : plugin : " + this.getPluginUUID().toString()
+                + "\n";
     }
 
 }

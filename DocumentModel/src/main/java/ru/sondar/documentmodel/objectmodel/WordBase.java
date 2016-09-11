@@ -82,19 +82,13 @@ public class WordBase {
         }
         this.base.get(filter).remove(item);
     }
-    
-    public static void main(String... args){
-        ArrayList<String> obj = new ArrayList<>();
-        obj.add("test");
-        obj.add("test2");
-        System.out.println(obj.toString());
-    }
+
     public void add(String filter, String item) {
         if (isFilterExist(filter)) {
             //Add element to current filter list
             base.get(filter).add(item);
         } else {
-            //Create new filter list with current i
+            //Create new filter list with current item
             ArrayList<String> temp = new ArrayList<>();
             temp.add(item);
             base.put(filter, temp);

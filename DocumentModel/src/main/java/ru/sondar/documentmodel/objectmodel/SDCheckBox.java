@@ -89,7 +89,7 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
     // End SupportDependency Interface
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(CheckBox_textFieldTag);
         if (list.item(0) != null) {
             this.setText(list.item(0).getTextContent());
@@ -105,7 +105,7 @@ public class SDCheckBox extends SDMainObject implements SupportDependencyInterfa
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + CheckBox_textFieldTag + ">" + this.Text + "</" + CheckBox_textFieldTag + ">\n"
                 + "<" + CheckBox_defaultCheck + ">" + this.checked + "</" + CheckBox_defaultCheck + ">\n");
     }

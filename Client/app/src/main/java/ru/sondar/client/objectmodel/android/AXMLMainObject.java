@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import org.w3c.dom.Element;
 
+import ru.sondar.core.exception.parser.ObjectStructureException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.documentmodel.objectmodel.exception.ObjectStructureException;
 
 /**
  * Main class for association android parameter for object
@@ -122,24 +122,30 @@ public abstract class AXMLMainObject extends SDMainObject {
         this.sdMainObject.setSequence(sequence);
     }
 
-    @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseAttribute(Element element) throws ObjectStructureException {
+        this.sdMainObject.parseAttribute(element);
+    }
+
+    public void parseObjectFromXML(Element element) throws ObjectStructureException {
         this.sdMainObject.parseObjectFromXML(element);
+    }
+    @Override
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
+        this.sdMainObject.parseCurrentObjectField(element);
+    }
+
+    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
+        this.sdMainObject.printAttrivute(fileModule);
     }
 
     @Override
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        //Empty. All printing in sdMainObject object
-    }
-
-    @Override
-    protected void printAttrivute(FileModuleWriteThreadInterface fileModule) {
-        //Empty. All printing in sdMainObject object
-    }
-
-    @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
         this.sdMainObject.printObjectToXML(fileModule);
+    }
+
+    @Override
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+        this.sdMainObject.printCurrentObjectField(fileModule);
     }
 
     @Override

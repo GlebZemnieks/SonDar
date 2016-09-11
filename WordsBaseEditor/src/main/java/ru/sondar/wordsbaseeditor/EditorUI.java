@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ru.sondar.core.DOMParser;
+import ru.sondar.core.exception.parser.ObjectStructureException;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.documentmodel.objectmodel.WordBase;
 
@@ -24,6 +26,7 @@ import ru.sondar.documentmodel.objectmodel.WordBase;
  */
 public class EditorUI extends javax.swing.JFrame {
 
+    SDDocument document;
     SDWordsBasePart wordsBase;
     DOMParser parser;
     String fileName;
@@ -35,15 +38,18 @@ public class EditorUI extends javax.swing.JFrame {
      */
     public EditorUI(String fileToOpen) {
         initComponents();
-        wordsBase = new SDWordsBasePart();
+        document = new SDDocument();
         try {
-            parser = new DOMParser(fileToOpen);
+            document.loadDocument(fileToOpen);
+            wordsBase = document.getWordsBasePart();
             fileName = fileToOpen;
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             Logger.getLogger(EditorUI.class.getName()).log(Level.SEVERE, null, ex);
             return;
+        } catch (ObjectStructureException ex) {
+            Logger.getLogger(EditorUI.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
-        wordsBase.parseObjectFromXML(parser.getRootElement());
         updateUI();
     }
 
@@ -382,18 +388,10 @@ public class EditorUI extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         try {
             FileModuleWriteThread fileModule = new FileModuleWriteThread(fileName, false);
-            wordsBase.printObjectToXML(fileModule);
+            document.saveDocument(fileModule);
             fileModule.close();
-            wordsBase = new SDWordsBasePart();
-            try {
-                parser = new DOMParser(fileName);
-
-            } catch (SAXException | IOException | ParserConfigurationException ex) {
-                Logger.getLogger(EditorUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
-                return;
-            }
-            wordsBase.parseObjectFromXML(parser.getRootElement());
+            document = new SDDocument();
+            document.loadDocument(fileName);
             row = 0;
             filter = 0;
             updateUI();

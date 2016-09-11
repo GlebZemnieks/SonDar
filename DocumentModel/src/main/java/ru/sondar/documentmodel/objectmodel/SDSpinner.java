@@ -3,6 +3,7 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.Config;
 import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
@@ -15,7 +16,7 @@ import ru.sondar.core.exception.parser.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDSpinner extends SDMainObject implements SupportDependencyInterface{
+public class SDSpinner extends SDMainObject implements SupportDependencyInterface {
 
     /**
      * Tag for print and parse dataList field
@@ -54,7 +55,8 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         return activeFilter;
     }
 
-    private String getActiveFilterAttribute() {
+    public String getActiveFilterAttribute() {
+        Config.Log("SDSpinner::getActiveFilterAttribute", "Return value : '" + activeFilter + "'");
         if (activeFilter != null) {
             return " activeFilter=\"" + activeFilter + "\"";
         }
@@ -115,7 +117,8 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      */
     private String wordsBaseName;
 
-    private String getWordsBaseNameAttribute() {
+    public String getWordsBaseNameAttribute() {
+        Config.Log("SDSpinner::getWordsBaseNameAttribute", "Return value : '" + wordsBaseName + "'");
         if (wordsBaseName != null) {
             return " baseName=\"" + wordsBaseName + "\"";
         }
@@ -146,7 +149,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     // End SupportDependency Interface
 
     @Override
-    protected void parseCurrentObjectField(Element element) throws ObjectStructureException {
+    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
         NodeList list = element.getElementsByTagName(Spinner_DataList);
         if (list.item(0) == null) {
             throw new NoFieldException("Missing \"dataList\" field");
@@ -154,6 +157,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
         if (((Element) list.item(0)).getAttribute("baseName").equals("")) {
             throw new NoFieldException("Missing \"baseName\" attribute");
         }
+        this.wordsBaseName = ((Element) list.item(0)).getAttribute("baseName");
         this.setList(this.getSequence().document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
         if (!((Element) list.item(0)).getAttribute("activeFilter").equals("")) {
             this.activeFilter = ((Element) list.item(0)).getAttribute("activeFilter");
@@ -169,9 +173,14 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     }
 
     @Override
-    protected void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + getActiveFilterAttribute() + ">" + "</" + Spinner_DataList + ">\n"
-                + "<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
+    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + getActiveFilterAttribute() + ">" + "</" + Spinner_DataList + ">\n");
+        fileModule.write("<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
+    }
+    
+    @Override
+    public String toString(){
+        return super.toString() + " : wordsBaseName : " + this.wordsBaseName + " : activeFilter : " + this.activeFilter;
     }
 
 }

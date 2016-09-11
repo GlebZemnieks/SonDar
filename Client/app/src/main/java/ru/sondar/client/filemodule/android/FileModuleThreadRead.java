@@ -52,7 +52,6 @@ public class FileModuleThreadRead extends FileModuleThread implements FileModule
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log("FileModuleLog", "Read text from file '" + fileName + "'");
         String temp = "";
         try {
             int c = 0;
@@ -60,11 +59,12 @@ public class FileModuleThreadRead extends FileModuleThread implements FileModule
                 temp += (char) c;
                 //Logging.Log("FileModuleLog", "!!!  :  '" + temp + "' += '" + (char)c + "'");
             }
-            Config.Log("FileModuleLog", "-->TEXT:  '" + temp + "'");
+            Config.Log("FileModuleLog", "Read text from file '" + fileName + "'-->TEXT:  '" + temp + "'");
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (temp != "") {
+
             return temp;
         }
         return null;
