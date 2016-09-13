@@ -17,5 +17,15 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.sondar.core</groupId>
+            <artifactId>Logger</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.sondar.core</groupId>
+            <artifactId>Exception</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

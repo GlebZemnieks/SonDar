@@ -58,7 +58,7 @@ public class FileModuleWriteThread extends FileModuleThread implements FileModul
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log("FileModuleLog", "Write text in file '" + fileName + "'\n-->TEXT: " + textForWriting);
+        Config.Log("FileModuleLog", "Write text in file '" + fileName + "'-->TEXT: " + textForWriting);
         out.write(textForWriting);
         return 0;
     }

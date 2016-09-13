@@ -1,7 +1,8 @@
 package ru.sondar.core;
 
 import java.io.File;
-import ru.sondar.core.logging.*;
+import ru.sondar.core.logger.EmptyLogging;
+import ru.sondar.core.logger.LoggerInterface;
 
 /**
  * Configuration object for SonDar Core.

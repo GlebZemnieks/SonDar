@@ -2,7 +2,6 @@ package ru.sondar.documentmodel.documentfactory.structure;
 
 import ru.sondar.documentmodel.documentfactory.SDObjectFactory;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
-import ru.sondar.documentmodel.objectmodel.WordBase;
 
 /**
  *

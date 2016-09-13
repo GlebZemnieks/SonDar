@@ -21,7 +21,7 @@ import ru.sondar.documentmodel.objectmodel.WordBase;
  * @author GlebZemnieks
  */
 public class SDObjectFactory {
-
+    
     private static SDMainObject returnObject(SDMainObject object) {
         return object;
     }
