@@ -13,7 +13,7 @@ import ru.sondar.core.filesystem.exception.*;
  */
 public class SonDarFileSystemTest extends TestCase {
 
-    public static final String TESTDATAFOLDER = TestVariables.testFolder + "fileSystem";
+    public static final String TESTDATAFOLDER = "E:\\Development\\SonDar\\FileSystem\\JUnitTest\\fileSystem";
 
     FileModuleInterface fileModule = new FileModule();
 

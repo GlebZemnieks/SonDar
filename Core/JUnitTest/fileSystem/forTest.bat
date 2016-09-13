@@ -1,2 +1,0 @@
-del E:\Development\SonDar\Core\JUnitTest\fileSystem\TestFolder%2\*.txt
-copy E:\Development\SonDar\Core\JUnitTest\fileSystem\TestFolder%1\*.txt E:\Development\SonDar\Core\JUnitTest\fileSystem\TestFolder%2\*.txt

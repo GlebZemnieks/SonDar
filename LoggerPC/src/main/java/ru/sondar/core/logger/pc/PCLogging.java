@@ -1,4 +1,6 @@
-package ru.sondar.core.logging;
+package ru.sondar.core.logger.pc;
+
+import ru.sondar.core.logger.LoggerInterface;
 
 /**
  * Class logger for PC Implements
@@ -10,12 +12,12 @@ public class PCLogging implements LoggerInterface {
 
     @Override
     public void Log(String logTag, String logMsg) {
-        System.out.println(logTag + " -->" + logMsg);
+        System.out.println(logTag + "-->  " + logMsg + "\n");
     }
 
     @Override
     public void Log(String logTag, String logMsg, Throwable errorStackTrace) {
-        System.out.println(logTag + " -->" + logMsg + "::" + errorStackTrace.getMessage() + "\n");
+        System.out.println(logTag + "-->  " + logMsg + "::" + errorStackTrace.getMessage() + "\n");
         errorStackTrace.printStackTrace();
     }
 

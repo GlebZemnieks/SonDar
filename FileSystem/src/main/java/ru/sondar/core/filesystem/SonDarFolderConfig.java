@@ -6,10 +6,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import ru.sondar.core.Config;
-import ru.sondar.core.DOMParser;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filesystem.exception.*;
+import ru.sondar.core.parser.DOMParser;
 
 /**
  * Folder's configuration object. Supports configuration file in actual state
@@ -97,7 +96,6 @@ public class SonDarFolderConfig {
             Element tempElement = (Element) tempList.item(count);
             this.configFileList.add(((Element) tempList.item(count)).getTextContent());
         }
-        Config.Log(logTag, "Final config list " + configFileList.toString());
     }
 
     /**

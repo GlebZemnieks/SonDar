@@ -1,4 +1,4 @@
-package ru.sondar.core.logging;
+package ru.sondar.core.logger;
 
 /**
  * Empty logger class to use by default on whatever system

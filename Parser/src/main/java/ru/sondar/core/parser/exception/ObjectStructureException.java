@@ -1,4 +1,4 @@
-package ru.sondar.core.exception.parser;
+package ru.sondar.core.parser.exception;
 
 import ru.sondar.core.exception.SonDarException;
 

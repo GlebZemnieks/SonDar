@@ -1,7 +1,6 @@
 package ru.sondar.core.filesystem;
 
 import java.util.ArrayList;
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filemodule.exception.*;
 import ru.sondar.core.filesystem.exception.*;
@@ -87,7 +86,6 @@ public class SonDarFolder {
      */
     public ArrayList<String> getFileList() {
         if (this.isInit != SonDarFolderState.None) {
-            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         return this.config.configFileList;
@@ -105,7 +103,6 @@ public class SonDarFolder {
      */
     public String getGlobalFileName(String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         boolean isInFolder = false;
@@ -115,7 +112,6 @@ public class SonDarFolder {
             }
         }
         if (!isInFolder) {
-            Config.Log(logTag, "File '" + fileName + "' not found in folder. FileList : " + this.config.configFileList.toString());
             throw new FileNotFoundInFolderException();
         }
         return this.globalFolder + "/" + this.folderName + "/" + fileName;
@@ -128,38 +124,29 @@ public class SonDarFolder {
      * @throws SomeTroubleWithFolderException
      */
     public void init(FileModuleInterface fileModule) throws SomeTroubleWithFolderException {
-        Config.Log(logTag, "init folder '" + folderName + "'");
         if (!isInSystem) {
-            Config.Log(logTag, "Folder isInSystem = False");
             throw new FolderObjectNotInSystemException();
         }
         //check config file
-        Config.Log(logTag, "check config file in folder '" + folderName + "'");
         try {
             config = new SonDarFolderConfig(globalFolder, folderName);
         } catch (SonDarFileNotFoundException error) {
-            Config.Log(logTag, "Config file in " + folderName + " folder not exist");
             SomeTroubleWithFolderException next = new FirstFolderUseException();
             next.addSuppressed(error);
             this.isInit = SonDarFolderState.ReduildPending;
             throw next;
         } catch (ConfigFileFormatException error) {
-            Config.Log(logTag, "Config file in " + folderName + " folder have bad format");
             SomeTroubleWithFolderException next = new SomeTroubleWithFolderException();
             next.addSuppressed(error);
             this.isInit = SonDarFolderState.ReduildPending;
             throw next;
         }
-        Config.Log(logTag, "config file found in folder '" + folderName + "'");
-        Config.Log(logTag, "check file consist in folder '" + folderName + "';");
         boolean allRight = true;
         MissFileInFolderException missFileError = new MissFileInFolderException();
         for (String fileName : config.configFileList) {
-            Config.Log(logTag, "check file : " + fileName);
             try {
                 fileModule.getReadThread(globalFolder + "/" + folderName + "/" + fileName);
             } catch (SonDarFileNotFoundException error) {
-                Config.Log(logTag, "trouble with file " + fileName);
                 allRight = false;
                 missFileError.addSuppressed(error);
             }
@@ -180,7 +167,6 @@ public class SonDarFolder {
      */
     public FileModuleWriteThreadInterface addFile(FileModuleInterface fileModule, String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         FileModuleWriteThreadInterface temp = fileModule.getWriteThread(globalFolder + "/" + folderName + "/" + fileName);
@@ -198,7 +184,6 @@ public class SonDarFolder {
      */
     public FileModuleReadThreadInterface getFile(FileModuleInterface fileModule, String fileName) {
         if (this.isInit != SonDarFolderState.None) {
-            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         if (!this.config.configFileList.contains(fileName)) {
@@ -226,16 +211,13 @@ public class SonDarFolder {
 
     public FileModuleWriteThreadInterface saveFile(FileModuleInterface fileModule) {
         if (this.isInit != SonDarFolderState.None) {
-            Config.Log(logTag, "Folder not init. Now state : " + this.isInit.toString());
             throw new FolderNotReadyException();
         }
         if (this.isOpen) {
-            Config.Log(logTag, "Save document with name : " + this.FileOpen);
             FileModuleWriteThreadInterface temp = fileModule.getWriteThread(getGlobalFileName(FileOpen));
             this.isOpen = false;
             return temp;
         }
-        Config.Log(logTag, "File not opened. Throw exception : FileNotOpenedException");
         throw new FileNotOpenedException();
     }
 

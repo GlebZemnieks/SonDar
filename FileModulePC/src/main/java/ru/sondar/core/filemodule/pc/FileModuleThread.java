@@ -1,7 +1,6 @@
 package ru.sondar.core.filemodule.pc;
 
 import java.io.File;
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleThreadInterface;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 
@@ -57,7 +56,6 @@ public class FileModuleThread implements FileModuleThreadInterface {
         if (isClose) {
             throw new ThreadIsCloseException("Tried to close file after thread closing. File name : " + this.fileName);
         }
-        Config.Log("FileModuleLog", "Close file '" + fileName + "'");
         this.isClose = true;
     }
 

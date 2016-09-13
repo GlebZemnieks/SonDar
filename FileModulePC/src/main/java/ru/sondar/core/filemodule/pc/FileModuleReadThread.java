@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.exception.*;
 
@@ -25,11 +24,9 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
 
     public FileModuleReadThread(String fileName) {
         super(fileName);
-        Config.Log(LOGTAG, "Try to open file '" + this.fileName + "'");
         this.file = new File(fileName);
         if (!file.exists()) {
             super.close();
-            Config.Log(LOGTAG, "File '" + this.fileName + "' not found");
             throw new SonDarFileNotFoundException("File '" + this.fileName + "' not found");
         }
         try {
@@ -38,7 +35,6 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
             //TODO Do nothing, while have not requirement or stable reproduction.
             throw new RuntimeException("File \"" + this.fileName + "\" was found, but BufferedReader building fail. It's impossible but It happened. Sorry!");
         }
-        Config.Log(LOGTAG, "File '" + this.fileName + "' successful opened");
     }
 
     @Override
@@ -46,7 +42,6 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log(LOGTAG, "Read text from file '" + this.fileName + "'");
         String temp = null;
         try {
             temp = in.readLine();
@@ -54,7 +49,6 @@ public class FileModuleReadThread extends FileModuleThread implements FileModule
             //TODO Do nothing, while have not requirement or stable reproduction.
             throw new RuntimeException("Reading file \"" + this.fileName + "\" fail. It's impossible but It happened. Sorry!");
         }
-        Config.Log(LOGTAG, "-->TEXT:  '" + temp + "'");
         return temp;
     }
 

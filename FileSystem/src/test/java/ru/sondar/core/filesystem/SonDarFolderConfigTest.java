@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import junit.framework.TestCase;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filemodule.pc.*;
-import ru.sondar.core.filemodule.exception.*;
 import ru.sondar.core.filesystem.exception.*;
 
 /**
@@ -15,7 +14,7 @@ import ru.sondar.core.filesystem.exception.*;
  */
 public class SonDarFolderConfigTest extends TestCase {
 
-    public static final String TESTDATAFOLDER = TestVariables.testFolder + "fileSystem";
+    public static final String TESTDATAFOLDER = "E:\\Development\\SonDar\\FileSystem\\JUnitTest\\fileSystem";
 
     FileModuleInterface fileModule = new FileModule();
 

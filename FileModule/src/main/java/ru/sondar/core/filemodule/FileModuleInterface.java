@@ -18,7 +18,7 @@ public interface FileModuleInterface {
     /**
      * Tag to search activity this object in logging file
      */
-    String LOGTAG = "FileModule";
+    String LOGTAG = "FileModule213";
 
     /**
      * Open new thread to write file. If file not exist, create new file. If

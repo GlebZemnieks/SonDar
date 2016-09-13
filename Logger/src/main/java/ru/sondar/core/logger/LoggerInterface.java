@@ -1,4 +1,4 @@
-package ru.sondar.core.logging;
+package ru.sondar.core.logger;
 
 /**
  * Main logger interface. All logger classes must implement this.

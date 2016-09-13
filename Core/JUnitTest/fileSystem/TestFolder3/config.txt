@@ -1,3 +1,0 @@
-<configFile>
-<fileName>test.txt</fileName>
-</configFile>

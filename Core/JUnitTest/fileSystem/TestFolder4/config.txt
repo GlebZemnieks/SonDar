@@ -1,3 +1,0 @@
-<conf123igFile>
-<fileName>test.txt</fileName>
-</con123figFile>

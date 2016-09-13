@@ -2,9 +2,9 @@ package ru.sondar.core.filemodule.pc;
 
 import junit.framework.TestCase;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
-import ru.sondar.core.logging.LoggerInterface;
-import ru.sondar.core.logging.PCLogging;
 import static ru.sondar.core.filemodule.pc.FileModuleTest.TESTDATAFOLDER;
+import ru.sondar.core.logger.LoggerInterface;
+import ru.sondar.core.logger.pc.PCLogging;
 
 /**
  * Test class for {@link ru.sondar.core.filemodule.pc.FileModuleWriteThread}

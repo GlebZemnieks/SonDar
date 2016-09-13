@@ -1,4 +1,4 @@
-package ru.sondar.core.exception.parser;
+package ru.sondar.core.parser.exception;
 
 /**
  * Throw when you can't find object's field

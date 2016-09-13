@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 
@@ -27,7 +26,6 @@ public class FileModuleWriteThread extends FileModuleThread implements FileModul
 
     public FileModuleWriteThread(String fileName, boolean isAppend) {
         super(fileName);
-        Config.Log("FileModuleLog", "Try to open file '" + fileName + "' with append mode : " + isAppend);
         this.file = new File(fileName);
         if (!file.exists()) {
             try {
@@ -50,7 +48,6 @@ public class FileModuleWriteThread extends FileModuleThread implements FileModul
             //TODO Do nothing, while have not requirement or stable reproduction.
             throw new RuntimeException("File \"" + this.fileName + "\" have unsupported encoding. Needed encoding \"UTF-8\". Nothing to help you. Sorry!");
         }
-        Config.Log("FileModuleLog", "File '" + fileName + "' successful opened");
     }
 
     @Override
@@ -58,7 +55,6 @@ public class FileModuleWriteThread extends FileModuleThread implements FileModul
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log("FileModuleLog", "Write text in file '" + fileName + "'-->TEXT: " + textForWriting);
         out.write(textForWriting);
         return 0;
     }

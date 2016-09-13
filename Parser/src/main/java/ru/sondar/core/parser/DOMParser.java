@@ -1,4 +1,4 @@
-package ru.sondar.core;
+package ru.sondar.core.parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,13 +36,10 @@ public class DOMParser {
      * @throws ParserConfigurationException
      */
     public DOMParser(String fileName) throws SAXException, IOException, ParserConfigurationException {
-        Config.Log(logTag, "Try to open file \"" + fileName + "\"");
         File inputFile = new File(fileName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Config.Log(logTag, "Try to parse file \"" + fileName + "\"");
         document = builder.parse(inputFile);
-        Config.Log(logTag, "Parsing was successfully. Object ready!");
     }
 
     /**
