@@ -12,16 +12,16 @@ call Project_PrepareCode.bat LoggerFile
 call Project_PrepareCode.bat FileSystem
 call Project_PrepareTest.bat FileSystem
 call Project_PrepareCode.bat Parser
-:: ??
-call Project_PrepareCode.bat Core
-call Project_PrepareTest.bat Core
-:: Plugin parts
-call Project_PrepareCode.bat PluginAPI
-call Project_PrepareCode.bat DemoPlugin
 
 :: DocumentModule
 call Project_PrepareCode.bat DocumentModel
 call Project_PrepareTest.bat DocumentModel
+
+:: Plugin parts
+call Project_PrepareCode.bat DriverAPI 
+call Project_PrepareCode.bat DriverExcel 
+call Project_PrepareCode.bat PluginAPI
+call Project_PrepareCode.bat DemoPlugin
 
 :: Utils
 call Project_PrepareCode.bat DocumentFactory

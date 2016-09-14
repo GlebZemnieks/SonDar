@@ -1,20 +1,20 @@
 package ru.sondar.plugin;
 
-import ru.sondar.core.exception.parser.NoFieldException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import ru.sondar.core.Config;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.filemodule.FileModuleInterface;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.dependencymodel.*;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.core.parser.exception.NoFieldException;
 import ru.sondar.plugin.driver.*;
 import ru.sondar.plugin.driver.exception.*;
 
@@ -38,7 +38,7 @@ public abstract class Plugin {
         if (list.item(0) == null) {
             throw new NoFieldException("Missing \"version\" field");
         }
-        this.configurator = new PluginConfigurator(Config.getAbsolutePath(), plugin.getElementsByTagName(folderNameTag).item(0).getTextContent());
+        this.configurator = new PluginConfigurator((new File("")).getAbsolutePath(), plugin.getElementsByTagName(folderNameTag).item(0).getTextContent());
         this.manager = new DriverManager(this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName, this.configurator.pluginConfigurationFileName);
     }
 
@@ -152,10 +152,12 @@ public abstract class Plugin {
 
     /**
      * Generate default file in plug-in folder
+     *
+     * @param fileModule
      */
-    public void generateExampleFile() {
+    public void generateExampleFile(FileModuleInterface fileModule) {
         SDDocument document = this.getExampleDocument();
-        FileModuleWriteThread fileThread = new FileModuleWriteThread(this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\\Demo.xml", false);
+        FileModuleWriteThreadInterface fileThread = fileModule.getWriteThread(this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\\Demo.xml");
         document.saveDocument(fileThread);
         fileThread.close();
     }

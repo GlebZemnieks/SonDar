@@ -1,15 +1,15 @@
 package ru.sondar.plugin;
 
-import ru.sondar.core.exception.parser.ObjectStructureException;
-import ru.sondar.core.exception.parser.NoFieldException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.SDDocument;
+import ru.sondar.core.exception.SonDarRuntimeException;
+import ru.sondar.core.parser.exception.NoFieldException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  *

@@ -14,4 +14,17 @@ call buildItem.bat FileSystem
 
 :: Document Model
 call buildItem.bat DocumentModel
+
+:: Utils
 call buildItem.bat DocumentFactory
+call buildItem.bat WordsBaseEditor
+
+:: PluginAPI
+call buildItem.bat DriverAPI
+call buildItem.bat DriverExcel
+call buildItem.bat PluginAPI
+
+:: Server
+call buildItem.bat SDServer
+
+

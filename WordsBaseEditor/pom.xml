@@ -12,14 +12,19 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>ru.sondar</groupId>
-            <artifactId>core</artifactId>
-            <version>1.2</version>
+            <groupId>ru.sondar.core</groupId>
+            <artifactId>FileModulePC</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>ru.sondar.core</groupId>
+            <artifactId>Parser</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.sondar.documentmodel</groupId>
             <artifactId>DocumentModel</artifactId>
-            <version>1.2</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     <build>

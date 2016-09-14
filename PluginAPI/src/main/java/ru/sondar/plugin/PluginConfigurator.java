@@ -6,7 +6,7 @@ import java.util.UUID;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import ru.sondar.core.DOMParser;
+import ru.sondar.core.parser.DOMParser;
 
 /**
  * Plug-in configuration abstract class

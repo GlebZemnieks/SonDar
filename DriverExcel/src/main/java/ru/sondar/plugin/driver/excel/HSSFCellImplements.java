@@ -1,7 +1,6 @@
 package ru.sondar.plugin.driver.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import ru.sondar.core.Config;
 import ru.sondar.plugin.driver.DBCellInterface;
 
 /**
@@ -32,13 +31,11 @@ public class HSSFCellImplements implements DBCellInterface {
 
     @Override
     public void setCellValue(Object value) {
-        Config.Log(logTag, "Set value " + (String) value + " old value " + cell.getStringCellValue());
         cell.setCellValue((String) value);
     }
 
     @Override
     public Object getCellValue() {
-        Config.Log(logTag, "Get value " + cell.getStringCellValue());
         return cell.getStringCellValue();
     }
 

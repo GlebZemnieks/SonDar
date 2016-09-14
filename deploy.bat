@@ -16,4 +16,14 @@ call deploy_lib.bat Parser 1.0
 :: Document Model
 call deploy_lib.bat DocumentModel 1.0
 
+
+:: Utils
 call deploy_utils.bat DocumentFactory 1.0
+call deploy_utils.bat WordsBaseEditor 1.0
+
+:: Server
+call deploy_lib.bat DriverAPI 1.0
+call deploy_lib.bat DriverExcel 1.0
+call deploy_lib.bat PluginAPI 1.0
+
+call deploy_utils.bat SDServer 1.0
