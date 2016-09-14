@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ru.sondar.client.objectmodel.android.AXMLMainObject;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 /**
@@ -29,90 +29,90 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 
 	@Override
 	public LinearLayout generateLayout(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		Config.Log(logTag, "Start LayoutGenerate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
+		Logger.Log(logTag, "Start LayoutGenerate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
-		Config.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
+		Logger.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count++){			
 			if(checkSequenceOverflow(sequenceObject, count)){
 				if(count == startObjectId){
-					Config.Log(logTag, "Last page. Generation will skip. Throw XMLSequenceIndexOverflowException");
+					Logger.Log(logTag, "Last page. Generation will skip. Throw XMLSequenceIndexOverflowException");
 					throw new XMLSequenceIndexOverflowException("No layout update");
 				}
-				Config.Log(logTag, "checkSequenceOverflow = True --> break");
+				Logger.Log(logTag, "checkSequenceOverflow = True --> break");
 				domainLayout.addView(nowLayout);
 				sequenceObject.setFirstIdInDomain(startObjectId);
 				sequenceObject.setLastIdInDomain(sequenceObject.getXMLObject(count-1).getID());
-				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
+				Logger.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
 				return domainLayout;
 			}
 			if(ifEndln(sequenceObject, count)){
-				Config.Log(logTag, "ifEndln = True --> continue");
+				Logger.Log(logTag, "ifEndln = True --> continue");
 				prepareNewLayout(context, sequenceObject, count);
 				continue;
 			}
-			Config.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
+			Logger.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
 			View newView = prepareNewView(context, sequenceObject, count);
-			Config.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
+			Logger.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
 			if(domainCheck(footer)){
-				Config.Log(logTag, "domainLayout overflow --> break");
+				Logger.Log(logTag, "domainLayout overflow --> break");
 				sequenceObject.setLastIdInDomain(lastIdInString);
 				sequenceObject.setFirstIdInDomain(startObjectId);
-				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
+				Logger.Log(logTag, "return domainLayout --> lastIdInDomain = " + sequenceObject.getLastIdInDomain());
 				return domainLayout;
 			}
 			if(nowLayoutCheck()){
-				Config.Log(logTag, "nowLayout overflow --> continue with decrement count");
+				Logger.Log(logTag, "nowLayout overflow --> continue with decrement count");
 				prepareNewLayout(context, sequenceObject, count);
-				Config.Log(logTag, "left height = " + screenHeight);
+				Logger.Log(logTag, "left height = " + screenHeight);
 				//To the next time the cycle has continued to work with the current item. Do decrement the iterator
 				count--;
 				continue;
 			}
-			Config.Log(logTag, "addNewView");
+			Logger.Log(logTag, "addNewView");
 			addNewView(sequenceObject, count, newView);
-			Config.Log(logTag, "left width = " + widthNow);
+			Logger.Log(logTag, "left width = " + widthNow);
 		}		
 	}
 
 
 	@Override
 	public int reverseGenerating(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
-		Config.Log(logTag, "Start reverse Generate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
+		Logger.Log(logTag, "Start reverse Generate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
-		Config.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
+		Logger.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count--){
 			if(checkSequenceOverflow(sequenceObject, count)){
-				Config.Log(logTag, "checkSequenceOverflow = True --> break");
+				Logger.Log(logTag, "checkSequenceOverflow = True --> break");
 				domainLayout.addView(nowLayout);
-				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + 0);
+				Logger.Log(logTag, "return domainLayout --> lastIdInDomain = " + 0);
 				return 0;
 			}
 			if(ifEndln(sequenceObject, count)){
-				Config.Log(logTag, "ifEndln = True --> continue");
+				Logger.Log(logTag, "ifEndln = True --> continue");
 				prepareNewLayout(context, sequenceObject, count);
 				continue;
 			}
-			Config.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
+			Logger.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());
 			View newView = prepareNewView(context, sequenceObject, count);
-			Config.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
+			Logger.Log(logTag, "objectWidth = " + widthNewView + ";objectHeight = " + heightNewView);
 			if(domainCheck(footer)){
-				Config.Log(logTag, "domainLayout overflow --> break");
-				Config.Log(logTag, "return domainLayout --> lastIdInDomain = " + lastIdInString);
+				Logger.Log(logTag, "domainLayout overflow --> break");
+				Logger.Log(logTag, "return domainLayout --> lastIdInDomain = " + lastIdInString);
 				return lastIdInString;
 			}
 			if(nowLayoutCheck()){
-				Config.Log(logTag, "nowLayout overflow --> continue with decrement count");
+				Logger.Log(logTag, "nowLayout overflow --> continue with decrement count");
 				prepareNewLayout(context, sequenceObject, count);
-				Config.Log(logTag, "left height = " + screenHeight);
+				Logger.Log(logTag, "left height = " + screenHeight);
 				//To the next time the cycle has continued to work with the current item. Do increment the iterator
 				count++;
 				continue;
 			}
-			Config.Log(logTag, "addNewView");
+			Logger.Log(logTag, "addNewView");
 			addNewView(sequenceObject, count, newView);
-			Config.Log(logTag, "left width = " + widthNow);
+			Logger.Log(logTag, "left width = " + widthNow);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 	 */
 	private void isEntriesCorrect(AXMLSequenceObject sequenceObject, int startObjectId) throws XMLSequenceIndexOverflowException {
 		if(startObjectId>=sequenceObject.sequenceArray.size()&&startObjectId<0){
-			Config.Log(logTag, "!!!!throw XMLSequenceIndexOverflowException!!!!");
+			Logger.Log(logTag, "!!!!throw XMLSequenceIndexOverflowException!!!!");
 			throw new XMLSequenceIndexOverflowException();
 		}
 	}
@@ -143,7 +143,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 		nowLayout = getNowLayout(context);
 		screenWidth = getScreenWidth(context);
 		screenHeight = getScreenHeight(context) - footer;
-		Config.Log(logTag, "Start screenWidth = " + screenWidth + ";screenHeight = " + screenHeight);
+		Logger.Log(logTag, "Start screenWidth = " + screenWidth + ";screenHeight = " + screenHeight);
 		heightNow = 0;
 		widthNow = screenWidth;
 		lastIdInString = 0;

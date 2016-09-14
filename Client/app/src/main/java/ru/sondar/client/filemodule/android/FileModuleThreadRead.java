@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import android.content.Context;
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.exception.SonDarFileNotFoundException;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
@@ -27,14 +26,11 @@ public class FileModuleThreadRead extends FileModuleThread implements FileModule
     public FileModuleThreadRead(Context context, String fileName) {
         super(context, fileName);
         try {
-            Config.Log("FileModuleLog", "Try to create InputStreamReader for file '" + fileName + "'");
             this.streamToRead = new FileReader(new File(fileName));
 
         } catch (FileNotFoundException e) {
-            Config.Log("FileModuleLog", "File '" + this.fileName + "' not found");
             throw new SonDarFileNotFoundException();
         }
-        Config.Log("FileModuleLog", "InputStreamReader for file '" + fileName + "' successful created");
     }
 
     @Override
@@ -59,7 +55,6 @@ public class FileModuleThreadRead extends FileModuleThread implements FileModule
                 temp += (char) c;
                 //Logging.Log("FileModuleLog", "!!!  :  '" + temp + "' += '" + (char)c + "'");
             }
-            Config.Log("FileModuleLog", "Read text from file '" + fileName + "'-->TEXT:  '" + temp + "'");
         } catch (IOException e) {
             e.printStackTrace();
         }

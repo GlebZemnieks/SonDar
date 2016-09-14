@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import android.content.Context;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
 
@@ -27,7 +27,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
     public FileModuleThreadWrite(Context context, String fileName) {
         super(context, fileName);
         try {
-            Config.Log("FileModuleLog", "Try to create OutputStreamWriter for file '" + fileName + "'");
+            Logger.Log("FileModuleLog", "Try to create OutputStreamWriter for file '" + fileName + "'");
             streamToWrite = new PrintWriter(fileName, "UTF-8");
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -36,7 +36,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Config.Log("FileModuleLog", "OutputStreamWriter for file '" + fileName + "' successful created");
+        Logger.Log("FileModuleLog", "OutputStreamWriter for file '" + fileName + "' successful created");
     }
 
     /**
@@ -49,7 +49,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
     public FileModuleThreadWrite(Context context, String fileName, boolean isAppend) {
         super(context, fileName);
         try {
-            Config.Log("FileModuleLog", "Try to create OutputStreamWriter for file '" + fileName + "'");
+            Logger.Log("FileModuleLog", "Try to create OutputStreamWriter for file '" + fileName + "'");
             streamToWrite = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileName, true), "UTF-8"));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -58,7 +58,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Config.Log("FileModuleLog", "OutputStreamWriter for file '" + fileName + "' successful created");
+        Logger.Log("FileModuleLog", "OutputStreamWriter for file '" + fileName + "' successful created");
     }
 
     @Override
@@ -72,7 +72,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
         if (isClose()) {
             throw new ThreadIsCloseException();
         }
-        Config.Log("FileModuleLog", "Write text in file  '" + fileName + "'-->TEXT: " + textForWriting);
+        Logger.Log("FileModuleLog", "Write text in file  '" + fileName + "'-->TEXT: " + textForWriting);
         streamToWrite.write(textForWriting);
         return 0;
     }

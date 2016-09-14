@@ -1,7 +1,8 @@
 package ru.sondar.client;
 
 import android.util.Log;
-import ru.sondar.core.logging.LoggerInterface;
+
+import ru.sondar.core.logger.LoggerInterface;
 
 public class ALogging implements LoggerInterface {
 	/**

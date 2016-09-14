@@ -13,12 +13,12 @@
     <dependencies>
         <dependency>
             <groupId>ru.sondar.core</groupId>
-            <artifactId>FileModulePC</artifactId>
+            <artifactId>Parser</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>ru.sondar.core</groupId>
-            <artifactId>Parser</artifactId>
+            <artifactId>FileModulePC</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

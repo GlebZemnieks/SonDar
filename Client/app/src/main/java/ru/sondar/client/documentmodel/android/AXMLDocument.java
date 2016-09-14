@@ -3,8 +3,8 @@ package ru.sondar.client.documentmodel.android;
 import android.content.Context;
 import android.widget.LinearLayout;
 
-import ru.sondar.core.Config;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.logger.Logger;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDDOMParser;
 import ru.sondar.documentmodel.SDDocument;
@@ -52,7 +52,7 @@ public class AXMLDocument extends SDDocument {
 		try {
 			return generator.generateLayout(this.context, getSequense(), 0, footer);
 		} catch (XMLSequenceIndexOverflowException error){
-			Config.Log("getStartLayout","Try to open empty document(No object defined). Something wrong, but 'okay' - return empty layout. If this problem in log unexpected -> GLOBAL WARNING, suspected dataloss");
+			Logger.Log("getStartLayout","Try to open empty document(No object defined). Something wrong, but 'okay' - return empty layout. If this problem in log unexpected -> GLOBAL WARNING, suspected dataloss");
 			return new LinearLayout(this.context);
 		}
 	}

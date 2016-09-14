@@ -21,8 +21,8 @@ import ru.sondar.client.documentmodel.android.AXMLDocument;
 import ru.sondar.client.documentmodel.android.AXMLSequenceObject;
 import ru.sondar.client.documentmodel.android.XMLSequenceIndexOverflowException;
 import ru.sondar.client.filemodule.android.FileModule;
-import ru.sondar.core.Config;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.logger.Logger;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
@@ -68,7 +68,7 @@ public class DocumentSessionActivity extends Activity {
 					tempLayout.addView(getButtonLayout(context, document));
 					setContentView(tempLayout);
 				} catch (XMLSequenceIndexOverflowException error){
-					Config.Log(logTag, "Last page. Generation was skipped");
+					Logger.Log(logTag, "Last page. Generation was skipped");
 				}
 			}
 		};
@@ -104,7 +104,7 @@ public class DocumentSessionActivity extends Activity {
 		folderName = (String) getIntent().getSerializableExtra("folderName");
 
 		fileModule = new FileModule(this);
-		Config.Log(logTag, "MainActivity.onCreate start");
+		Logger.Log(logTag, "MainActivity.onCreate start");
 
 		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		fileSystem.addFolder(Folder.temp.toString());
@@ -113,7 +113,7 @@ public class DocumentSessionActivity extends Activity {
 		fileSystem.init(fileModule);
 
 		document = new AXMLDocument(this);
-		Config.Log(logTag, "Load Document start : " + fileName);
+		Logger.Log(logTag, "Load Document start : " + fileName);
 		try {
 			document.loadDocument(
 					new SDDOMParser(fileSystem.getFolderByName(Folder.temp.toString()).getGlobalFileName(fileName)),
@@ -133,15 +133,15 @@ public class DocumentSessionActivity extends Activity {
 			e.printStackTrace();
 		}
 		fileSystem.getFolderByName(Folder.temp.toString()).setOpenFile(fileName);
-		Config.Log(logTag, "LoadDocument done : " + fileName);
-		Config.Log(logTag, "Create start layout");
+		Logger.Log(logTag, "LoadDocument done : " + fileName);
+		Logger.Log(logTag, "Create start layout");
 		LinearLayout layout = document.getStartLayout();
 
-		Config.Log(logTag, "prepare buttonLayout");
+		Logger.Log(logTag, "prepare buttonLayout");
 		layout.addView(getButtonLayout(this, document));
-		Config.Log(logTag, "prepare buttonLayout");
+		Logger.Log(logTag, "prepare buttonLayout");
 
-		Config.Log(logTag, "set Layout");
+		Logger.Log(logTag, "set Layout");
 		setContentView(layout);
 			
 
@@ -155,9 +155,9 @@ public class DocumentSessionActivity extends Activity {
 	
 	public void onPause(){
 		try{
-			Config.Log(logTag, "onPause();");
+			Logger.Log(logTag, "onPause();");
 			FileModuleWriteThreadInterface temp = fileSystem.getFolderByName(Folder.temp.toString()).saveFile(fileModule);
-			Config.Log(logTag, "SaveDocument");
+			Logger.Log(logTag, "SaveDocument");
 			document.saveDocument(temp);
 			temp.close();
 			fileSystem.moveFile(fileModule, Folder.temp.toString(), fileName, Folder.work.toString(), fileName);
@@ -166,7 +166,7 @@ public class DocumentSessionActivity extends Activity {
 			super.onPause();
 			finish();
 		}catch(Exception error){
-			Config.Log(logTag, "Error : " + error.getMessage());
+			Logger.Log(logTag, "Error : " + error.getMessage());
 			super.onPause();
 		}
 		

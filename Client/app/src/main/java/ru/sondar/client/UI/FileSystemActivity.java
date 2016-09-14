@@ -18,12 +18,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import ru.sondar.client.ALogging;
 import ru.sondar.client.ClientConfiguration;
 import ru.sondar.client.PrepareTestDocumentOnDisk_NonReleaseCode;
 import ru.sondar.client.R;
 import ru.sondar.client.filemodule.android.FileModule;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 import ru.sondar.core.filesystem.SonDarFolder;
@@ -55,8 +54,8 @@ public class FileSystemActivity extends Activity {
 			prepare();
 		}
         this.logUUID = UUID.randomUUID();
-		Config.Log(logTag,"start");
-		Config.Log(logTag,"File module prepare");
+		Logger.Log(logTag,"start");
+		Logger.Log(logTag,"File module prepare");
 		fileModule = new FileModule(this);
 		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
 		fileSystem.addFolder(Folder.example.toString());
@@ -74,29 +73,29 @@ public class FileSystemActivity extends Activity {
     @Override
 	public void onResume(){
 		super.onResume();
-		Config.Log(logTag,"Preparing file system ...");
+		Logger.Log(logTag,"Preparing file system ...");
 		if(ClientConfiguration.testingEnabled.equals("Auto")) {
 			prepare();
 		}
 		fileSystem.init(fileModule);
-		Config.Log(logTag,"File system init successfully");
+		Logger.Log(logTag,"File system init successfully");
 		if(isSomeDocumentInTemp(fileSystem)){
-			Config.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
+			Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
 			return;
 		}
-		Config.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
+		Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
 		LinearLayout layout = new LinearLayout(this);
 		layout.addView(getCreateNewButton(this,fileSystem, fileModule));
 		layout.addView(getOpenButton(this,fileSystem, fileModule));
 		if(ClientConfiguration.testingEnabled.equals("Hand")) {
 			layout.addView(getRefreshButton(this));
 		}
-		Config.Log(logTag, "set Layout");
+		Logger.Log(logTag, "set Layout");
         if(isApplicationActive) {
-            Config.Log(logTag, "Application is active. Show work layout");
+			Logger.Log(logTag, "Application is active. Show work layout");
             setContentView(layout);
         } else {
-            Config.Log(logTag, "Application is not active. Show default layout");
+			Logger.Log(logTag, "Application is not active. Show default layout");
             setContentView(R.layout.activity_main123);
         }
 	}
@@ -108,7 +107,7 @@ public class FileSystemActivity extends Activity {
 	public boolean isSomeDocumentInTemp(SonDarFileSystem fileSystem){
 		SonDarFolder temp = fileSystem.getFolderByName(Folder.temp.toString());
 		if(temp.getFileList().size()!=0){
-			Config.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
+			Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
 			Intent intent = new Intent(this, DocumentSessionActivity.class);
 			intent.putExtra("fileName",temp.getFileList().get(0));
 			intent.putExtra("logUUID",logUUID.toString());
@@ -252,7 +251,7 @@ public class FileSystemActivity extends Activity {
 			file.delete();
 			prepareConfigFile(file);
 		} catch (IOException e) {
-			Config.Log("Prepare","Error",e);
+			Logger.Log("Prepare","Error",e);
 		}
 		new PrepareTestDocumentOnDisk_NonReleaseCode(this);
 	}

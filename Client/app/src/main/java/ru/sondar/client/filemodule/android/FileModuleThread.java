@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.io.File;
 
-import ru.sondar.core.Config;
 import ru.sondar.core.filemodule.FileModuleThreadInterface;
 
 public class FileModuleThread implements FileModuleThreadInterface {
@@ -35,7 +34,6 @@ public class FileModuleThread implements FileModuleThreadInterface {
 
     @Override
     public void close() {
-        Config.Log("FileModuleLog", "Close file '" + fileName + "'");
         this.isClose = true;
     }
 

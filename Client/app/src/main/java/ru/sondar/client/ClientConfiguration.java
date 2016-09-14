@@ -12,11 +12,12 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import ru.sondar.client.filemodule.android.FileModule;
-import ru.sondar.core.Config;
-import ru.sondar.core.DOMParser;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.logging.*;
+import ru.sondar.core.logger.EmptyLogging;
+import ru.sondar.core.logger.Logger;
+import ru.sondar.core.logger.LoggerInterface;
+import ru.sondar.core.parser.DOMParser;
 
 /**
  * Created by GlebZemnieks on 9/6/2016.
@@ -63,11 +64,11 @@ public class ClientConfiguration {
                     "\t<testingEnabled>False</testingEnabled>\n" +
                     "</clientConfiguration>" );
             writeThreadConfig.close();
-            Config.Log("ClientConfiguration","Trouble with parse client.configuration value. File was rewritten in default value", e);
+            Logger.Log("ClientConfiguration","Trouble with parse client.configuration value. File was rewritten in default value", e);
             if(retry > 0) {
                 return init(context, 0);
             } else {
-                Config.Log("ClientConfiguration","Trouble with parse client.configuration value. Rewriting failed. God - save us please.(Unsupported version detected). Throw RunTime exception. You shall not pass for next step.", e);
+                Logger.Log("ClientConfiguration","Trouble with parse client.configuration value. Rewriting failed. God - save us please.(Unsupported version detected). Throw RunTime exception. You shall not pass for next step.", e);
                 throw new RuntimeException("Trouble with parse client.configuration value. Rewriting failed. God - save us please.(Unsupported version detected)");
             }
         }
@@ -77,20 +78,19 @@ public class ClientConfiguration {
     private void parse(Element element){
         NodeList list = element.getElementsByTagName(versionTag);
         if (list.item(0) == null) {
-            Config.Log("ClientConfiguration","No version tag field");
+            Logger.Log("ClientConfiguration","No version tag field");
         }
-
         list = element.getElementsByTagName(logModeTag);
         if (list.item(0) == null) {
-            Config.Log("ClientConfiguration","No logMode tag field. Set default - EmptyLogging");
-            Config.setLogger(this.getLogger(""));
+            Logger.Log("ClientConfiguration","No logMode tag field. Set default - EmptyLogging");
+            Logger.setLogger(this.getLogger(""));
         } else {
-            Config.setLogger(getLogger(list.item(0).getTextContent()));
+            Logger.setLogger(getLogger(list.item(0).getTextContent()));
         }
 
         list = element.getElementsByTagName(testingEnabledTag);
         if (list.item(0) == null) {
-            Config.Log("ClientConfiguration","No testingEnabledTag tag field. Set default - None");
+            Logger.Log("ClientConfiguration","No testingEnabledTag tag field. Set default - None");
             this.testingEnabled = "None";
         } else {
             this.testingEnabled =  list.item(0).getTextContent();

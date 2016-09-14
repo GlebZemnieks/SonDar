@@ -10,10 +10,10 @@
     tools:context="ru.sondar.client.MainActivity123">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="         Application ready... \nWaiting connection to server"
-        android:id="@+id/textView"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="         Application ready... \nWaiting connection to server" />
 </RelativeLayout>

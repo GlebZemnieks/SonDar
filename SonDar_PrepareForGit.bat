@@ -50,6 +50,7 @@ git add buildProject.bat
 git add deploy.bat
 git add deploy_lib.bat
 git add deploy_utils.bat
+git add deploy_client.bat
 
 echo ___________________________
 echo Branches

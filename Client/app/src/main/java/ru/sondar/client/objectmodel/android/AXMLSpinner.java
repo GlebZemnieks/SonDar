@@ -7,8 +7,7 @@ import android.widget.Spinner;
 
 import org.w3c.dom.Element;
 
-import ru.sondar.core.Config;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 import ru.sondar.documentmodel.objectmodel.SDSpinner;

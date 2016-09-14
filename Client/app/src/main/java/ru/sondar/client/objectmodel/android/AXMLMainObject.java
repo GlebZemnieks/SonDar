@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import org.w3c.dom.Element;
 
-import ru.sondar.core.exception.parser.ObjectStructureException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * Main class for association android parameter for object
