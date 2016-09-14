@@ -1,9 +1,9 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.core.exception.parser.NoAttributeException;
-import ru.sondar.core.exception.parser.ObjectStructureException;
 import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.core.parser.exception.NoAttributeException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.exception.*;
 

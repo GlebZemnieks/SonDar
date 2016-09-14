@@ -1,15 +1,11 @@
-package ru.sondar.core;
-
-import java.io.File;
-import ru.sondar.core.logger.EmptyLogging;
-import ru.sondar.core.logger.LoggerInterface;
+package ru.sondar.core.logger;
 
 /**
  * Configuration object for SonDar Core.
  *
  * @author GlebZemnieks
  */
-public class Config {
+public class Logger {
 
     /**
      * Logger object. By default have value
@@ -24,11 +20,9 @@ public class Config {
      * @param logger All logging message will set off to this object.
      */
     public static void setLogger(LoggerInterface logger) {
-        Config.logger = logger;
+        Logger.logger = logger;
         if (logger instanceof EmptyLogging) {
-            Config.Log("Config", "Disable logging");
         } else {
-            Config.Log("Config", "New logger object : " + logger.getClass());
         }
     }
 
@@ -44,15 +38,10 @@ public class Config {
      * @param msg
      */
     public static void Log(String tag, String msg) {
-        Config.logger.Log(tag, msg);
+        Logger.logger.Log(tag, msg);
     }
-    
-    public static void Log(String tag, String msg, Throwable error){
-        Config.logger.Log(tag, msg, error);
-    }
-    
-    public static String getAbsolutePath(){
-        File file = new File("");
-        return file.getAbsolutePath();
+
+    public static void Log(String tag, String msg, Throwable error) {
+        Logger.logger.Log(tag, msg, error);
     }
 }

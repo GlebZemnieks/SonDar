@@ -1,20 +1,10 @@
 package ru.sondar.documentmodel.documentfactory;
 
-import ru.sondar.documentmodel.objectmodel.SDSpinner;
-import ru.sondar.documentmodel.objectmodel.SDHeadPart;
-import ru.sondar.documentmodel.objectmodel.SDText;
-import ru.sondar.documentmodel.objectmodel.SDEditText;
-import ru.sondar.documentmodel.objectmodel.SDDate;
-import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.documentmodel.objectmodel.SDEndln;
-import ru.sondar.documentmodel.objectmodel.SDLogPart;
-import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
-import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
-import ru.sondar.documentmodel.objectmodel.WordBase;
+import ru.sondar.documentmodel.objectmodel.*;
 
 /**
  *

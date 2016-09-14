@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 
 /**
@@ -120,7 +120,7 @@ public class SDWordsBasePart {
      * @param fileModule
      */
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Config.Log("SDWordsBasePart::printObjectToXML", "Write wordsBase : " + this.toString());
+        Logger.Log("SDWordsBasePart::printObjectToXML", "Write wordsBase : " + this.toString());
         fileModule.write("<" + this.Tag_MainObject + ">\n");
         for (WordBase base : this.wordsBase.values()) {
             base.printObjectToXML(fileModule);

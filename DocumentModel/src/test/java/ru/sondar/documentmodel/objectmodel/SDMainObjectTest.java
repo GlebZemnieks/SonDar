@@ -8,7 +8,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.documentmodel.objectmodel.exception.ObjectAlreadyHaveNameException;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  *

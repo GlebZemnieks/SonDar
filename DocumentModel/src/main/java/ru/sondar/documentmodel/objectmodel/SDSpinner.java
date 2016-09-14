@@ -3,12 +3,12 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.exception.parser.NoFieldException;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.NoFieldException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * SDSpinner object
@@ -56,7 +56,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     }
 
     public String getActiveFilterAttribute() {
-        Config.Log("SDSpinner::getActiveFilterAttribute", "Return value : '" + activeFilter + "'");
+        Logger.Log("SDSpinner::getActiveFilterAttribute", "Return value : '" + activeFilter + "'");
         if (activeFilter != null) {
             return " activeFilter=\"" + activeFilter + "\"";
         }
@@ -118,7 +118,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     private String wordsBaseName;
 
     public String getWordsBaseNameAttribute() {
-        Config.Log("SDSpinner::getWordsBaseNameAttribute", "Return value : '" + wordsBaseName + "'");
+        Logger.Log("SDSpinner::getWordsBaseNameAttribute", "Return value : '" + wordsBaseName + "'");
         if (wordsBaseName != null) {
             return " baseName=\"" + wordsBaseName + "\"";
         }

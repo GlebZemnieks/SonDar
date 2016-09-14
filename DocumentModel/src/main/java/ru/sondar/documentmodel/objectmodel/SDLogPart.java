@@ -3,9 +3,9 @@ package ru.sondar.documentmodel.objectmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.Config;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * Log file list object
@@ -78,7 +78,7 @@ public class SDLogPart extends SDMainObject {
 
     @Override
     public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Config.Log("SDLogPart::printObjectToXML", "Write logPart : " + this.toString());
+        Logger.Log("SDLogPart::printObjectToXML", "Write logPart : " + this.toString());
         this.printAttrivute(fileModule);
         this.printCurrentObjectField(fileModule);
         fileModule.write("</" + Log_MainTag + ">\n");

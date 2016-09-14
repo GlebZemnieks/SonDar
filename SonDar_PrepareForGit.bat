@@ -19,11 +19,12 @@ call Project_PrepareTest.bat Core
 call Project_PrepareCode.bat PluginAPI
 call Project_PrepareCode.bat DemoPlugin
 
-::DocumentModule
+:: DocumentModule
 call Project_PrepareCode.bat DocumentModel
 call Project_PrepareTest.bat DocumentModel
 
 :: Utils
+call Project_PrepareCode.bat DocumentFactory
 call Project_PrepareCode.bat WordsBaseEditor
 
 :: Client
@@ -37,12 +38,18 @@ git add Client/gradlew
 git add Client/gradlew.bat
 git add Client/settings.gradle
 
-:: Build scripts
+:: Git scripts
 git add SonDar_PrepareForGit.bat
 git add Project_PrepareCode.bat
 git add Project_PrepareTest.bat
-git add buildProject.bat
+:: Build scripts
 git add build.bat
+git add buildItem.bat
+git add buildProject.bat
+:: Deploy scripts
+git add deploy.bat
+git add deploy_lib.bat
+git add deploy_utils.bat
 
 echo ___________________________
 echo Branches

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
 import ru.sondar.documentmodel.objectmodel.SDDate;
@@ -13,7 +8,7 @@ import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDDate;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  *

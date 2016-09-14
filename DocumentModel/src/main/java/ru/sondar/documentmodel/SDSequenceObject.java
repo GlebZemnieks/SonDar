@@ -3,12 +3,11 @@ package ru.sondar.documentmodel;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import ru.sondar.core.Config;
 import ru.sondar.documentmodel.objectmodel.*;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.exception.ObjectNotFountException;
-import ru.sondar.core.exception.parser.ObjectStructureException;
-
 /**
  * Objects sequence object
  *
@@ -197,7 +196,7 @@ public class SDSequenceObject extends SDMainObject {
      * @throws ObjectStructureException
      */
     public void parseSequence(Element element) throws ObjectStructureException {
-        Config.Log("SDSequenceObject::parseSequence", "Parsing start");
+        Logger.Log("SDSequenceObject::parseSequence", "Parsing start");
         this.sequenceArray = new ArrayList<>();
         this.sequenceArrayLength = 0;
         NodeList tempList = element.getChildNodes();
@@ -208,13 +207,13 @@ public class SDSequenceObject extends SDMainObject {
                 SDMainObject tempObject = this.getObjectByType(newObjectType);
                 AddXMLObject(tempObject);
                 tempObject.parseObjectFromXML(tempElement);
-                Config.Log("SDSequenceObject::parseSequence", "Parsed object : " + tempObject.toString());
+                Logger.Log("SDSequenceObject::parseSequence", "Parsed object : " + tempObject.toString());
             }
         }
-        Config.Log("SDSequenceObject::parseSequence", "Enumirate sequence");
+        Logger.Log("SDSequenceObject::parseSequence", "Enumirate sequence");
         this.enumirateSequence(0);
-        Config.Log("SDSequenceObject::parseSequence", "Parsing finish");
-        Config.Log("SDSequenceObject::parseSequence", "Result : \n" + this.toString());
+        Logger.Log("SDSequenceObject::parseSequence", "Parsing finish");
+        Logger.Log("SDSequenceObject::parseSequence", "Result : \n" + this.toString());
     }
 
     public SDMainObject getObjectByType(SDMainObjectType type) {
@@ -227,10 +226,8 @@ public class SDSequenceObject extends SDMainObject {
      * @param fileModule
      */
     public void printSequence(FileModuleWriteThreadInterface fileModule) {
-        Config.Log("SDSequenceObject::printSequence", "Write sequence : " + this.toString());
         fileModule.write("<" + Sequence_MainTag + ">\n");
         for (SDMainObject sDMainObject : sequenceArray) {
-            Config.Log("SDSequenceObject::printSequence", "Try to print object : " + sDMainObject.toString());
             sDMainObject.printObjectToXML(fileModule);
         }
         fileModule.write("</" + Sequence_MainTag + ">\n");

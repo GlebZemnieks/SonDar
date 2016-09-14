@@ -9,7 +9,7 @@ import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 
 /**

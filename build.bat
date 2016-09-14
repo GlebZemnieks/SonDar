@@ -1,35 +1,17 @@
 echo off
-set currentPath=E:\Development\SonDar
 set SonDarPath=C:\SonDar\
 
-::Part with no dependencies
-call buildProject.bat Exception
-cd %currentPath%
-call buildProject.bat Logger
-cd %currentPath%
-
-::Part with Exception dependency
-call buildProject.bat FileModule
-cd %currentPath%
-
-::Part with Logger dependency
-call buildProject.bat LoggerPC
-cd %currentPath%
-call buildProject.bat FileModulePC
-cd %currentPath%
-
-::Part with FileModule dependency
-call buildProject.bat LoggerFile
-cd %currentPath%
-
-
-call buildProject.bat LoggerFile
-cd %currentPath%
-
-call buildProject.bat FileSystem
-cd %currentPath%
-
-call buildProject.bat Parser
-cd %currentPath%
-
+:: Core.jar prepare
+call buildItem.bat Exception
+call buildItem.bat Logger
+call buildItem.bat FileModule
+call buildItem.bat LoggerPC
+call buildItem.bat FileModulePC
+call buildItem.bat LoggerFile
+call buildItem.bat Parser
+call buildItem.bat FileSystem
 :: Core ready - go!
+
+:: Document Model
+call buildItem.bat DocumentModel
+call buildItem.bat DocumentFactory

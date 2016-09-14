@@ -3,14 +3,12 @@ package ru.sondar.documentmodel;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import ru.sondar.core.Config;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.core.logger.Logger;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.exception.*;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.*;
-import ru.sondar.core.exception.parser.ObjectStructureException;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.core.logging.FileLogging;
 
 /**
  * Document model
@@ -20,6 +18,7 @@ import ru.sondar.core.logging.FileLogging;
  */
 public class SDDocument {
     
+    /*
     public static void main(String... args) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException{
         Config.setLogger(new FileLogging("E:\\test.log"));
         SDDocument document = new SDDocument();
@@ -28,6 +27,7 @@ public class SDDocument {
         document.saveDocument(fileModuleWriteThreadInterface);
         fileModuleWriteThreadInterface.close();
     }
+    */
 
     /**
      * Sequence object of this document
@@ -231,7 +231,7 @@ public class SDDocument {
      * @param fileModule
      */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
-        Config.Log("SDDOcument::saveDocument", "Start");
+        Logger.Log("SDDOcument::saveDocument", "Start");
         if (this.sequence == null || this.headPart == null
                 || this.logPart == null || this.dependency == null
                 || this.wordsBase == null) {
@@ -241,7 +241,7 @@ public class SDDocument {
                     + " : log : " + this.logPart
                     + " : wordsBase : " + this.wordsBase + " ;");
         }
-        Config.Log("SDDOcument::saveDocument", "Document ready to writing");
+        Logger.Log("SDDOcument::saveDocument", "Document ready to writing");
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
         this.wordsBase.printObjectToXML(fileModule);
@@ -249,7 +249,7 @@ public class SDDocument {
         this.dependency.printObjectToXML(fileModule);
         this.logPart.printObjectToXML(fileModule);
         fileModule.write("</Document>\n");
-        Config.Log("SDDOcument::saveDocument", "Document writted");
+        Logger.Log("SDDOcument::saveDocument", "Document writted");
     }
 
     public static boolean isInFormat(String fileName) {
@@ -258,7 +258,6 @@ public class SDDocument {
         try {
             SDDocument document = new SDDocument();
             document.loadDocument(fileName);
-
         } catch (SAXException | IOException | ParserConfigurationException | ObjectStructureException ex) {
             return false;
         }

@@ -2,7 +2,7 @@ package ru.sondar.documentmodel.objectmodel;
 
 import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.exception.parser.ObjectStructureException;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * End of line object decoration object

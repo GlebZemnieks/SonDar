@@ -1,5 +1,7 @@
 package ru.sondar.documentmodel.documentfactory;
 
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.documentfactory.structure.*;
@@ -7,8 +9,6 @@ import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.addCompositeObjectList;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.enter;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 
 /**
  *
@@ -162,7 +162,7 @@ public class SpaceForYourCreativity {
             listValue, 0, "")
         });
         enter(sequence);
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
@@ -172,7 +172,7 @@ public class SpaceForYourCreativity {
             listValue, 0, "")
         });
         enter(sequence);
-        addProsentWithText(sequence, "фасада");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
@@ -182,7 +182,7 @@ public class SpaceForYourCreativity {
             listValue, 0, "")
         });
         enter(sequence);
-        addProsentWithText(sequence, "кровли");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
@@ -233,7 +233,7 @@ public class SpaceForYourCreativity {
             listValue, 0, "", listValue, 0, "")
         });
         enter(sequence);
-        addProsentWithText(sequence, "подвала");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         //TODO Вынести словарные базы в конфигурацию.
@@ -379,7 +379,7 @@ public class SpaceForYourCreativity {
             new TextAndSpinnerList("Отопление подъедов", baseList, listValue, 0, ""),
             new TextAndSpinnerList("Подача теплоносителей в полотенцесушители", baseList, listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         //TODO переделать во внутренние функции с открытием нового экрана
@@ -395,7 +395,7 @@ public class SpaceForYourCreativity {
             new TextAndSpinnerList("Наличие повысительного насоса", baseList, listValue, 0, ""),
             new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -413,7 +413,7 @@ public class SpaceForYourCreativity {
             new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, ""),
             new TextAndSpinnerList("Наличие пожарного водопровода", baseList, listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -425,7 +425,7 @@ public class SpaceForYourCreativity {
             new TextAndSpinnerList("материал трубопроводов водоотведение: стояков", baseList, listValue, 0, ""),
             new TextAndSpinnerList("лежаков", baseList, listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -436,7 +436,7 @@ public class SpaceForYourCreativity {
             new TextAndSpinnerList("Вид газового оборудования (плиты/колонки(котлы))", baseList, listValue, 0, "", listValue, 0, ""),
             new TextAndSpinnerList("Наличие поквартирного учета", baseList, listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -453,7 +453,7 @@ public class SpaceForYourCreativity {
         addCompositeObjectList(sequence, new CompositeObject[]{
             new TextAndSpinnerList("ж)Наличие ливтов пасажирских/грузовых", baseList, listValue, 0, "", listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -477,7 +477,7 @@ public class SpaceForYourCreativity {
             listValue, 0, "", listValue, 0, ""),
             new TextAndSpinnerList("Наличие/способ электроснабжения электрических плит", baseList, listValue, 0, "", listValue, 0, "")
         });
-        addProsentWithText(sequence, "");
+        addProsentWithText(sequence, "", "", "");
         enter(sequence);
 
         addCompositeObjectList(sequence, new CompositeObject[]{
