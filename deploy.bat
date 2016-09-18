@@ -3,27 +3,34 @@ set SonDarPath=C:\SonDar\
 set currentPath=E:\Development\SonDar\
 set toJarPath=\target\
 
+echo debug
+goto :test
+
 :: Core
-call deploy_lib.bat Exception 1.0
-call deploy_lib.bat FileModule 1.0
-call deploy_lib.bat FileModulePC 1.0
-call deploy_lib.bat FileSystem 1.0
-call deploy_lib.bat Logger 1.0
-call deploy_lib.bat LoggerFile 1.0
-call deploy_lib.bat LoggerPC 1.0
-call deploy_lib.bat Parser 1.0
+call deploy_lib.bat Core Exception 1.0
+call deploy_lib.bat Core FileModule 1.0
+call deploy_lib.bat Core FileModulePC 1.0
+call deploy_lib.bat Core FileSystem 1.0
+call deploy_lib.bat Core Logger 1.0
+call deploy_lib.bat Core LoggerFile 1.0
+call deploy_lib.bat Core LoggerPC 1.0
+call deploy_lib.bat Core Parser 1.0
 
 :: Document Model
-call deploy_lib.bat DocumentModel 1.0
-
+call deploy_lib.bat "" DocumentModel 1.0
 
 :: Utils
-call deploy_utils.bat DocumentFactory 1.0
-call deploy_utils.bat WordsBaseEditor 1.0
+:test
+call deploy_utils.bat Utils DocumentFactory 1.0
+call deploy_utils.bat Utils WordsBaseEditor 1.0
+goto :exit
 
 :: Server
-call deploy_lib.bat DriverAPI 1.0
-call deploy_lib.bat DriverExcel 1.0
-call deploy_lib.bat PluginAPI 1.0
+call deploy_lib.bat Plugins DriverAPI 1.0
+call deploy_lib.bat Plugins DriverExcel 1.0
+call deploy_lib.bat Plugins PluginAPI 1.0
 
-call deploy_utils.bat SDServer 1.0
+call deploy_utils.bat "" SDServer 1.0
+
+:exit
+echo EXIT

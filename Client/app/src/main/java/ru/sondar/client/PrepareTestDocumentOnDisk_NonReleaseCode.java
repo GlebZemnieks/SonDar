@@ -194,6 +194,446 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 				"<text>Рекомендовать в магистратуру</text>\n" +
 				"<default>false</default>\n" +
 				"</object>\n" +
+						"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+						"<textEdit></textEdit>\n" +
+						"<textLength>20</textLength>\n" +
+						"</object>\n" +
+						"<object type=\"Text\" id=\"18\">\n" +
+						"<text>степень </text>\n" +
+						"</object>\n" +
+						"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+						"<dataList baseName=\"test2\">" +
+						"</dataList>\n" +
+						"<ItemSelected>0</ItemSelected>\n" +
+						"</object>\n" +
+						"<object type=\"Text\" id=\"20\">\n" +
+						"<text>\"Прикладная математика и информатика\"</text>\n" +
+						"</object>\n" +
+						"<object type=\"EndLn\" id=\"21\">\n" +
+						"</object>\n" +
+						"<object type=\"Text\" id=\"22\">\n" +
+						"<text>2. Выдать студенту </text>\n" +
+						"</object>\n" +
+						"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+						"<textEdit></textEdit>\n" +
+						"<textLength>20</textLength>\n" +
+						"</object>\n" +
+						"<object type=\"Text\" id=\"24\">\n" +
+						"<text>диплом </text>\n" +
+						"</object>\n" +
+						"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+						"<text>с отличием</text>\n" +
+						"<default>false</default>\n" +
+						"</object>\n" +
+						"<object type=\"EndLn\" id=\"26\">\n" +
+						"</object>\n" +
+						"<object type=\"Text\" id=\"27\">\n" +
+						"<text>3.</text>\n" +
+						"</object>\n" +
+						"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+						"<text>Рекомендовать в магистратуру</text>\n" +
+						"<default>false</default>\n" +
+						"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"17\" name=\"StudentName\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"18\">\n" +
+				"<text>степень </text>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"19\" name=\"educationRank\">\n" +
+				"<dataList baseName=\"test2\">" +
+				"</dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"20\">\n" +
+				"<text>\"Прикладная математика и информатика\"</text>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"21\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"22\">\n" +
+				"<text>2. Выдать студенту </text>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"23\" name=\"StudentName2\">\n" +
+				"<textEdit></textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"24\">\n" +
+				"<text>диплом </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"25\" name=\"AdditionalBun\">\n" +
+				"<text>с отличием</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"26\">\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"27\">\n" +
+				"<text>3.</text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"28\" name=\"MastersRecommend\">\n" +
+				"<text>Рекомендовать в магистратуру</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
 				"</XMLSequence>\n" +
 				"<DependencyPart>\n" +
 				"<link objectName=\"protocolNumber\" cellId=\"1\"></link>\n" +

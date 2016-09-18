@@ -2,30 +2,30 @@
 
 git init
 :: Core
-call Project_PrepareCode.bat Exception
-call Project_PrepareCode.bat Logger
-call Project_PrepareCode.bat FileModule
-call Project_PrepareCode.bat LoggerPC
-call Project_PrepareCode.bat FileModulePC
-call Project_PrepareTest.bat FileModulePC
-call Project_PrepareCode.bat LoggerFile
-call Project_PrepareCode.bat FileSystem
-call Project_PrepareTest.bat FileSystem
-call Project_PrepareCode.bat Parser
+call Project_PrepareCode.bat Core\Exception
+call Project_PrepareCode.bat Core\Logger
+call Project_PrepareCode.bat Core\FileModule
+call Project_PrepareCode.bat Core\LoggerPC
+call Project_PrepareCode.bat Core\FileModulePC
+call Project_PrepareTest.bat Core\FileModulePC
+call Project_PrepareCode.bat Core\LoggerFile
+call Project_PrepareCode.bat Core\FileSystem
+call Project_PrepareTest.bat Core\FileSystem
+call Project_PrepareCode.bat Core\Parser
 
 :: DocumentModule
 call Project_PrepareCode.bat DocumentModel
 call Project_PrepareTest.bat DocumentModel
 
 :: Plugin parts
-call Project_PrepareCode.bat DriverAPI 
-call Project_PrepareCode.bat DriverExcel 
-call Project_PrepareCode.bat PluginAPI
-call Project_PrepareCode.bat DemoPlugin
+call Project_PrepareCode.bat Plugins\DriverAPI 
+call Project_PrepareCode.bat Plugins\DriverExcel 
+call Project_PrepareCode.bat Plugins\PluginAPI
+call Project_PrepareCode.bat Plugins\DemoPlugin
 
 :: Utils
-call Project_PrepareCode.bat DocumentFactory
-call Project_PrepareCode.bat WordsBaseEditor
+call Project_PrepareCode.bat Utils\DocumentFactory
+call Project_PrepareCode.bat Utils\WordsBaseEditor
 
 :: Client
 git add Client\app\src\main\*.java
