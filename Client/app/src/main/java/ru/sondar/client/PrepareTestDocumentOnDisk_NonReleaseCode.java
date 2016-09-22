@@ -58,25 +58,75 @@ public class PrepareTestDocumentOnDisk_NonReleaseCode {
 		writeThread.close();
 
 		writeThread = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/example/" + "Example2.xml");
-		writeThread.write("<Document>\n"
-				+ "<head>\n"
-				+ "<documentUUID>00000000-0000-0000-0000-000000000000</documentUUID>\n"
-				+ "<pluginUUID>00000000-0000-0000-0000-000000000000</pluginUUID>\n"
-				+ "<creationTime>45780364596876</creationTime>\n"
-				+ "<lastModificationTime>248657685765234</lastModificationTime>\n"
-				+ "</head>\n"
-				+ "<WordsBase>\n"
-				+ "</WordsBase>\n"
-				+ "<XMLSequence>\n"
-				+ "<object type=\"Text\" id=\"0\">\n"
-				+ "<text>Test Data Xoxoxo</text>\n"
-				+ "</object>\n"
-				+ "</XMLSequence>\n" +
+		writeThread.write("<Document>\n" +
+				"<head>\n" +
+				"<documentUUID>00000000-0000-0000-0000-000000000000</documentUUID>\n" +
+				"<pluginUUID>00000000-0000-0000-0000-000000000000</pluginUUID>\n" +
+				"<documentName>00000000-0000-0000-0000-000000000000</documentName>\n" +
+				"<creationTime>1474521673365</creationTime>\n" +
+				"<lastModificationTime>1474521673365</lastModificationTime>\n" +
+				"</head>\n" +
+				"<WordsBase>\n" +
+				"<dataList name=\"test\">\n" +
+				"<item>item1</item>\n" +
+				"<item>item2</item>\n" +
+				"</dataList>\n" +
+				"</WordsBase>\n" +
+				"<XMLSequence>\n" +
+				"<object type=\"CheckBox\" id=\"0\">\n" +
+				"<text>CheckTEST1</text>\n" +
+				"<default>true</default>\n" +
+				"</object>\n" +
+				"<object type=\"Date\" id=\"1\">\n" +
+				"<date>1474521673370</date>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"2\">\n" +
+				"</object>\n" +
+				"<object type=\"DivContainer\" id=\"3\">\n" +
+				"<object type=\"CheckBox\" id=\"4\">\n" +
+				"<text>CheckTEST2</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"EditText\" id=\"5\">\n" +
+				"<textEdit>test text(20)</textEdit>\n" +
+				"<textLength>20</textLength>\n" +
+				"</object>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"6\">\n" +
+				"<text>textTEST1 : </text>\n" +
+				"</object>\n" +
+				"<object type=\"DivContainer\" id=\"7\">\n" +
+				"<object type=\"CheckBox\" id=\"8\">\n" +
+				"<text>CheckTEST2</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"9\">\n" +
+				"<dataList baseName=\"test\"></dataList>\n" +
+				"<ItemSelected>0</ItemSelected>\n" +
+				"</object>\n" +
+				"</object>\n" +
+				"<object type=\"Text\" id=\"10\">\n" +
+				"<text>testTEST2 : </text>\n" +
+				"</object>\n" +
+				"<object type=\"CheckBox\" id=\"11\">\n" +
+				"<text>checkTEST3</text>\n" +
+				"<default>false</default>\n" +
+				"</object>\n" +
+				"<object type=\"Spinner\" id=\"12\">\n" +
+				"<dataList baseName=\"test\"></dataList>\n" +
+				"<ItemSelected>1</ItemSelected>\n" +
+				"</object>\n" +
+				"<object type=\"EndLn\" id=\"13\">\n" +
+				"</object>\n" +
+				"<object type=\"Date\" id=\"14\">\n" +
+				"<date>1474521673371</date>\n" +
+				"</object>\n" +
+				"</XMLSequence>\n" +
 				"<DependencyPart>\n" +
-				"</DependencyPart>\n"
-				+ "<Log>\n"
-				+ "</Log>\n"
-				+ "</Document>\n");
+				"</DependencyPart>\n" +
+				"<Log>\n" +
+				"</Log>\n" +
+				"</Document>\n");
 		writeThread.close();
 
 		writeThread = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/example/" + "Example3.xml");

@@ -50,9 +50,10 @@ public class FileSystemActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		new ClientConfiguration(this);
-		if(ClientConfiguration.testingEnabled.equals("Auto")) {
-			prepare();
-		}
+		//if(ClientConfiguration.testingEnabled.equals("Auto")) {
+
+		prepare();
+		//}
         this.logUUID = UUID.randomUUID();
 		Logger.Log(logTag,"start");
 		Logger.Log(logTag,"File module prepare");
@@ -81,9 +82,9 @@ public class FileSystemActivity extends Activity {
 		Logger.Log(logTag,"File system init successfully");
 		if(isSomeDocumentInTemp(fileSystem)){
 			Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
-			return;
+		} else {
+			Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
 		}
-		Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
 		LinearLayout layout = new LinearLayout(this);
 		layout.addView(getCreateNewButton(this,fileSystem, fileModule));
 		layout.addView(getOpenButton(this,fileSystem, fileModule));
@@ -107,7 +108,6 @@ public class FileSystemActivity extends Activity {
 	public boolean isSomeDocumentInTemp(SonDarFileSystem fileSystem){
 		SonDarFolder temp = fileSystem.getFolderByName(Folder.temp.toString());
 		if(temp.getFileList().size()!=0){
-			Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
 			Intent intent = new Intent(this, DocumentSessionActivity.class);
 			intent.putExtra("fileName",temp.getFileList().get(0));
 			intent.putExtra("logUUID",logUUID.toString());

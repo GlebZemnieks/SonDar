@@ -120,7 +120,7 @@ public class SDSequenceObject extends SDMainObject {
             if (this.sequenceArray.get(cursor).getObjectType() == SDMainObjectType.DivContainer) {
                 return ((SDSequenceObject) this.sequenceArray.get(cursor)).getXMLObject(id);
             } else {
-                throw new IndexOutOfBoundsException();
+                throw new IndexOutOfBoundsException("Try to get object '" + cursor + "' from sequence with max '" + this.sequenceArray.size() + "(" + this.sequenceArray.get(this.sequenceArray.size()-1).getObjectType() + ")");
             }
         }
         int max = cursor;
@@ -171,6 +171,7 @@ public class SDSequenceObject extends SDMainObject {
             this.sequenceArray.get(count).setID(tempId++);
             if (SDMainObjectType.DivContainer == this.sequenceArray.get(count).getObjectType()) {
                 ((SDSequenceObject) this.sequenceArray.get(count)).enumirateSequence(tempId);
+                tempId += ((SDSequenceObject) this.sequenceArray.get(count)).sequenceArrayLength;
             }
         }
     }
@@ -182,6 +183,7 @@ public class SDSequenceObject extends SDMainObject {
      */
     public void AddXMLObject(SDMainObject newObject) {
         if (newObject.getObjectType() == SDMainObjectType.DivContainer) {
+            ((SDSequenceObject)newObject).document = this.document;
             this.sequenceArrayLength += ((SDSequenceObject) newObject).sequenceArrayLength;
         }
         this.sequenceArrayLength++;

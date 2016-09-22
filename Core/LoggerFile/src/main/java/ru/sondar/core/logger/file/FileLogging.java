@@ -10,19 +10,23 @@ import ru.sondar.core.logger.LoggerInterface;
  * @author GlebZemnieks
  * @since SonDar-1.2
  */
-public class FileLogging implements LoggerInterface{
+public class FileLogging implements LoggerInterface {
 
     FileModuleInterface fileModule;
     public String fileName;
-    
-    public FileLogging(FileModuleInterface fileModule, String fileName) {
+
+    public FileLogging(FileModuleInterface fileModule, String fileName, boolean append) {
         this.fileModule = fileModule;
         this.fileName = fileName;
-        //getWriteThread - create new empty file
-        FileModuleWriteThreadInterface temp = fileModule.getWriteThread(fileName);
+        FileModuleWriteThreadInterface temp;
+        if (append) {
+            temp = fileModule.getWriteThreadToAppend(fileName);
+        } else {
+            temp = fileModule.getWriteThread(fileName);
+        }
         temp.close();
     }
-    
+
     @Override
     public void Log(String logTag, String logMsg) {
         FileModuleWriteThreadInterface temp = fileModule.getWriteThreadToAppend(fileName);
@@ -46,5 +50,5 @@ public class FileLogging implements LoggerInterface{
     public void Log(int logingLevel, String logTag, String logMsg, Throwable errorStackTrace) {
         this.Log(logTag, logMsg, errorStackTrace);
     }
-    
+
 }

@@ -1,7 +1,12 @@
 package ru.sondar.documentmodel.documentfactory;
 
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
+import ru.sondar.core.logger.Logger;
+import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.documentfactory.structure.*;
@@ -20,13 +25,15 @@ public class SpaceForYourCreativity {
 
     public static String documentUUID = "69f08553-bf07-405f-b849-0bea1423ed1c";
 
-    public static void main(String... args) {
+    public static void main(String... args) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException {
         SDDocument document = new SDDocument();
         SDHeadPart head = SDObjectFactory.getHeadPart(documentUUID);
         document.setHeadPart(head);
-        SDWordsBasePart baseList = getWordsBase();
-        document.setWordsBasePart(baseList);
+
+        //The sequence of function calls faithful to the following 4 lines
+        SDWordsBasePart baseList = new SDWordsBasePart();
         SDSequenceObject sequenceObject = getSequence(baseList);
+        document.setWordsBasePart(baseList);
         document.setSequence(sequenceObject);
 
         DependencyPart dependency = getDependencyPart(sequenceObject);
@@ -37,18 +44,20 @@ public class SpaceForYourCreativity {
         FileModuleWriteThreadInterface fileModule = new FileModuleWriteThread(pathToFileCreate, false);
         document.saveDocument(fileModule);
         fileModule.close();
-    }
-
-    public static SDWordsBasePart getWordsBase() {
-        SDWordsBasePart baseList = new SDWordsBasePart();
-        baseList.addNewBase("категория фонда", new WordBase());
-        return baseList;
+        //For check document is valid - loading it!
+        SDDocument testDocument = new SDDocument();
+        testDocument.loadDocument(pathToFileCreate);
     }
 
     public static DependencyPart getDependencyPart(SDSequenceObject sequenceObject) {
         DependencyPart dependency = new DependencyPart();
-        dependency.addDependencyItemWithValidation(sequenceObject, "test", 0);
-        dependency.addDependencyItemWithValidation(sequenceObject, "test2", 1);
+        // 0-3 for head part
+        int startI = 4;
+        for (SDMainObject object : sequenceObject.sequenceArray) {
+            if ((object.getObjectName() != null) && (object.getObjectName() != "")) {
+                dependency.addDependencyItemWithValidation(sequenceObject, object.getObjectName(), startI++);
+            }
+        }
         return dependency;
     }
 
@@ -76,7 +85,7 @@ public class SpaceForYourCreativity {
         enter(sequence);
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
-            new TextAndSpinnerList("Категория жилищного фонда", baseList, "категория фонда", 1, "категория финда")
+            new TextAndSpinnerList("Категория жилищного фонда", baseList, "категория фонда", 0, "категория фонда")
         });
         addCompositeObjectList(sequence, new CompositeObject[]{
             new TextAndEditTextList("принадлежность", "", 30, "собственник")

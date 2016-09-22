@@ -6,6 +6,8 @@ package ru.sondar.core.exception;
  */
 public class SonDarException extends Exception{
 
+    public Object[] params;
+    
     public SonDarException() {
         super();
     }
@@ -14,4 +16,8 @@ public class SonDarException extends Exception{
         super(msg);
     }
     
+    public SonDarException(String msg, Object... params){
+        super(msg);
+        this.params = params;
+    }
 }

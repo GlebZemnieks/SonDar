@@ -31,7 +31,9 @@ public class AXMLSequenceObject extends SDSequenceObject {
      */
     public void resetView(){
         for(int count=0;count<this.sequenceArrayLength;count++){
-            ((AXMLMainObject) this.getXMLObject(count)).resetView();
+            if(!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
+                ((AXMLMainObject) this.getXMLObject(count)).resetView();
+            }
         }
     }
 
@@ -40,16 +42,18 @@ public class AXMLSequenceObject extends SDSequenceObject {
      */
 	public void updateState(){
 		for(int count=firstIdInDomain;count<lastIdInDomain+1;count++){
-			((AXMLMainObject)this.getXMLObject(count)).updateState();
+            if(!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
+                ((AXMLMainObject) this.getXMLObject(count)).updateState();
+            }
 		}
 	}
 
     public void AddXMLObject(SDMainObject newObject) {
-        super.AddXMLObject((AXMLMainObject)newObject);
+        super.AddXMLObject(newObject);
     }
 
     public SDMainObject getXMLObject(int id) {
-        return (AXMLMainObject)super.getXMLObject(id);
+        return super.getXMLObject(id);
     }
 
     /**

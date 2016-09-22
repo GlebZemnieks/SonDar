@@ -37,7 +37,7 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 			if(checkSequenceOverflow(sequenceObject, count)){
 				if(count == startObjectId){
 					Logger.Log(logTag, "Last page. Generation will skip. Throw XMLSequenceIndexOverflowException");
-					throw new XMLSequenceIndexOverflowException("No layout update");
+					throw new XMLSequenceIndexOverflowException("Layout no update");
 				}
 				Logger.Log(logTag, "checkSequenceOverflow = True --> break");
 				domainLayout.addView(nowLayout);
@@ -49,6 +49,10 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 			if(ifEndln(sequenceObject, count)){
 				Logger.Log(logTag, "ifEndln = True --> continue");
 				prepareNewLayout(context, sequenceObject, count);
+				continue;
+			}
+			if(sequenceObject.getXMLObject(count).getObjectType() == SDMainObjectType.DivContainer){
+				Logger.Log(logTag, "ifDivContainer = True --> continue");
 				continue;
 			}
 			Logger.Log(logTag, "prepare object:\n" + count + "-->" + sequenceObject.getXMLObject(count).toString());

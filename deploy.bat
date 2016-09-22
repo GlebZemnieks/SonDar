@@ -3,9 +3,6 @@ set SonDarPath=C:\SonDar\
 set currentPath=E:\Development\SonDar\
 set toJarPath=\target\
 
-echo debug
-goto :test
-
 :: Core
 call deploy_lib.bat Core Exception 1.0
 call deploy_lib.bat Core FileModule 1.0
@@ -20,10 +17,8 @@ call deploy_lib.bat Core Parser 1.0
 call deploy_lib.bat "" DocumentModel 1.0
 
 :: Utils
-:test
 call deploy_utils.bat Utils DocumentFactory 1.0
 call deploy_utils.bat Utils WordsBaseEditor 1.0
-goto :exit
 
 :: Server
 call deploy_lib.bat Plugins DriverAPI 1.0
@@ -31,6 +26,3 @@ call deploy_lib.bat Plugins DriverExcel 1.0
 call deploy_lib.bat Plugins PluginAPI 1.0
 
 call deploy_utils.bat "" SDServer 1.0
-
-:exit
-echo EXIT

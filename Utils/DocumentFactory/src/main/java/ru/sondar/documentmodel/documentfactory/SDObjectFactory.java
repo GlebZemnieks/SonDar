@@ -120,21 +120,14 @@ public class SDObjectFactory {
         return (SDLogPart) returnObject(log);
     }
 
-    public static SDSpinner getSpinner(WordBase base) {
-        return getSpinner(base, 0);
-    }
-
     public static SDSpinner getSpinner(SDWordsBasePart baseList, String baseName) {
-        return getSpinner(baseList.getList(baseName), 0);
+        return getSpinner(baseList, baseName, 0);
     }
 
     public static SDSpinner getSpinner(SDWordsBasePart baseList, String baseName, int itemSelected) {
-        return getSpinner(baseList.getList(baseName), itemSelected);
-    }
-
-    public static SDSpinner getSpinner(WordBase base, int itemSelected) {
         SDSpinner spinner = new SDSpinner();
-        spinner.setList(base);
+        spinner.setWordsBaseName(baseName);
+        spinner.setList(baseList.getList(baseName));
         spinner.setDefaultItemSelected(itemSelected);
         return (SDSpinner) returnObject(spinner);
     }

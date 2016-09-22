@@ -30,12 +30,12 @@ public class AXMLSpinner extends AXMLMainObject {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, ((SDSpinner) this.sdMainObject).getList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         temp.setAdapter(adapter);
-        temp.setSelection(((SDSpinner) this.sdMainObject).getDefaultItemSelected() - 1);
+        temp.setSelection(((SDSpinner) this.sdMainObject).getDefaultItemSelected());
         return temp;
     }
 
     @Override
     public void updateState() {
-        ((SDSpinner) this.sdMainObject).setDefaultItemSelected(((Spinner) this.getView()).getSelectedItemPosition() + 1);
+        ((SDSpinner) this.sdMainObject).setDefaultItemSelected(((Spinner) this.getView()).getSelectedItemPosition());
     }
 }

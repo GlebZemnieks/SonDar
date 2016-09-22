@@ -167,6 +167,7 @@ public class DocumentSessionActivity extends Activity {
 			finish();
 		}catch(Exception error){
 			Logger.Log(logTag, "Error : " + error.getMessage());
+			error.printStackTrace();
 			super.onPause();
 		}
 		

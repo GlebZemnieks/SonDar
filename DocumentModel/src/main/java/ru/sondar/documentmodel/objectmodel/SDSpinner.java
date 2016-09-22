@@ -116,6 +116,10 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      * Name of words base list
      */
     private String wordsBaseName;
+    
+    public void setWordsBaseName(String newName){
+        this.wordsBaseName = newName;
+    }
 
     public String getWordsBaseNameAttribute() {
         Logger.Log("SDSpinner::getWordsBaseNameAttribute", "Return value : '" + wordsBaseName + "'");

@@ -1,6 +1,5 @@
 package ru.sondar.documentmodel;
 
-import ru.sondar.documentmodel.SDSequenceObject;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -41,7 +40,7 @@ public class SDSequenceObjectTest {
         sequence.AddXMLObject(edit);
         sequence.enumirateSequence(0);
     }
-    
+
     /**
      * Test of getXMLObjectByName method, of class SDSequenceObject.
      */
@@ -149,7 +148,7 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testPrintCurrentObjectField() {
-        //Так надо
+        //Так надо//Почему?
         sequence.setID(-1);
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\div_object_temp.txt", false);
         this.sequence.printObjectToXML(fileModule);

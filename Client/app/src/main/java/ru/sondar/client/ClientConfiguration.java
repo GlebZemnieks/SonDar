@@ -17,6 +17,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.logger.EmptyLogging;
 import ru.sondar.core.logger.Logger;
 import ru.sondar.core.logger.LoggerInterface;
+import ru.sondar.core.logger.file.FileLogging;
 import ru.sondar.core.parser.DOMParser;
 
 /**
@@ -46,7 +47,7 @@ public class ClientConfiguration {
 
     public ClientConfiguration(Context context) {
         Element element = init(context, 1);
-        parse(element);
+        parse(element, context);
     }
 
     private Element init(Context context, int retry){
@@ -57,10 +58,10 @@ public class ClientConfiguration {
             parser = new DOMParser(Environment.getExternalStorageDirectory()+"/sondar/" + PROPERTIES_FILE);
             congif = parser.getRootElement();
         } catch (IOException | ParserConfigurationException | SAXException e) {
-            FileModuleWriteThreadInterface writeThreadConfig = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/client.configuration");
+            FileModuleWriteThreadInterface writeThreadConfig = fileModule.getWriteThread(Environment.getExternalStorageDirectory()+"/sondar/" + PROPERTIES_FILE);
             writeThreadConfig.write("<clientConfiguration>\n" +
                     "\t<version>1</version>\n" +
-                    "\t<logMode></logMode>\n" +
+                    "\t<logMode>File</logMode>\n" +
                     "\t<testingEnabled>False</testingEnabled>\n" +
                     "</clientConfiguration>" );
             writeThreadConfig.close();
@@ -75,7 +76,7 @@ public class ClientConfiguration {
         return congif;
     }
 
-    private void parse(Element element){
+    private void parse(Element element, Context context){
         NodeList list = element.getElementsByTagName(versionTag);
         if (list.item(0) == null) {
             Logger.Log("ClientConfiguration","No version tag field");
@@ -83,9 +84,11 @@ public class ClientConfiguration {
         list = element.getElementsByTagName(logModeTag);
         if (list.item(0) == null) {
             Logger.Log("ClientConfiguration","No logMode tag field. Set default - EmptyLogging");
-            Logger.setLogger(this.getLogger(""));
+            Logger.setLogger(this.getLogger("", context));
         } else {
-            Logger.setLogger(getLogger(list.item(0).getTextContent()));
+            LoggerInterface newLogger = getLogger(list.item(0).getTextContent(), context);
+            Logger.setLogger(newLogger);
+            Logger.Log("ClientConfiguration","New logger was set. New value : " + newLogger.getClass());
         }
 
         list = element.getElementsByTagName(testingEnabledTag);
@@ -105,12 +108,16 @@ public class ClientConfiguration {
      * @param value
      * @return
      */
-    private LoggerInterface getLogger(String value) {
+    private LoggerInterface getLogger(String value, Context context) {
         switch (value) {
             case "None":
                 return new EmptyLogging();
             case "Android":
                 return new ALogging();
+            case "File":
+                return new FileLogging(new FileModule(context), Environment.getExternalStorageDirectory()+"/sondar/log/log.txt", false);
+            case "FileLong":
+                return new FileLogging(new FileModule(context), Environment.getExternalStorageDirectory()+"/sondar/log/log.txt", true);
             default:
                 return new ALogging();
         }

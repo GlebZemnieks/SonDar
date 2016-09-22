@@ -5,8 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
+import ru.sondar.documentmodel.objectmodel.exception.BaseWithNameNotExistException;
 
 /**
  * Words base main class
@@ -40,33 +42,33 @@ public class SDWordsBasePart {
 
     /**
      * Getter for strings list field. If base with <code>key</code> not exist
-     * throw RunTimeException
+     * throw SonDarRuntimeException
      *
      * @param key Name of words base
      * @return
-     * @throws RuntimeException
+     * @throws SonDarRuntimeException
      */
     public WordBase getList(String key) {
         if (wordsBase.containsKey(key)) {
             return wordsBase.get(key);
         } else {
-            throw new RuntimeException("Base with name \"" + key + "\" not exist in list");
+            throw new BaseWithNameNotExistException("Base with name \"" + key + "\" not exist in list", key);
         }
     }
 
     /**
      * Getter for strings list field. If base with <code>key</code> not exist
-     * throw RunTimeException
+     * throw SonDarRuntimeException
      *
      * @param i
      * @return
-     * @throws RuntimeException
+     * @throws SonDarRuntimeException
      */
     public WordBase getList(int i) {
         if (i < wordsBase.size()) {
             return (WordBase) (wordsBase.values().toArray()[i]);
         } else {
-            throw new RuntimeException("Base with id \"" + i + "\" not exist in list");
+            throw new SonDarRuntimeException("Base with id \"" + i + "\" not exist in list");
         }
     }
 
