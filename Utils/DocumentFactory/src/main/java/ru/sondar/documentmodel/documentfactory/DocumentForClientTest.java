@@ -25,6 +25,7 @@ public class DocumentForClientTest {
     
     public static void main(String... args) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException{
         generateTestSet1();
+        generateTestSet2();
     }
     
     public static void generateTestSet1() throws SAXException, IOException, ParserConfigurationException, ObjectStructureException{
@@ -59,6 +60,41 @@ public class DocumentForClientTest {
         sequence.AddXMLObject(SDObjectFactory.getSpinner(basePart, "test", 1));
         sequence.AddXMLObject(SDObjectFactory.getEndln()); 
         sequence.AddXMLObject(SDObjectFactory.getDate());
+        sequence.enumirateSequence(0);
+        document1.setSequence(sequence);
+        
+        document1.setDependencyPart(new DependencyPart());
+        
+        document1.setLogPart(new SDLogPart());
+        
+        FileModuleWriteThread fileModule = new FileModuleWriteThread(set1Folder + "doc1.xml", false);
+        document1.saveDocument(fileModule);
+        fileModule.close();
+        
+        //For check document is valid - loading it!
+        SDDocument testDocument = new SDDocument();
+        testDocument.loadDocument(set1Folder + "doc1.xml");
+    }
+    
+    public static void generateTestSet2() throws SAXException, IOException, ParserConfigurationException, ObjectStructureException{
+        String set1Folder = "E:\\set2\\";
+        
+        SDDocument document1 = new SDDocument();    
+
+        document1.setHeadPart(SDObjectFactory.getHeadPart());
+
+        SDWordsBasePart basePart = new SDWordsBasePart();
+        WordBase base1 = new WordBase();
+        base1.add("item1");
+        base1.add("item2");
+        basePart.addNewBase("test", base1);
+        document1.setWordsBasePart(basePart);
+        
+        SDSequenceObject sequence = new SDSequenceObject();
+        for (int i = 0; i < 200; i++) {
+            sequence.AddXMLObject(SDObjectFactory.getText("Text : " + i));
+            sequence.AddXMLObject(SDObjectFactory.getEndln());
+        }
         sequence.enumirateSequence(0);
         document1.setSequence(sequence);
         
