@@ -23,6 +23,10 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
      * Tag for print and parse length filed
      */
     public static String EditText_textLengthTag = "textLength";
+    /**
+     * Tag for print and parse length filed
+     */
+    public static String EditText_contentTypeTag = "contentType";
 
     /**
      * Text field
@@ -33,6 +37,16 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
      * Length field
      */
     private int textLength = 0;
+    
+    private String contentType = "text";
+    
+    public String getContentType(){
+        return this.contentType;
+    }
+    
+    public void setContentType(String newType){
+        this.contentType = newType;
+    }
 
     /**
      * Constructor
@@ -102,7 +116,14 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
         if (list.item(0) != null) {
             this.setTextLength(Integer.valueOf(list.item(0).getTextContent()));
         } else {
-            throw new NoFieldException("Missing \"length\" field");
+            // Default value - Text.length()
+            this.setTextLength(this.Text.length());
+        }
+        list = element.getElementsByTagName(EditText_contentTypeTag);
+        if (list.item(0) != null) {
+            this.setContentType(list.item(0).getTextContent());
+        } else {
+            //Default value "text"
         }
     }
 
@@ -111,6 +132,7 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
         this.Text = this.Text.replaceAll("\n", "Zzz");
         fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n");
         fileModule.write("<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");
+        fileModule.write("<" + EditText_contentTypeTag + ">" + this.contentType + "</" + EditText_contentTypeTag + ">\n");
     }
 
     @Override

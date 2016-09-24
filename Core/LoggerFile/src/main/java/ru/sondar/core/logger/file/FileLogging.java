@@ -1,5 +1,6 @@
 package ru.sondar.core.logger.file;
 
+import java.util.Date;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.logger.LoggerInterface;
@@ -14,31 +15,28 @@ public class FileLogging implements LoggerInterface {
 
     FileModuleInterface fileModule;
     public String fileName;
+    FileModuleWriteThreadInterface out;
 
     public FileLogging(FileModuleInterface fileModule, String fileName, boolean append) {
         this.fileModule = fileModule;
         this.fileName = fileName;
-        FileModuleWriteThreadInterface temp;
         if (append) {
-            temp = fileModule.getWriteThreadToAppend(fileName);
+            out = fileModule.getWriteThreadToAppend(fileName);
         } else {
-            temp = fileModule.getWriteThread(fileName);
+            out = fileModule.getWriteThread(fileName);
         }
-        temp.close();
     }
 
     @Override
     public void Log(String logTag, String logMsg) {
-        FileModuleWriteThreadInterface temp = fileModule.getWriteThreadToAppend(fileName);
-        temp.write(logTag + "-->  " + logMsg + "\n");
-        temp.close();
+        out.write((new Date()).toString() + "::" + logTag + "-->  " + logMsg + "\n");
+        out.flush();
     }
 
     @Override
     public void Log(String logTag, String logMsg, Throwable errorStackTrace) {
-        FileModuleWriteThreadInterface temp = fileModule.getWriteThreadToAppend(fileName);
-        temp.write(logTag + "-->  " + logMsg + " ::Error:: " + errorStackTrace.getMessage() + "\n");
-        temp.close();
+        out.write((new Date()).toString() + "::" + logTag + "-->  " + logMsg + " ::Error:: " + errorStackTrace.getMessage() + "\n");
+        out.flush();
     }
 
     @Override

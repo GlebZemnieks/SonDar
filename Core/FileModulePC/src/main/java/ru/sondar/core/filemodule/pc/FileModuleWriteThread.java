@@ -58,6 +58,11 @@ public class FileModuleWriteThread extends FileModuleThread implements FileModul
         out.write(textForWriting);
         return 0;
     }
+    
+    @Override
+    public void flush() {
+        this.out.flush();
+    }
 
     @Override
     public void close() {

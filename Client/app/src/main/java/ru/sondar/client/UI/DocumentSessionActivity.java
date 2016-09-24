@@ -146,14 +146,6 @@ public class DocumentSessionActivity extends ActionBarActivity {
 
 		Logger.Log(logTag, "set Layout");
 		setContentView(layout);
-			
-
-		/*
-		 * connection = new Connection(this,Logging);
-		 * //connection.sendData("Hello");
-		 * 
-		 * connection.sendFile("TEST\\EXAMPLE\\Example1.xml");
-		 */
 	}
 	
 	public void onPause(){
@@ -169,11 +161,12 @@ public class DocumentSessionActivity extends ActionBarActivity {
 			super.onPause();
 			finish();
 		}catch(Exception error){
-			Logger.Log(logTag, "Error : " + error.getMessage(), error);
-			error.printStackTrace();
+			Intent intent = new Intent(this, ErrorActivity.class);
+			intent.putExtra("exception",error);
+			startActivity(intent);
+			finish();
 			super.onPause();
 		}
-		
 	}
 	/*
 	@Override

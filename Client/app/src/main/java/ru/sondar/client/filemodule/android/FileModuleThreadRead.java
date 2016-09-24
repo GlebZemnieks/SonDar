@@ -53,7 +53,6 @@ public class FileModuleThreadRead extends FileModuleThread implements FileModule
             int c = 0;
             while ((c = streamToRead.read()) != -1 && ((char) (c)) != '\n') {
                 temp += (char) c;
-                //Logging.Log("FileModuleLog", "!!!  :  '" + temp + "' += '" + (char)c + "'");
             }
         } catch (IOException e) {
             e.printStackTrace();

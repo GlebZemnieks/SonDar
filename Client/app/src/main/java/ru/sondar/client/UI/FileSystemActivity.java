@@ -51,10 +51,9 @@ public class FileSystemActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		new ClientConfiguration(this);
 		if(ClientConfiguration.testingEnabled.equals("Auto")) {
-
-		prepare();
+			prepare();
 		}
-        this.logUUID = UUID.randomUUID();
+		this.logUUID = UUID.randomUUID();
 		Logger.Log(logTag,"start");
 		Logger.Log(logTag,"File module prepare");
 		fileModule = new FileModule(this);
@@ -92,13 +91,13 @@ public class FileSystemActivity extends Activity {
 			layout.addView(getRefreshButton(this));
 		}
 		Logger.Log(logTag, "set Layout");
-        if(isApplicationActive) {
+		if(isApplicationActive) {
 			Logger.Log(logTag, "Application is active. Show work layout");
-            setContentView(layout);
-        } else {
+			setContentView(layout);
+		} else {
 			Logger.Log(logTag, "Application is not active. Show default layout");
-            setContentView(R.layout.activity_main123);
-        }
+			setContentView(R.layout.activity_main123);
+		}
 	}
 
     /**

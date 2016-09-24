@@ -20,5 +20,10 @@ public interface FileModuleWriteThreadInterface extends FileModuleThreadInterfac
      * @param textForWriting
      * @return
      */
-    public int write(String textForWriting);
+    int write(String textForWriting);
+    
+    /**
+     * Flush written text in stream.
+     */
+    void flush();
 }

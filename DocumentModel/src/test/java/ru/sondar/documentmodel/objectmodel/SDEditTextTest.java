@@ -83,12 +83,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        try {
-            this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
-        } catch (ObjectStructureException error) {
-            return;
-        }
-        fail("No exception");
+        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
     }
 
     /**

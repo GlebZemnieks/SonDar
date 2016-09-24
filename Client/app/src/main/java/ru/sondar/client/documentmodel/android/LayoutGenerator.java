@@ -31,7 +31,6 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 	public LinearLayout generateLayout(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
 		Logger.Log(logTag, "Start LayoutGenerate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
-		Logger.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count++){			
 			if(checkSequenceOverflow(sequenceObject, count)){
@@ -84,7 +83,6 @@ public class LayoutGenerator implements LayoutGeneratorInterface {
 	public int reverseGenerating(Context context, AXMLSequenceObject sequenceObject, int startObjectId, int footer){
 		Logger.Log(logTag, "Start reverse Generate with parameter:\n   startObjectId:"+startObjectId+"\n   footer:" + footer);
 		isEntriesCorrect(sequenceObject, startObjectId);
-		Logger.Log(logTag, "XMLSequence:\n" + sequenceObject.toString());
 		prepareToGenerate(context, startObjectId, footer, sequenceObject);
 		for(int count = startObjectId;;count--){
 			if(checkSequenceOverflow(sequenceObject, count)){
