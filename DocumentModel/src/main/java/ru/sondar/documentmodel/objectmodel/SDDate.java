@@ -1,5 +1,6 @@
 package ru.sondar.documentmodel.objectmodel;
 
+import java.util.Calendar;
 import java.util.Date;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -17,14 +18,13 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
 public class SDDate extends SDMainObject implements SupportDependencyInterface {
 
     /**
-     * Tag to print and parse date field
+     * Tag to print and parse day field
      */
-    public static String Date_DateFieldTag = "date";
-    
+    public static String DATE_DATE_FIELD_TAG = "date";
     /**
      * Tag to print and parse text field
      */
-    public static String Date_TextFieldTag = "text";
+    public static String DATE_TEXT_FIELD_TAG = "text";
 
     /**
      * Constructor
@@ -32,19 +32,28 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
     public SDDate() {
         this.objectType = SDMainObjectType.Date;
     }
-    
+
     /**
      * Date field
      */
-    private Date date;
+    private Calendar calendar = Calendar.getInstance();
 
     /**
      * Getter for date field
      *
      * @return
      */
-    public Date getDate() {
-        return this.date;
+    public Calendar getCalendar() {
+        return this.calendar;
+    }
+
+    /**
+     * Setter for date field
+     *
+     * @param calendar
+     */
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
     }
 
     /**
@@ -52,48 +61,48 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
      *
      * @param date
      */
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCalendar(Date date) {
+        this.calendar.setTime(date);
     }
 
     /**
      * Set current date
      */
     public void setCurrentDate() {
-        this.date = new Date();
+        this.calendar = Calendar.getInstance();
     }
-    
+
     private String text = "";
-    
-    public String getText(){
+
+    public String getText() {
         return this.text;
     }
-    
-    public void setText(String newText){
+
+    public void setText(String newText) {
         this.text = newText;
     }
 
     // Start SupportDependency Interface
     @Override
     public Object getValue() {
-        return this.date.getTime();
+        return this.calendar.getTime().getTime();
     }
 
     @Override
     public void setValue(Object object) {
-        this.date = new Date(Long.parseLong((String) object));
+        this.calendar.setTime(new Date(Long.parseLong((String) object)));
     }
     // End SupportDependency Interface
 
     @Override
     public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList list = element.getElementsByTagName(Date_DateFieldTag);
+        NodeList list = element.getElementsByTagName(DATE_DATE_FIELD_TAG);
         if (list.item(0) != null) {
-            this.setDate(new Date(Long.parseLong(list.item(0).getTextContent())));
+            this.setCalendar(new Date(Long.parseLong(list.item(0).getTextContent())));
         } else {
             throw new NoFieldException("Missing \"date\" field");
         }
-        list = element.getElementsByTagName(Date_TextFieldTag);
+        list = element.getElementsByTagName(DATE_TEXT_FIELD_TAG);
         if (list.item(0) != null) {
             this.setText(list.item(0).getTextContent());
         } else {
@@ -104,13 +113,13 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
 
     @Override
     public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<text>" + this.date.getTime() + "</text>\n");
-        fileModule.write("<date>" + this.date.getTime() + "</date>\n");
+        fileModule.write("<" + DATE_TEXT_FIELD_TAG + ">" + this.text + "</" + DATE_TEXT_FIELD_TAG + ">\n");
+        fileModule.write("<" + DATE_DATE_FIELD_TAG + ">" + this.calendar.getTime().getTime() + "</" + DATE_DATE_FIELD_TAG + ">\n");
     }
 
     @Override
     public String toString() {
-        return super.toString() + " : date : " + this.date.toString() + " : text : " + this.text;
+        return super.toString() + " : date : " + this.calendar.getTime() + " : text : " + this.text;
     }
 
 }

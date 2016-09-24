@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 import ru.sondar.core.logger.Logger;
@@ -31,28 +32,19 @@ public class AXMLDate extends AXMLMainObject {
 
     @Override
     protected View prepareView(final Context context) {
-        DatePicker view = new DatePicker(context);
-        Calendar today = Calendar.getInstance();
-        today.setTime(((SDDate) this.sdMainObject).getDate());
-        view.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-                today.get(Calendar.DAY_OF_MONTH), null);
-        view.setCalendarViewShown(false);
-
-        TextView viewTemp = new TextView(context);
+        final TextView viewTemp = new TextView(context);
         viewTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Logger.Log("AXMLDate::","OnClick on date object : " + sdMainObject.toString());
-                DialogFragment dateDialog = (new CustomDatePickerDialog()).setDate((SDDate) sdMainObject);
+                DialogFragment dateDialog = (new CustomDatePickerFragment()).setDate((SDDate) sdMainObject).setTextView(viewTemp);
                 dateDialog.show(((ActionBarActivity)context).getSupportFragmentManager(), "datePicker");
             }
         });
-        viewTemp.setText(((SDDate) this.sdMainObject).getDate().getDay()
-                + "-" + ((SDDate) this.sdMainObject).getDate().getMonth()
-                + "-" + ((SDDate) this.sdMainObject).getDate().getYear());
-
+        viewTemp.setText(((SDDate) this.sdMainObject).getCalendar().get(Calendar.DAY_OF_MONTH)
+                + "-" + ((new DateFormatSymbols()).getMonths())[(((SDDate) this.sdMainObject).getCalendar().get(Calendar.MONTH))]
+                + "-" + ((SDDate) this.sdMainObject).getCalendar().get(Calendar.YEAR));
         return viewTemp;
-
     }
 
     @Override
@@ -62,33 +54,64 @@ public class AXMLDate extends AXMLMainObject {
 
 }
 
-class CustomDatePickerDialog extends DialogFragment
+class CustomDatePickerDialog extends DatePickerDialog{
+
+    private String title = "";
+
+    public CustomDatePickerDialog(Context context, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+        super(context, callBack, year, monthOfYear, dayOfMonth);
+    }
+
+    public void setPermanentTitle(String title) {
+        this.title = title;
+        this.setTitle(title);
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int month, int day) {
+        super.onDateChanged(view, year, month, day);
+        setTitle(title);
+    }
+}
+
+class CustomDatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     SDDate protectedDate;
+    TextView protectedView;
 
-    public CustomDatePickerDialog setDate(SDDate date){
+    public CustomDatePickerFragment setDate(SDDate date){
         this.protectedDate = date;
+        Logger.Log("AXMLDate::","Set date object : " + protectedDate.toString());
+        return this;
+    }
+
+    public CustomDatePickerFragment setTextView(TextView view){
+        this.protectedView = view;
         return this;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog picker = new DatePickerDialog(getActivity(), this,
-                protectedDate.getDate().getYear(),
-                protectedDate.getDate().getMonth(),
-                protectedDate.getDate().getDay());
-        picker.setTitle(protectedDate.getText());
-        picker.
-
+        Dialog picker = new CustomDatePickerDialog(getActivity(), this,
+                protectedDate.getCalendar().get(Calendar.YEAR),
+                protectedDate.getCalendar().get(Calendar.MONTH),
+                protectedDate.getCalendar().get(Calendar.DAY_OF_MONTH));
+        ((CustomDatePickerDialog)picker).setPermanentTitle(protectedDate.getText());
+        Logger.Log("AXMLDate::", "Dialog created with date : " + protectedDate.toString());
+        ((CustomDatePickerDialog) picker).getDatePicker().setCalendarViewShown(false);
         return picker;
     }
 
     @Override
     public void onDateSet(android.widget.DatePicker datePicker, int year,
                           int month, int day) {
-        protectedDate.getDate().setDate(day);
-        protectedDate.getDate().setMonth(month);
-        protectedDate.getDate().setYear(year);
+        protectedDate.getCalendar().set(Calendar.DAY_OF_MONTH, day);
+        protectedDate.getCalendar().set(Calendar.MONTH, month);
+        protectedDate.getCalendar().set(Calendar.YEAR, year);
+        protectedView.setText(((SDDate) this.protectedDate).getCalendar().get(Calendar.DAY_OF_MONTH)
+                + "-" + ((new DateFormatSymbols()).getMonths())[(((SDDate) this.protectedDate).getCalendar().get(Calendar.MONTH))]
+                    + "-" + ((SDDate) this.protectedDate).getCalendar().get(Calendar.YEAR));
+        Logger.Log("AXMLDate::","onDateSet work:: new value " + protectedDate.toString());
     }
 }

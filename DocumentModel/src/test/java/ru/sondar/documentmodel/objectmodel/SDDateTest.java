@@ -1,12 +1,11 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDDate;
+import java.util.Calendar;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDDate;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.ObjectStructureException;
 
@@ -28,9 +27,9 @@ public class SDDateTest {
      */
     @Test
     public void testSetDate() {
-        Date time = new Date();
-        date.setDate(time);
-        assertEquals(time, date.getDate());
+        Date time = Calendar.getInstance().getTime();
+        date.setCalendar(time);
+        assertEquals(time, date.getCalendar().getTime());
     }
 
     /**
@@ -60,18 +59,20 @@ public class SDDateTest {
 
     /**
      * Test of printCurrentObjectField method, of class SDDate.
+     *
+     * @throws ru.sondar.core.parser.exception.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\date_temp.txt", false);
         Date now = new Date();
-        date.setDate(now);
+        date.setCalendar(now);
         date.setID(11);
         this.date.printObjectToXML(fileModule);
         fileModule.close();
         SDDate date2 = new SDDate();
         date2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "date_temp.txt"));
-        assertEquals(now.getTime(), date2.getDate().getTime());
+        assertEquals(now.getTime(), date2.getCalendar().getTime().getTime());
         assertEquals(11, date2.getID());
     }
 

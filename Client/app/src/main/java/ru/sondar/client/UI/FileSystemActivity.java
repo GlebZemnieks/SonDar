@@ -50,10 +50,10 @@ public class FileSystemActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		new ClientConfiguration(this);
-		//if(ClientConfiguration.testingEnabled.equals("Auto")) {
+		if(ClientConfiguration.testingEnabled.equals("Auto")) {
 
 		prepare();
-		//}
+		}
         this.logUUID = UUID.randomUUID();
 		Logger.Log(logTag,"start");
 		Logger.Log(logTag,"File module prepare");

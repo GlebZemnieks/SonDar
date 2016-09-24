@@ -17,17 +17,6 @@ import ru.sondar.documentmodel.objectmodel.*;
  * @since SonDar-1.0
  */
 public class SDDocument {
-    
-    /*
-    public static void main(String... args) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException{
-        Config.setLogger(new FileLogging("E:\\test.log"));
-        SDDocument document = new SDDocument();
-        document.loadDocument("E:\\Development\\SonDar\\DocumentModel\\JUnitTest\\SequenceTest\\document_1.txt");
-        FileModuleWriteThreadInterface fileModuleWriteThreadInterface = new FileModuleWriteThread("E:\\Development\\SonDar\\DocumentModel\\JUnitTest\\SequenceTest\\document_1.txt", false);
-        document.saveDocument(fileModuleWriteThreadInterface);
-        fileModuleWriteThreadInterface.close();
-    }
-    */
 
     /**
      * Sequence object of this document

@@ -82,7 +82,7 @@ public class SDObjectFactory {
 
     public static SDDate getDate(Date date) {
         SDDate dateObject = new SDDate();
-        dateObject.setDate(date);
+        dateObject.setCalendar(date);
         return (SDDate) returnObject(dateObject);
     }
 
