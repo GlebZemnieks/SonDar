@@ -7,15 +7,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import ru.sondar.client.documentmodel.android.AXMLDocument;
 import ru.sondar.client.documentmodel.android.AXMLSequenceObject;
@@ -28,7 +31,7 @@ import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 import ru.sondar.documentmodel.SDDOMParser;
 
-public class DocumentSessionActivity extends Activity {
+public class DocumentSessionActivity extends ActionBarActivity {
 
 	public String logTag = "SDActivity:DocumentSessionActivity";
 
@@ -166,7 +169,7 @@ public class DocumentSessionActivity extends Activity {
 			super.onPause();
 			finish();
 		}catch(Exception error){
-			Logger.Log(logTag, "Error : " + error.getMessage());
+			Logger.Log(logTag, "Error : " + error.getMessage(), error);
 			error.printStackTrace();
 			super.onPause();
 		}

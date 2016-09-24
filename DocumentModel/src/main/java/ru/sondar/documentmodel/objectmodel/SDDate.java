@@ -20,11 +20,11 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
      * Tag to print and parse date field
      */
     public static String Date_DateFieldTag = "date";
-
+    
     /**
-     * Date field
+     * Tag to print and parse text field
      */
-    private Date date;
+    public static String Date_TextFieldTag = "text";
 
     /**
      * Constructor
@@ -32,6 +32,11 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
     public SDDate() {
         this.objectType = SDMainObjectType.Date;
     }
+    
+    /**
+     * Date field
+     */
+    private Date date;
 
     /**
      * Getter for date field
@@ -57,6 +62,16 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
     public void setCurrentDate() {
         this.date = new Date();
     }
+    
+    private String text = "";
+    
+    public String getText(){
+        return this.text;
+    }
+    
+    public void setText(String newText){
+        this.text = newText;
+    }
 
     // Start SupportDependency Interface
     @Override
@@ -78,16 +93,24 @@ public class SDDate extends SDMainObject implements SupportDependencyInterface {
         } else {
             throw new NoFieldException("Missing \"date\" field");
         }
+        list = element.getElementsByTagName(Date_TextFieldTag);
+        if (list.item(0) != null) {
+            this.setText(list.item(0).getTextContent());
+        } else {
+            //Do nothing - default value ""(Empty string)
+            //throw new NoFieldException("Missing \"text\" field");
+        }
     }
 
     @Override
     public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
+        fileModule.write("<text>" + this.date.getTime() + "</text>\n");
         fileModule.write("<date>" + this.date.getTime() + "</date>\n");
     }
 
     @Override
     public String toString() {
-        return super.toString() + " : date : " + this.date.toString();
+        return super.toString() + " : date : " + this.date.toString() + " : text : " + this.text;
     }
 
 }
