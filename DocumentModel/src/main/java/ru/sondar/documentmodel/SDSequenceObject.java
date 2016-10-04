@@ -87,6 +87,11 @@ public class SDSequenceObject extends SDMainObject {
         }
         return true;
     }
+    
+    
+    public boolean isObjectWithIdExist(int id) {
+        return !((id < 0) || (id >= this.sequenceArrayLength));
+    }
 
     /**
      * Get object by id. Enumeration by id is global. So index of element in

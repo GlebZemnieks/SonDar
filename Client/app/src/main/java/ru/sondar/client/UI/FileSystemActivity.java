@@ -49,7 +49,8 @@ public class FileSystemActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		new ClientConfiguration(this);
+		FileModuleInterface fileModule = new FileModule(this);
+		new ClientConfiguration(fileModule, Environment.getExternalStorageDirectory().getAbsolutePath());
 		if(ClientConfiguration.testingEnabled.equals("Auto")) {
 			prepare();
 		}
