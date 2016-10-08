@@ -49,7 +49,7 @@ public class FileSystemActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		FileModuleInterface fileModule = new FileModule(this);
+		fileModule = new FileModule(this);
 		new ClientConfiguration(fileModule, Environment.getExternalStorageDirectory().getAbsolutePath());
 		if(ClientConfiguration.testingEnabled.equals("Auto")) {
 			prepare();
@@ -86,8 +86,13 @@ public class FileSystemActivity extends Activity {
 			Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
 		}
 		LinearLayout layout = new LinearLayout(this);
-		layout.addView(getCreateNewButton(this,fileSystem, fileModule));
+		Button createNew = getCreateNewButton(this,fileSystem, fileModule);
+		layout.addView(createNew);
 		layout.addView(getOpenButton(this,fileSystem, fileModule));
+		if(fileSystem.getFolderByName(Folder.example.toString()).isEmpty()){
+			createNew.setEnabled(false);
+			this.isApplicationActive = false;
+		}
 		if(ClientConfiguration.testingEnabled.equals("Hand")) {
 			layout.addView(getRefreshButton(this));
 		}
@@ -150,11 +155,6 @@ public class FileSystemActivity extends Activity {
 
 	          }
 		};
-        SonDarFolder example = fileSystem.getFolderByName(Folder.example.toString());
-        if(example.isEmpty()){
-            createNew.setEnabled(false);
-            this.isApplicationActive = false;
-        }
 		createNew.setOnClickListener(createNewOnClickListener);
 		return createNew;
 	}

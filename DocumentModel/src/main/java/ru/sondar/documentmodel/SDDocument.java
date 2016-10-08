@@ -198,6 +198,7 @@ public class SDDocument {
                 || this.wordsBase != null) {
             throw new DocumentAlreadyInitException("Trying to reload document. Denied!");
         }
+        Logger.Log("SDDocument::loadDocument", "Start");
         headPart = new SDHeadPart();
         parser.getHeadPart(headPart);
         wordsBase = new SDWordsBasePart();
@@ -209,6 +210,7 @@ public class SDDocument {
         parser.getDependencyPart(dependency);
         logPart = new SDLogPart();
         parser.getLogPart(logPart);
+        Logger.Log("SDDocument::loadDocument", "Finish");
     }
 
     /**
@@ -220,7 +222,7 @@ public class SDDocument {
      * @param fileModule
      */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDDOcument::saveDocument", "Start");
+        Logger.Log("SDDocument::saveDocument", "Start");
         if (this.sequence == null || this.headPart == null
                 || this.logPart == null || this.dependency == null
                 || this.wordsBase == null) {
@@ -230,7 +232,7 @@ public class SDDocument {
                     + " : log : " + this.logPart
                     + " : wordsBase : " + this.wordsBase + " ;");
         }
-        Logger.Log("SDDOcument::saveDocument", "Document ready to writing");
+        Logger.Log("SDDocument::saveDocument", "Document ready to writing");
         fileModule.write("<Document>\n");
         this.headPart.printObjectToXML(fileModule);
         this.wordsBase.printObjectToXML(fileModule);
@@ -238,7 +240,7 @@ public class SDDocument {
         this.dependency.printObjectToXML(fileModule);
         this.logPart.printObjectToXML(fileModule);
         fileModule.write("</Document>\n");
-        Logger.Log("SDDOcument::saveDocument", "Document writted");
+        Logger.Log("SDDocument::saveDocument", "Document writted");
     }
 
     public static boolean isInFormat(String fileName) {

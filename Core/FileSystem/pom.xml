@@ -21,7 +21,6 @@
             <groupId>ru.sondar.core</groupId>
             <artifactId>FileModulePC</artifactId>
             <version>1.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ru.sondar.core</groupId>

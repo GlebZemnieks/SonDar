@@ -1,9 +1,12 @@
 package ru.sondar.core.filesystem;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filemodule.exception.*;
 import ru.sondar.core.filesystem.exception.*;
+import ru.sondar.core.logger.Logger;
 
 /**
  * Folder object.
@@ -94,7 +97,7 @@ public class SonDarFolder {
     public boolean isEmpty() {
         return (this.config.isEmpty());
     }
-    
+
     /**
      * Return global file name if it exist in this folder
      *
@@ -117,13 +120,32 @@ public class SonDarFolder {
         return this.globalFolder + "/" + this.folderName + "/" + fileName;
     }
 
+    public void init(FileModuleInterface fileModule) throws SomeTroubleWithFolderException {
+        this.init(fileModule, 0);
+    }
+
+    public void init(FileModuleInterface fileModule, FileCheckerInterface checker) throws SomeTroubleWithFolderException {
+        this.init(fileModule, checker, 0);
+    }
+
+    public void init(FileModuleInterface fileModule, int retryCount) throws SomeTroubleWithFolderException {
+        this.init(fileModule, new FileCheckerInterface() {
+            @Override
+            public boolean isFileValid(File file) {
+                return true;
+            }
+        }, retryCount);
+    }
+
     /**
      * Read configuration file and check that folder relevant
      *
      * @param fileModule
+     * @param checker
+     * @param retryCount
      * @throws SomeTroubleWithFolderException
      */
-    public void init(FileModuleInterface fileModule) throws SomeTroubleWithFolderException {
+    public void init(FileModuleInterface fileModule, FileCheckerInterface checker, int retryCount) throws SomeTroubleWithFolderException {
         if (!isInSystem) {
             throw new FolderObjectNotInSystemException();
         }
@@ -153,7 +175,14 @@ public class SonDarFolder {
         }
         if (!allRight) {
             this.isInit = SonDarFolderState.ReduildPending;
-            throw missFileError;
+            if (retryCount > 0) {
+                Logger.Log(logTag, "Trouble with folder init. Start rebuild", missFileError);
+                this.rebuild(fileModule, checker);
+                this.init(fileModule, checker, retryCount - 1);
+            } else {
+                Logger.Log(logTag, "Trouble with folder init. Retry count equals 0. Throw missFileError", missFileError);
+                throw missFileError;
+            }
         }
         this.isInit = SonDarFolderState.None;
     }
@@ -169,7 +198,7 @@ public class SonDarFolder {
         if (this.isInit != SonDarFolderState.None) {
             throw new FolderNotReadyException();
         }
-        FileModuleWriteThreadInterface temp = fileModule.getWriteThread(globalFolder + "/" + folderName + "/" + fileName);
+        FileModuleWriteThreadInterface temp = fileModule.getWriteThreadToAppend(globalFolder + "/" + folderName + "/" + fileName);
         this.config.addFile(fileModule, globalFolder, folderName, fileName);
         return temp;
     }
@@ -232,6 +261,43 @@ public class SonDarFolder {
         FileModuleWriteThreadInterface temp = fileModule.getWriteThread(getGlobalFileName(fileName));
         temp.delFile();
         this.config.DeleteFile(fileModule, globalFolder, folderName, fileName);
+    }
+
+    public void rebuild(FileModuleInterface fileModule) {
+        this.rebuild(fileModule, new FileCheckerInterface() {
+            @Override
+            public boolean isFileValid(File file) {
+                //Add all file in folder without filter by content
+                return true;
+            }
+        });
+    }
+
+    public void rebuild(FileModuleInterface fileModule, FileCheckerInterface checker) {
+        Logger.Log(logTag, "rebuild : Start in folder \"" + this.toString() + "\"");
+        this.config.resetFileList();
+        this.isInit = SonDarFolderState.None;
+        File folder = new File(this.globalFolder + "/" + this.folderName);
+        File[] folderEntries = folder.listFiles();
+        Logger.Log(logTag, "rebuild : Files was found in folder : " + Arrays.toString(folderEntries));
+        for (File entry : folderEntries) {
+            if (entry.getName().equals("config.txt")) {
+                //Skip configuration file
+                continue;
+            }
+            if (entry.isDirectory()) {
+                //Sub folder unsupported
+                Logger.Log(logTag, "rebuild : Find folder \"" + entry.getName() + "\". Skip from rebuild");
+                continue;
+            }
+            if (checker.isFileValid(entry)) {
+                Logger.Log(logTag, "rebuild : Valid file  \"" + entry.getName() + "\"");
+                this.addFile(fileModule, entry.getName());
+            } else {
+                Logger.Log(logTag, "rebuild : Invalid file \"" + entry.getName() + "\"");
+            }
+        }
+        Logger.Log(logTag, "rebuild : Finish. Current file list : " + this.getFileList());
     }
 
     @Override
