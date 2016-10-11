@@ -35,7 +35,7 @@ public class FileLogging implements LoggerInterface {
 
     @Override
     public void Log(String logTag, String logMsg, Throwable errorStackTrace) {
-        out.write((new Date()).toString() + "::" + logTag + "-->  " + logMsg + " ::Error:: " + errorStackTrace.getMessage() + "\n");
+        out.write((new Date()).toString() + "::" + logTag + "-->  " + logMsg + " ::Type\"" + errorStackTrace.getClass().toString() + "\":: " + errorStackTrace.getMessage() + "\n");
         out.flush();
     }
 

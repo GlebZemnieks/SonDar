@@ -136,6 +136,21 @@ public class SonDarFileSystemTest extends TestCase {
     }
 
     /**
+     * <b>Case 5.1</b>
+     * <li> Create SonDarFileSystem object</li>
+     * <li> Create SonDarFolder object in folder with files which name is
+     * Russian</li>
+     * <li> Start initialization</li>
+     * <p>
+     * <b>Expected</b><br>FolderNotFoundException</p>
+     */
+    public void testAddFolder6() {
+        SonDarFileSystem instance = new SonDarFileSystem(TESTDATAFOLDER);
+        instance.addFolder("TestFolder7");
+        instance.init(fileModule);
+    }
+
+    /**
      * <b>Case 6</b>
      * <li> Create SonDarFileSystem object</li>
      * <li> Create SonDarFolder object in empty folder with correct

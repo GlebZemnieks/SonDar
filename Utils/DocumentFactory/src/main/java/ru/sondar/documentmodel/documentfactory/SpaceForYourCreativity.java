@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.core.logger.Logger;
+import ru.sondar.core.logger.pc.PCLogging;
 import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
@@ -26,6 +27,7 @@ public class SpaceForYourCreativity {
     public static String documentUUID = "69f08553-bf07-405f-b849-0bea1423ed1c";
 
     public static void main(String... args) throws SAXException, IOException, ParserConfigurationException, ObjectStructureException {
+        Logger.setLogger(new PCLogging());
         SDDocument document = new SDDocument();
         SDHeadPart head = SDObjectFactory.getHeadPart(documentUUID);
         document.setHeadPart(head);
@@ -287,6 +289,7 @@ public class SpaceForYourCreativity {
             new Enter()
         });
 
+        /*
         //TODO переделать во внутренние функции с открытием нового экрана
         addCompositeObjectList(sequence, new CompositeObject[]{
             new TextAndSpinnerList("б)Водоснабжение", baseList,
@@ -432,6 +435,8 @@ public class SpaceForYourCreativity {
         });
         enter(sequence);
 
+        */
+        
         /*
         addCompositeObjectList(sequence, true, false, new CompositeObject[]{
             new TextAndSpinnerList("", listValue, 0),

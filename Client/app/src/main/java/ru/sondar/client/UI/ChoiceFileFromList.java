@@ -40,14 +40,19 @@ public class ChoiceFileFromList extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-		fileModule = new FileModule(this);
-		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
-		nowFolder = (String)getIntent().getSerializableExtra("folderName");
-		fileSystem.addFolder(nowFolder);
-		fileSystem.addFolder(Folder.temp.toString());
-		fileSystem.init(fileModule);
-	    mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileSystem.getFolderByName(nowFolder).getFileList());
-	    setListAdapter(mAdapter);
+		try {
+			fileModule = new FileModule(this);
+			fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
+			nowFolder = (String)getIntent().getSerializableExtra("folderName");
+			fileSystem.addFolder(nowFolder);
+			fileSystem.addFolder(Folder.temp.toString());
+			fileSystem.init(fileModule);
+			mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileSystem.getFolderByName(nowFolder).getFileList());
+			setListAdapter(mAdapter);
+		} catch(Exception error){
+			Logger.Log("ChoiceFileFromList", "onCreate -> Exception", error);
+			throw error;
+		}
 	}
 
 	@Override
@@ -59,7 +64,6 @@ public class ChoiceFileFromList extends ListActivity {
 			// TODO Why ?
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String newFileName = l.getItemAtPosition(position).toString();

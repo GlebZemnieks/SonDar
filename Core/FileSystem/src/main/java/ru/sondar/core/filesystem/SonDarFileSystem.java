@@ -1,9 +1,15 @@
 package ru.sondar.core.filesystem;
 
+import ru.sondar.core.filesystem.filechecker.FileCheckerInterface;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.core.filemodule.*;
 import ru.sondar.core.filesystem.exception.*;
+import ru.sondar.core.filesystem.filechecker.EmptyChecker;
+import ru.sondar.core.logger.Logger;
 
 /**
  * File system object.
@@ -29,13 +35,13 @@ public class SonDarFileSystem {
      */
     public SonDarFileSystem(String folderName) {
         this.globalFolder = folderName;
-        this.folderList = new ArrayList<>();
+        this.folderMap = new HashMap<>();
     }
 
     /**
      * Folder list
      */
-    private ArrayList<SonDarFolder> folderList;
+    private Map<SonDarFolder, FileCheckerInterface> folderMap;
 
     /**
      * Add new folder in file system
@@ -43,8 +49,21 @@ public class SonDarFileSystem {
      * @param folderName
      */
     public void addFolder(String folderName) {
+        this.addFolder(folderName, new EmptyChecker());
+    }
+
+    /**
+     * Add new folder in file system
+     *
+     * @param folderName
+     * @param checker
+     */
+    public void addFolder(String folderName, FileCheckerInterface checker) {
+        if (folderName == null) {
+            throw new SonDarRuntimeException("addFolder :: Folder name is \"null\". Denaid!");
+        }
         SonDarFolder folder = new SonDarFolder(globalFolder, folderName);
-        folderList.add(folder);
+        folderMap.put(folder, checker);
         folder.isInSystem = true;
     }
 
@@ -55,27 +74,36 @@ public class SonDarFileSystem {
      * @return
      */
     public SonDarFolder getFolderByName(String folderName) {
-        if (this.folderList.isEmpty()) {
+        if (this.folderMap.isEmpty()) {
             throw new FolderNotFoundException();
         }
-        for (SonDarFolder folderList1 : this.folderList) {
-            if (folderName == null ? folderList1.getFolderName() == null : folderList1.getFolderName().equals(folderName)) {
+        if (folderName == null) {
+            throw new SonDarRuntimeException("getFolderByName :: Folder name is \"null\". Denaid!");
+        }
+        for (SonDarFolder folderList1 : this.folderMap.keySet()) {
+            if (folderList1.getFolderName().equals(folderName)) {
                 return folderList1;
             }
         }
         throw new FolderNotFoundException();
     }
 
+    public void init(FileModuleInterface fileModule) {
+        this.init(fileModule, 0);
+    }
+
     /**
      * Initialization file system
      *
      * @param fileModule
+     * @param retryCount
      */
-    public void init(FileModuleInterface fileModule) {
-        for (SonDarFolder folderList1 : this.folderList) {
+    public void init(FileModuleInterface fileModule, int retryCount) {
+        for (SonDarFolder folderList1 : this.folderMap.keySet()) {
             try {
-                folderList1.init(fileModule);
+                folderList1.init(fileModule, this.folderMap.get(folderList1), retryCount);
             } catch (SomeTroubleWithFolderException ex) {
+                Logger.Log(logTag, "Some trouble with folder \"" + folderList1.getFolderName() + "\"", ex);
             }
         }
     }
@@ -149,6 +177,7 @@ public class SonDarFileSystem {
         FileModuleReadThreadInterface Old = folder1.getFile(fileModule, oldFileName);
         FileModuleWriteThreadInterface New = folder2.addFile(fileModule, newFileName);
         String tempString = Old.read();
+        //???? O-o ???? 
         while (tempString != null) {
             New.write(tempString + "\n");
             tempString = Old.read();

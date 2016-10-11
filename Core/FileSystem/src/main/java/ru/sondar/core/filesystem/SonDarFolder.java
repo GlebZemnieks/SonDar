@@ -1,5 +1,6 @@
 package ru.sondar.core.filesystem;
 
+import ru.sondar.core.filesystem.filechecker.FileCheckerInterface;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -164,7 +165,7 @@ public class SonDarFolder {
             throw next;
         }
         boolean allRight = true;
-        MissFileInFolderException missFileError = new MissFileInFolderException();
+        MissFileInFolderException missFileError = new MissFileInFolderException("File in folder nor found : ");
         for (String fileName : config.configFileList) {
             try {
                 fileModule.getReadThread(globalFolder + "/" + folderName + "/" + fileName);
@@ -198,7 +199,7 @@ public class SonDarFolder {
         if (this.isInit != SonDarFolderState.None) {
             throw new FolderNotReadyException();
         }
-        FileModuleWriteThreadInterface temp = fileModule.getWriteThreadToAppend(globalFolder + "/" + folderName + "/" + fileName);
+        FileModuleWriteThreadInterface temp = fileModule.getWriteThread(globalFolder + "/" + folderName + "/" + fileName);
         this.config.addFile(fileModule, globalFolder, folderName, fileName);
         return temp;
     }

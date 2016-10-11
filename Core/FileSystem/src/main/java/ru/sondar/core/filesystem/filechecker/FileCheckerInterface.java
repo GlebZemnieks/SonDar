@@ -1,4 +1,4 @@
-package ru.sondar.core.filesystem;
+package ru.sondar.core.filesystem.filechecker;
 
 import java.io.File;
 

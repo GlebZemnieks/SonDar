@@ -18,14 +18,21 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import ru.sondar.client.ClientConfiguration;
 import ru.sondar.client.PrepareTestDocumentOnDisk_NonReleaseCode;
 import ru.sondar.client.R;
 import ru.sondar.client.filemodule.android.FileModule;
+import ru.sondar.core.filesystem.filechecker.FileCheckerInterface;
 import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleInterface;
 import ru.sondar.core.filesystem.SonDarFileSystem;
 import ru.sondar.core.filesystem.SonDarFolder;
+import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.SDDocument;
 
 public class FileSystemActivity extends Activity {
 
@@ -45,25 +52,45 @@ public class FileSystemActivity extends Activity {
      * Session UUID
      */
 	UUID logUUID;
+	/**
+	 * Checker for document
+	 */
+	FileCheckerInterface documentChecker = new FileCheckerInterface() {
+		@Override
+		public boolean isFileValid(File file) {
+			SDDocument document = new SDDocument();
+			try {
+				document.loadDocument(file.getAbsolutePath());
+			} catch (SAXException | IOException | ParserConfigurationException | ObjectStructureException e) {
+				return false;
+			}
+			return true;
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		fileModule = new FileModule(this);
-		new ClientConfiguration(fileModule, Environment.getExternalStorageDirectory().getAbsolutePath());
-		if(ClientConfiguration.testingEnabled.equals("Auto")) {
-			prepare();
+		try {
+			fileModule = new FileModule(this);
+			new ClientConfiguration(fileModule, Environment.getExternalStorageDirectory().getAbsolutePath());
+			if(ClientConfiguration.testingEnabled.equals("Auto")) {
+				prepare();
+			}
+			this.logUUID = UUID.randomUUID();
+			Logger.Log(logTag,"start");
+			Logger.Log(logTag,"File module prepare");
+			fileModule = new FileModule(this);
+			fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
+			fileSystem.addFolder(Folder.example.toString(), documentChecker);
+			fileSystem.addFolder(Folder.work.toString(), documentChecker);
+			fileSystem.addFolder(Folder.temp.toString(), documentChecker);
+			fileSystem.addFolder(Folder.done.toString(), documentChecker);
+			fileSystem.addFolder(Folder.log.toString());
+		} catch(Exception error){
+			Logger.Log("FileSystemActivity", "onCreate -> Exception", error);
+			throw error;
 		}
-		this.logUUID = UUID.randomUUID();
-		Logger.Log(logTag,"start");
-		Logger.Log(logTag,"File module prepare");
-		fileModule = new FileModule(this);
-		fileSystem = new SonDarFileSystem(Environment.getExternalStorageDirectory()+"/sondar");
-		fileSystem.addFolder(Folder.example.toString());
-		fileSystem.addFolder(Folder.work.toString());
-		fileSystem.addFolder(Folder.temp.toString());
-		fileSystem.addFolder(Folder.done.toString());
-		fileSystem.addFolder(Folder.log.toString());
 	}
 
     /**
@@ -74,35 +101,40 @@ public class FileSystemActivity extends Activity {
     @Override
 	public void onResume(){
 		super.onResume();
-		Logger.Log(logTag,"Preparing file system ...");
-		if(ClientConfiguration.testingEnabled.equals("Auto")) {
-			prepare();
-		}
-		fileSystem.init(fileModule);
-		Logger.Log(logTag,"File system init successfully");
-		if(isSomeDocumentInTemp(fileSystem)){
-			Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
-		} else {
-			Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
-		}
-		LinearLayout layout = new LinearLayout(this);
-		Button createNew = getCreateNewButton(this,fileSystem, fileModule);
-		layout.addView(createNew);
-		layout.addView(getOpenButton(this,fileSystem, fileModule));
-		if(fileSystem.getFolderByName(Folder.example.toString()).isEmpty()){
-			createNew.setEnabled(false);
-			this.isApplicationActive = false;
-		}
-		if(ClientConfiguration.testingEnabled.equals("Hand")) {
-			layout.addView(getRefreshButton(this));
-		}
-		Logger.Log(logTag, "set Layout");
-		if(isApplicationActive) {
-			Logger.Log(logTag, "Application is active. Show work layout");
-			setContentView(layout);
-		} else {
-			Logger.Log(logTag, "Application is not active. Show default layout");
-			setContentView(R.layout.activity_main123);
+		try {
+			Logger.Log(logTag,"Preparing file system ...");
+			if(ClientConfiguration.testingEnabled.equals("Auto")) {
+				prepare();
+			}
+			fileSystem.init(fileModule, 1);
+			Logger.Log(logTag,"File system init successfully");
+			if(isSomeDocumentInTemp(fileSystem)){
+				Logger.Log(logTag,"isSomeDocumentInTemp is success -> start UI.DocumentSessionActivity");
+			} else {
+				Logger.Log(logTag,"isSomeDocumentInTemp is fail -> create new layout");
+			}
+			LinearLayout layout = new LinearLayout(this);
+			Button createNew = getCreateNewButton(this,fileSystem, fileModule);
+			layout.addView(createNew);
+			layout.addView(getOpenButton(this,fileSystem, fileModule));
+			if(fileSystem.getFolderByName(Folder.example.toString()).isEmpty()){
+				createNew.setEnabled(false);
+				this.isApplicationActive = false;
+			}
+			if(ClientConfiguration.testingEnabled.equals("Hand")) {
+				layout.addView(getRefreshButton(this));
+			}
+			Logger.Log(logTag, "set Layout");
+			if(isApplicationActive) {
+				Logger.Log(logTag, "Application is active. Show work layout");
+				setContentView(layout);
+			} else {
+				Logger.Log(logTag, "Application is not active. Show default layout");
+				setContentView(R.layout.activity_main123);
+			}
+		} catch(Exception error){
+			Logger.Log("FileSystemActivity", "onResume -> Exception", error);
+			throw error;
 		}
 	}
 

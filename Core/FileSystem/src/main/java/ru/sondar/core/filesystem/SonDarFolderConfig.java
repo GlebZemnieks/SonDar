@@ -45,7 +45,7 @@ public class SonDarFolderConfig {
 
     public boolean isEmpty() {
         return (this.configFileList.isEmpty());
-    }
+    }    
     /**
      * Constructor
      *
