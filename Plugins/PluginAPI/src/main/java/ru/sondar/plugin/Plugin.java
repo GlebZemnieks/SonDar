@@ -91,6 +91,9 @@ public abstract class Plugin {
      */
     public SDDocument importDocumentFromDB(DriverName name, String key) throws DataBaseFileNotFoundException, RowNotFoundException {
         DBDriverInterface driver = this.manager.getDriver(name);
+        if (!driver.functionality.contains(DriverFunctionality.Import)) {
+            throw new FunctionalityNotSupportedException("Try to import by \"" + name + "\" driver. Functionality not supported for with driver");
+        }
         driver.connectToDB();
         SDDocument document = this.getExampleDocument();
         DBRowInterface row = driver.getRowByKey(key);
@@ -128,6 +131,9 @@ public abstract class Plugin {
      */
     public void exportDocumentToDB(DriverName name, SDDocument document) throws DataBaseFileNotFoundException, RowNotFoundException {
         DBDriverInterface driver = this.manager.getDriver(name);
+        if (!driver.functionality.contains(DriverFunctionality.Export)) {
+            throw new FunctionalityNotSupportedException("Try to export by \"" + name + "\" driver. Functionality not supported for with driver");
+        }
         driver.connectToDB();
         DBRowInterface row = driver.getRowByKey(document.getHeadPart().getUUID().toString());
         Iterator<DependencyItem> iterator = document.getDependencyPart().iterator();

@@ -6,14 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import ru.sondar.core.logger.Logger;
 import ru.sondar.plugin.driver.*;
 import ru.sondar.plugin.driver.exception.*;
 
@@ -22,7 +21,7 @@ import ru.sondar.plugin.driver.exception.*;
  *
  * @author GlebZemnieks
  */
-public class ExcelDBDriver implements DBDriverInterface {
+public class ExcelDBDriver extends DBDriverInterface {
 
     /**
      * Domain folder to data base
@@ -54,11 +53,13 @@ public class ExcelDBDriver implements DBDriverInterface {
      * @param element
      */
     public ExcelDBDriver(String foldeName, Element element) {
+        this.functionality.add(DriverFunctionality.Import);
+        this.functionality.add(DriverFunctionality.Export);
         try {
             this.folderName = foldeName;
             configuration = new ExcelConfiguration(element);
         } catch (SAXException | IOException | ParserConfigurationException ex) {
-            Logger.getLogger(ExcelDBDriver.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.Log("Excel driver", "Trouble with parse configuration", ex);
         }
     }
 
@@ -69,7 +70,7 @@ public class ExcelDBDriver implements DBDriverInterface {
             this.fileSystem = new NPOIFSFileSystem(new FileInputStream(dataBase));
             this.workBook = new HSSFWorkbook(new FileInputStream(dataBase));
         } catch (IOException ex) {
-            Logger.getLogger(ExcelDBDriver.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.Log("Excel driver", "Trouble with connection", ex);
         }
     }
 
@@ -143,7 +144,7 @@ public class ExcelDBDriver implements DBDriverInterface {
             this.fileSystem.close();
             this.workBook.close();
         } catch (IOException ex) {
-            Logger.getLogger(ExcelDBDriver.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.Log("Excel driver", "Trouble with closing connection", ex);
         }
     }
 

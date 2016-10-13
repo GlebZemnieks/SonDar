@@ -9,15 +9,17 @@ import ru.sondar.plugin.driver.exception.RowNotFoundException;
  *
  * @author GlebZemnieks
  */
-public interface DBDriverInterface {
-
+public abstract class DBDriverInterface {
+    
+    public ArrayList<DriverFunctionality> functionality = new ArrayList<>();
+    
     /**
      * Open connection to data base and wait next command. If file not found
      * throw exception
      *
      * @throws ru.sondar.plugin.driver.exception.DataBaseFileNotFoundException
      */
-    void connectToDB() throws DataBaseFileNotFoundException;
+    public abstract void connectToDB() throws DataBaseFileNotFoundException;
 
     /**
      * Find in data base row with key and return it. If key not found throw
@@ -27,7 +29,7 @@ public interface DBDriverInterface {
      * @return
      * @throws ru.sondar.plugin.driver.exception.RowNotFoundException
      */
-    DBRowInterface getRowByKey(Object key) throws RowNotFoundException;
+    public abstract DBRowInterface getRowByKey(Object key) throws RowNotFoundException;
 
     /**
      * Create new row in data base. If row with newKey already exist throw
@@ -36,24 +38,24 @@ public interface DBDriverInterface {
      * @param newKey
      * @return
      */
-    DBRowInterface createNewRowInDB(Object newKey);
+    public abstract DBRowInterface createNewRowInDB(Object newKey);
 
     /**
      * Get list of value by key row.
      *
      * @return
      */
-    ArrayList<Object> getKeyList();
+    public abstract ArrayList<Object> getKeyList();
 
     /**
      * Return configuration object of this driver
      *
      * @return
      */
-    DBDriverConfiguration getConfiguration();
+    public abstract DBDriverConfiguration getConfiguration();
 
     /**
      * Close data base connection with transactions
      */
-    void closeConnection();
+    public abstract void closeConnection();
 }

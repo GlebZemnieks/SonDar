@@ -13,6 +13,7 @@ import ru.sondar.core.parser.DOMParser;
 import ru.sondar.plugin.driver.DBDriverInterface;
 import ru.sondar.plugin.driver.excel.ExcelDBDriver;
 import ru.sondar.plugin.driver.exception.NoSheetAttributeException;
+import ru.sondar.plugin.driver.word.WordDBDriver;
 
 /**
  * Driver configuration object for plug-in. Read configuration file and create
@@ -84,6 +85,9 @@ public class DriverManager {
         switch (name) {
             case ExcelDriver: {
                 return new ExcelDBDriver(folderName, element);
+            }
+            case WordDriver: {
+                return new WordDBDriver(folderName, element);
             }
         }
         return null;

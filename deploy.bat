@@ -23,6 +23,7 @@ call deploy_utils.bat Utils WordsBaseEditor 1.0
 :: Server
 call deploy_lib.bat Plugins DriverAPI 1.0
 call deploy_lib.bat Plugins DriverExcel 1.0
+call deploy_lib.bat Plugins DriverWord 1.0
 call deploy_lib.bat Plugins PluginAPI 1.0
 
 call deploy_utils.bat "" SDServer 1.0

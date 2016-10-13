@@ -5,7 +5,7 @@ package ru.sondar.plugin.driver;
  *
  * @author GlebZemnieks
  */
-public interface DBRowInterface {
+public interface DBRowInterface{
 
     /**
      * Return cell object by key. If cell no found throw exception

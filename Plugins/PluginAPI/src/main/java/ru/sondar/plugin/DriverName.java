@@ -9,5 +9,10 @@ public enum DriverName {
     /**
      * Export & Import with Excel table
      */
-    ExcelDriver;
+    ExcelDriver,
+    /**
+     * Prepare document to printing
+     */
+    WordDriver;
+    
 }

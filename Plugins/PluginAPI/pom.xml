@@ -22,6 +22,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>ru.sondar.plugin.driver</groupId>
+            <artifactId>DriverWord</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>ru.sondar.plugin</groupId>
             <artifactId>DriverAPI</artifactId>
             <version>1.0</version>

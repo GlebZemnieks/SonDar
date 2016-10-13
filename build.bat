@@ -21,6 +21,7 @@ call buildItem.bat Utils\WordsBaseEditor
 :: PluginAPI
 call buildItem.bat Plugins\DriverAPI
 call buildItem.bat Plugins\DriverExcel
+call buildItem.bat Plugins\DriverWord
 call buildItem.bat Plugins\PluginAPI
 
 :: Server

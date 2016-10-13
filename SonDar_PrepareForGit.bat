@@ -20,6 +20,7 @@ call Project_PrepareTest.bat DocumentModel
 :: Plugin parts
 call Project_PrepareCode.bat Plugins\DriverAPI 
 call Project_PrepareCode.bat Plugins\DriverExcel 
+call Project_PrepareCode.bat Plugins\DriverWord
 call Project_PrepareCode.bat Plugins\PluginAPI
 call Project_PrepareCode.bat Plugins\DemoPlugin
 
