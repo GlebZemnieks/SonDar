@@ -150,9 +150,9 @@ public class ExcelDBDriver extends DBDriverInterface {
 
     @Override
     public String toString() {
-        String temp = "Excel driver : \n";
+        String temp = "File name \"" + this.configuration.fileName + "\"\n";
         for (int i = 0; i < this.configuration.sheetConfigurations.size(); i++) {
-            temp += (this.configuration.sheetConfigurations.get(i).toString());
+            temp += "\t\t\t\t" + (this.configuration.sheetConfigurations.get(i).toString());
         }
         return temp;
     }

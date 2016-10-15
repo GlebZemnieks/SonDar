@@ -24,6 +24,10 @@ call Project_PrepareCode.bat Plugins\DriverWord
 call Project_PrepareCode.bat Plugins\PluginAPI
 call Project_PrepareCode.bat Plugins\DemoPlugin
 
+:: Server
+call Project_PrepareCode.bat SDServer
+call Project_PrepareTest.bat SDServer
+
 :: Utils
 call Project_PrepareCode.bat Utils\DocumentFactory
 call Project_PrepareCode.bat Utils\WordsBaseEditor
@@ -47,6 +51,7 @@ git add Project_PrepareTest.bat
 git add build.bat
 git add buildItem.bat
 git add buildProject.bat
+git add buildServer.bat
 :: Deploy scripts
 git add deploy.bat
 git add deploy_lib.bat

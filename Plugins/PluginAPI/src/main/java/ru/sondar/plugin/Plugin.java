@@ -177,7 +177,10 @@ public abstract class Plugin {
 
     @Override
     public String toString() {
-        return "Global folder : \"" + this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\"\n"
-                + "pluginList : " + this.manager.supportedDrivers.toString();
+        String temp = "Folder:\"" + this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\"\n\t\tdriverList:\n";
+        for (DriverName supportedDriver : this.manager.supportedDrivers.keySet()) {
+            temp += "\t\t\t" + supportedDriver + "=" + this.manager.supportedDrivers.get(supportedDriver).toString() + "\n";
+        }
+        return temp;
     }
 }
