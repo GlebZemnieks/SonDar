@@ -12,17 +12,35 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDDocument;
 
 /**
+ * Document manager.
  *
  * @author GlebZemnieks
  */
 public class DocumentManager {
 
+    /**
+     * Global path to work directory
+     */
     private final String globalFolder;
+    /**
+     * File system object to make actions with files
+     */
     public SonDarFileSystem fileSystem;
+    /**
+     * Name of folder with document to export
+     */
     private final String EXPORT_FOLDER_NAME = "ToDB";
+    /**
+     * Name of folder with document by import
+     */
     private final String IMPORT_FOLDER_NAME = "FromDB";
-
+    /**
+     * Current list of document in export folder
+     */
     public ArrayList<SDDocument> exportFileList = new ArrayList<>();
+    /**
+     * Current list of document in import folder
+     */
     public ArrayList<SDDocument> importFileList = new ArrayList<>();
 
     public DocumentManager(FileModuleInterface fileModule, String globalFolder) {
@@ -32,11 +50,6 @@ public class DocumentManager {
         fileSystem.addFolder(IMPORT_FOLDER_NAME);
         fileSystem.init(fileModule);
         pullFileList();
-    }
-
-    public void init(FileModuleInterface fileModule) {
-        ArrayList<String> exportList = fileSystem.getFolderByName(EXPORT_FOLDER_NAME).getFileList();
-        ArrayList<String> importList = fileSystem.getFolderByName(IMPORT_FOLDER_NAME).getFileList();
     }
 
     public ArrayList<SDDocument> getDocumentListByPluginFilterFromImportList(String pluginUUID) {

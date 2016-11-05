@@ -11,16 +11,16 @@ import static org.junit.Assert.*;
  * @author GlebZemnieks
  */
 public class SonDarServerTest {
-    
+
     SonDarServer server;
-    
+
     public static String testFolder = "E:\\Development\\SonDar\\SDServer\\JUnitTest\\testserver1";
     public static String buildFolder = "E:\\Development\\SonDar\\SDServer\\target";
     public static String fileName = "SDServer-1.0.jar";
-    
+
     public SonDarServerTest() throws IOException {
     }
-    
+
     @Before
     public void setUp() {
     }
@@ -45,5 +45,5 @@ public class SonDarServerTest {
     @Test
     public void testToString() {
     }
-    
+
 }
