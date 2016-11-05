@@ -23,6 +23,11 @@
         </dependency>
         <dependency>
             <groupId>ru.sondar.core</groupId>
+            <artifactId>FileModuleString</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.sondar.core</groupId>
             <artifactId>Parser</artifactId>
             <version>1.0</version>
         </dependency>
@@ -47,6 +52,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.4.1.RELEASE</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -60,7 +70,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ru.sondar.sdserver.ServerConsoleUI</mainClass>
+                            <mainClass>ru.sondar.sdserver.Server</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

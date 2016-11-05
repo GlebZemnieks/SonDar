@@ -24,7 +24,13 @@ public class DOMParser {
     /**
      * Object of document model in DOM
      */
-    protected final Document document;
+    protected Document document;
+
+    /**
+     * Empty constructor
+     */
+    public DOMParser() {
+    }
 
     /**
      * Constructor. Object of parser must to use once and should be created for
@@ -48,6 +54,13 @@ public class DOMParser {
      * @return
      */
     public Element getRootElement() {
+        return document.getDocumentElement();
+    }
+
+    public Element getRootElement(String content) throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        document = builder.parse(content);
         return document.getDocumentElement();
     }
 

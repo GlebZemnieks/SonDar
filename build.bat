@@ -4,6 +4,7 @@ echo off
 call buildItem.bat Core\Exception
 call buildItem.bat Core\Logger
 call buildItem.bat Core\FileModule
+call buildItem.bat Core\FileModuleString
 call buildItem.bat Core\LoggerPC
 call buildItem.bat Core\FileModulePC
 call buildItem.bat Core\LoggerFile

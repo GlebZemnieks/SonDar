@@ -5,6 +5,7 @@ git init
 call Project_PrepareCode.bat Core\Exception
 call Project_PrepareCode.bat Core\Logger
 call Project_PrepareCode.bat Core\FileModule
+call Project_PrepareCode.bat Core\FileModuleString
 call Project_PrepareCode.bat Core\LoggerPC
 call Project_PrepareCode.bat Core\FileModulePC
 call Project_PrepareTest.bat Core\FileModulePC

@@ -7,6 +7,7 @@ set toJarPath=\target\
 call deploy_lib.bat Core Exception 1.0
 call deploy_lib.bat Core FileModule 1.0
 call deploy_lib.bat Core FileModulePC 1.0
+call deploy_lib.bat Core FileModuleString 1.0
 call deploy_lib.bat Core FileSystem 1.0
 call deploy_lib.bat Core Logger 1.0
 call deploy_lib.bat Core LoggerFile 1.0

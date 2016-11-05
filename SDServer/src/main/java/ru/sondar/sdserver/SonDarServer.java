@@ -16,7 +16,7 @@ import ru.sondar.plugin.driver.exception.*;
 public class SonDarServer {
 
     private final ServerConfiguration configuration;
-    private final DocumentManager documentManager;
+    public final DocumentManager documentManager;
     private final FileModuleInterface fileModule;
 
     public SonDarServer(String globalFolder) {

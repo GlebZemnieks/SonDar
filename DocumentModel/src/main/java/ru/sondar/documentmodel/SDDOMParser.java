@@ -21,6 +21,10 @@ import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
  */
 public class SDDOMParser extends DOMParser {
 
+    public SDDOMParser(){
+        super();
+    }
+    
     public SDDOMParser(String fileName) throws SAXException, IOException, ParserConfigurationException {
         super(fileName);
     }
