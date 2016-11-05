@@ -20,7 +20,7 @@ import ru.sondar.sdserver.exception.PluginNotFoundException;
  *
  * @author GlebZemnieks
  */
-public final class ServerConfiguration {
+public final class PluginManager {
 
     /**
      * relative path to configuration file. Should be in directory with .jar
@@ -35,7 +35,7 @@ public final class ServerConfiguration {
      */
     public static ArrayList<Plugin> plugins = new ArrayList<>();
 
-    public ServerConfiguration(String globalFolder) {
+    public PluginManager(String globalFolder) {
         this.globalFolderName = globalFolder;
         try {
             DOMParser parser = new DOMParser(globalFolderName + "\\" + PROPERTIES_FILE);
@@ -54,7 +54,7 @@ public final class ServerConfiguration {
                 this.plugins.add(plugin);
             }
         } catch (SAXException | IOException | ParserConfigurationException | NoFieldException ex) {
-            Logger.getLogger(ServerConfiguration.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PluginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

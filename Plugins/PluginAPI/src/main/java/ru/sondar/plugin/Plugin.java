@@ -175,6 +175,20 @@ public abstract class Plugin {
      */
     public abstract SDDocument getExampleDocument();
 
+    public void printPluginConfiguration(FileModuleWriteThreadInterface fileModule) {
+        fileModule.write("<PluginConfiguration>");
+        fileModule.write("<properties>");
+        fileModule.write("<PluginUUID>" + this.getPluginUUID().toString() + "</PluginUUID>");
+        fileModule.write("</properties>");
+        fileModule.write("<drivers>");
+        for (DBDriverInterface driver : this.manager.supportedDrivers.values()) {
+            fileModule.write("<driver type=\"" + this.manager.getDriverNameByClass(driver) + "\" fileName=\"" + driver.configuration.fileName + ">");
+            fileModule.write("</driver>");
+        }
+        fileModule.write("</drivers>");
+        fileModule.write("</PluginConfiguration>");
+    }
+
     @Override
     public String toString() {
         String temp = "Folder:\"" + this.configurator.globalPluginFolder + "\\" + this.configurator.localFolderName + "\"\n\t\tdriverList:\n";

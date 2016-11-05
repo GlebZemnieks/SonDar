@@ -21,7 +21,6 @@ import ru.sondar.plugin.driver.word.WordDBDriver;
  *
  * @author GlebZemnieks
  */
-
 public class DriverManager {
 
     /**
@@ -81,6 +80,7 @@ public class DriverManager {
      * @param element
      * @return
      */
+    //Temp
     private DBDriverInterface createDBDriverByType(DriverName name, String folderName, Element element) {
         switch (name) {
             case ExcelDriver: {
@@ -93,4 +93,14 @@ public class DriverManager {
         return null;
     }
 
+    //Temp
+    public String getDriverNameByClass(DBDriverInterface driver) {
+        if (driver.getClass() == ExcelDBDriver.class) {
+            return "ExcelDriver";
+        }
+        if (driver.getClass() == WordDBDriver.class) {
+            return "WordDriver";
+        }
+        return "";
+    }
 }

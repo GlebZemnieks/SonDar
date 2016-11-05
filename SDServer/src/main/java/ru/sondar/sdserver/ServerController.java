@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sondar.core.filemodule.FileModuleInterface;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.string.FileModule;
+import ru.sondar.core.filemodule.string.FileModuleReadThread;
+import ru.sondar.core.filemodule.string.FileModuleWriteThread;
 import ru.sondar.documentmodel.SDDocument;
+import ru.sondar.plugin.Plugin;
 
 /**
  * Server controller. All method for view and manager clients. Default bind on
@@ -72,7 +76,12 @@ public class ServerController {
      */
     @RequestMapping(value = "/getExportDocumentList", method = RequestMethod.GET)
     public String getExportDocumentList() {
-        return "OK";
+        String temp = "<documentList>\n";
+        for (SDDocument document : server.documentManager.exportFileList) {
+            temp += getHeadPartXML(document) + "\n";
+        }
+        temp += "</documentList>";
+        return temp;
     }
 
     /**
@@ -82,7 +91,12 @@ public class ServerController {
      */
     @RequestMapping(value = "/getImportDocumentList", method = RequestMethod.GET)
     public String getImportDocumentList() {
-        return "OK";
+        String temp = "<documentList>\n";
+        for (SDDocument document : server.documentManager.importFileList) {
+            temp += getHeadPartXML(document) + "\n";
+        }
+        temp += "</documentList>";
+        return temp;
     }
 
     /**
@@ -92,7 +106,14 @@ public class ServerController {
      */
     @RequestMapping(value = "/getPluginList", method = RequestMethod.GET)
     public String getPluginList() {
-        return "OK";
+        FileModuleWriteThread writeThread = new FileModuleWriteThread();
+        writeThread.write("<documentList>\n");
+        for (Plugin plugin : server.pluginManager.plugins) {
+            plugin.printPluginConfiguration(writeThread);
+        }
+        writeThread.write("</documentList>");
+        FileModuleReadThread readThread = new FileModuleReadThread(writeThread);
+        return readThread.read();
     }
 
     /**
@@ -161,4 +182,9 @@ public class ServerController {
         return fileModule.getReadThread("").read();
     }
 
+    private String getHeadPartXML(SDDocument document) {
+        FileModuleInterface fileModule = new FileModule();
+        document.getHeadPart().printObjectToXML(fileModule.getWriteThread(""));
+        return fileModule.getReadThread("").read();
+    }
 }

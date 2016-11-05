@@ -11,9 +11,7 @@ import ru.sondar.plugin.driver.exception.NoSheetAttributeException;
  *
  * @author GlebZemnieks
  */
-public class WordConfiguration implements DBDriverConfiguration {
-
-    public String fileName;
+public class WordConfiguration extends DBDriverConfiguration {
 
     @Override
     public int getKeyCellId(int sheetId) {

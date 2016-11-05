@@ -1,6 +1,7 @@
 package ru.sondar.plugin.driver;
 
 import java.util.ArrayList;
+import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.plugin.driver.exception.DataBaseFileNotFoundException;
 import ru.sondar.plugin.driver.exception.RowNotFoundException;
 
@@ -10,9 +11,17 @@ import ru.sondar.plugin.driver.exception.RowNotFoundException;
  * @author GlebZemnieks
  */
 public abstract class DBDriverInterface {
-    
+
+    /**
+     * Configuration object
+     */
+    public DBDriverConfiguration configuration;
+
+    /**
+     * Action which unlocked for this driver
+     */
     public ArrayList<DriverFunctionality> functionality = new ArrayList<>();
-    
+
     /**
      * Open connection to data base and wait next command. If file not found
      * throw exception

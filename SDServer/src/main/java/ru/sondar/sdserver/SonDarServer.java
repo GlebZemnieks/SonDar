@@ -15,34 +15,20 @@ import ru.sondar.plugin.driver.exception.*;
  */
 public class SonDarServer {
 
-    private final ServerConfiguration configuration;
+    public final PluginManager pluginManager;
     public final DocumentManager documentManager;
-    private final FileModuleInterface fileModule;
+    public final FileModuleInterface fileModule;
 
     public SonDarServer(String globalFolder) {
         this.fileModule = new FileModule();
-        this.configuration = new ServerConfiguration(globalFolder);
+        this.pluginManager = new PluginManager(globalFolder);
         this.documentManager = new DocumentManager(fileModule, globalFolder);
     }
-
-    public void importDocument(String key, UUID pluginUuid, DriverName driver) {
-        try {
-            Plugin plugin = this.configuration.getPluginByUUID(pluginUuid);
-            plugin.importDocumentFromDB(driver, key);
-        } catch (DataBaseFileNotFoundException | RowNotFoundException ex) {
-            Logger.getLogger(SonDarServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void exportDocument(SDDocument document, DriverName driver) throws DataBaseFileNotFoundException, RowNotFoundException {
-        Plugin plugin = this.configuration.getPluginByUUID(document.getHeadPart().getPluginUUID());
-        plugin.exportDocumentToDB(driver, document);
-    }
-
+    
     @Override
     public String toString() {
         String temp = "Server configuration :\n";
-        temp += this.configuration.toString();
+        temp += this.pluginManager.toString();
         temp += this.documentManager.toString();
         return temp;
     }

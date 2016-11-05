@@ -13,12 +13,7 @@ import ru.sondar.plugin.driver.exception.*;
  *
  * @author GlebZemnieks
  */
-public class ExcelConfiguration implements DBDriverConfiguration {
-
-    /**
-     * Data base file name
-     */
-    public String fileName;
+public class ExcelConfiguration extends DBDriverConfiguration {
 
     /**
      * Supported sheet list

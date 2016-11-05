@@ -42,11 +42,6 @@ public class ExcelDBDriver extends DBDriverInterface {
     private HSSFWorkbook workBook;
 
     /**
-     * Configuration object
-     */
-    public ExcelConfiguration configuration;
-
-    /**
      * Constructor
      *
      * @param foldeName
@@ -85,7 +80,7 @@ public class ExcelDBDriver extends DBDriverInterface {
      * @param sheetId
      */
     public void setActiveSheet(int sheetId) {
-        if (this.configuration.isSheetExist(sheetId)) {
+        if (((ExcelConfiguration) this.configuration).isSheetExist(sheetId)) {
             this.activeSheet = sheetId;
         } else {
             throw new SheetNotSupportedException("Try to activate sheet id \"" + sheetId + "\" with configuration list " + this.configuration.toString());
@@ -151,8 +146,8 @@ public class ExcelDBDriver extends DBDriverInterface {
     @Override
     public String toString() {
         String temp = "File name \"" + this.configuration.fileName + "\"\n";
-        for (int i = 0; i < this.configuration.sheetConfigurations.size(); i++) {
-            temp += "\t\t\t\t" + (this.configuration.sheetConfigurations.get(i).toString());
+        for (int i = 0; i < ((ExcelConfiguration) this.configuration).sheetConfigurations.size(); i++) {
+            temp += "\t\t\t\t" + (((ExcelConfiguration) this.configuration).sheetConfigurations.get(i).toString());
         }
         return temp;
     }

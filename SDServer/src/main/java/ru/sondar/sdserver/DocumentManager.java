@@ -63,9 +63,14 @@ public class DocumentManager {
     }
 
     private void pullFileList() {
-        File folderTO = new File(this.globalFolder + "\\" + EXPORT_FOLDER_NAME);
-        File folderFROM = new File(this.globalFolder + "\\" + IMPORT_FOLDER_NAME);
-        for (File file : folderTO.listFiles()) {
+        this.exportFileList = pullFileFromDirectory(this.globalFolder + "\\" + EXPORT_FOLDER_NAME);
+        this.importFileList = pullFileFromDirectory(this.globalFolder + "\\" + IMPORT_FOLDER_NAME);
+    }
+
+    private ArrayList<SDDocument> pullFileFromDirectory(String directoryName) {
+        File directory = new File(directoryName);
+        ArrayList<SDDocument> temp = new ArrayList<>();
+        for (File file : directory.listFiles()) {
             if (file.isFile()) {
                 SDDocument document = new SDDocument();
                 try {
@@ -73,20 +78,10 @@ public class DocumentManager {
                 } catch (SAXException | IOException | ParserConfigurationException | ObjectStructureException ex) {
                     continue;
                 }
-                this.importFileList.add(document);
+                temp.add(document);
             }
         }
-        for (File file : folderFROM.listFiles()) {
-            if (file.isFile()) {
-                SDDocument document = new SDDocument();
-                try {
-                    document.loadDocument(file.getAbsolutePath());
-                } catch (SAXException | IOException | ParserConfigurationException | ObjectStructureException ex) {
-                    continue;
-                }
-                this.exportFileList.add(document);
-            }
-        }
+        return temp;
     }
 
     @Override
@@ -101,5 +96,4 @@ public class DocumentManager {
         }
         return temp;
     }
-
 }

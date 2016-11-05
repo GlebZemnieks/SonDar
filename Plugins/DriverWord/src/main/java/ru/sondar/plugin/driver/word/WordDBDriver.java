@@ -1,6 +1,5 @@
 package ru.sondar.plugin.driver.word;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,10 +19,6 @@ import ru.sondar.plugin.driver.exception.RowNotFoundException;
  */
 public class WordDBDriver extends DBDriverInterface {
 
-    /**
-     * Driver configuration object
-     */
-    private WordConfiguration configuration;
     /**
      * Domain folder to data base
      */
@@ -69,52 +64,6 @@ public class WordDBDriver extends DBDriverInterface {
     @Override
     public void closeConnection() {
         //Empty
-    }
-
-    public static void main(String... args) throws FileNotFoundException, IOException {
-        /*
-        XWPFDocument docx = new XWPFDocument(
-                new FileInputStream("E:\\Development\\SonDar\\SDServer\\JUnitTest\\testserver1\\test1\\SampleRaw.docx"));
-        //using XWPFWordExtractor Class
-        XWPFWordExtractor we = new XWPFWordExtractor(docx);
-        String test = we.getText();
-        System.out.println(we.getText());
-        
-        System.out.println("createdocument.docx written successully");
-        
-        String valueTag = "DATE";
-        String valueTag2 = "FOND";
-        test = test.replaceFirst("%" + valueTag + "%", "02.10.2010");
-        test = test.replaceFirst("%" + valueTag2 + "%", "личный");
-        
-        //Blank Document
-        XWPFDocument document= new XWPFDocument(); 
-        //Write the Document in file system
-        FileOutputStream out = new FileOutputStream(new File("E:\\Development\\SonDar\\SDServer\\JUnitTest\\testserver1\\test1\\SampleRaw_temp.docx"));
-        
-        //Create a blank spreadsheet
-        XWPFParagraph paragraph = document.createParagraph();
-        XWPFRun run=paragraph.createRun();
-        run.setText(test);
-        
-        document.write(out);
-        out.close();
-        System.out.println("createdocument.docx written successully");
-         */
-        String test = "test";
-        Test value = new Test();
-        System.out.println("test : " + test(value).test);
-        System.out.println("test : " + value.test);
-    }
-
-    static class Test {
-
-        String test = "test";
-    }
-
-    public static Test test(Test test) {
-        test.test += "test2";
-        return test;
     }
 
     @Override

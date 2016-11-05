@@ -4,7 +4,11 @@ package ru.sondar.plugin.driver;
  *
  * @author GlebZemnieks
  */
-public interface DBDriverConfiguration {
+public abstract class DBDriverConfiguration {
 
-    int getKeyCellId(int sheetId);
+    public String fileName;
+
+    public String driverName;
+
+    public abstract int getKeyCellId(int sheetId);
 }
