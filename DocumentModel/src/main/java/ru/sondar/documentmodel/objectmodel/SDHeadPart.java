@@ -2,11 +2,6 @@ package ru.sondar.documentmodel.objectmodel;
 
 import java.util.Date;
 import java.util.UUID;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.logger.Logger;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * SDHeadPart object
@@ -14,7 +9,7 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDHeadPart extends SDMainObject {
+public class SDHeadPart {
 
     /**
      * Tag for print and parse dataList field
@@ -139,68 +134,6 @@ public class SDHeadPart extends SDMainObject {
      */
     public void setLastModificationTime(Date date) {
         this.lastModificationTime = date;
-    }
-
-    @Override
-    public void parseObjectFromXML(Element element) throws ObjectStructureException {
-        this.parseCurrentObjectField(element);
-    }
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList list = element.getElementsByTagName("documentUUID");
-        if (list.item(0) != null) {
-            this.setUUID(UUID.fromString(list.item(0).getTextContent()));
-        } else {
-            Logger.Log("parser", "Missing \"documentUUID\" field in head object. Set default value \"00000000-0000-...\"");
-            this.setUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
-        }
-        list = element.getElementsByTagName("pluginUUID");
-        if (list.item(0) != null) {
-            this.setPluginUUID(UUID.fromString(list.item(0).getTextContent()));
-        } else {
-            Logger.Log("parser", "Missing \"pluginUUID\" field in head object. Set default value \"00000000-0000-...\"");
-            this.setPluginUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
-        }
-        list = element.getElementsByTagName("documentName");
-        if (list.item(0) != null) {
-            this.setDocumentName(list.item(0).getTextContent());
-        } else {
-            Logger.Log("parser", "Missing \"documentName\" field in head object. Set default value \"" + this.uuid.toString() + "\"");
-            this.setDocumentName(this.uuid.toString());
-        }
-        list = element.getElementsByTagName("creationTime");
-        if (list.item(0) != null) {
-            this.setCreationTime(new Date(Long.parseLong(list.item(0).getTextContent())));
-
-        } else {
-            Logger.Log("parser", "Missing \"creationTime\" field in head object. Set current date.");
-            this.setCreationTime(new Date());
-        }
-        list = element.getElementsByTagName("lastModificationTime");
-        if (list.item(0) != null) {
-            this.setLastModificationTime(new Date(Long.parseLong(list.item(0).getTextContent())));
-        } else {
-            Logger.Log("parser", "Missing \"lastModificationTime\" field in head object. Set current date.");
-            this.setLastModificationTime(new Date());
-        }
-    }
-
-    @Override
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDHeadPart::printObjectToXML", "Write headPart : " + this.toString());
-        this.printCurrentObjectField(fileModule);
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Tag_MainObject + ">\n"
-                + "<documentUUID>" + this.uuid.toString() + "</documentUUID>\n"
-                + "<pluginUUID>" + this.plugin.toString() + "</pluginUUID>\n"
-                + "<documentName>" + this.documentName + "</documentName>\n"
-                + "<creationTime>" + this.creationTime.getTime() + "</creationTime>\n"
-                + "<lastModificationTime>" + this.lastModificationTime.getTime() + "</lastModificationTime>\n"
-                + "</" + Tag_MainObject + ">\n");
     }
 
     @Override

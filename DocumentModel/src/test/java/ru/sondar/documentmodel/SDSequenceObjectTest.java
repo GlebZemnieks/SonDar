@@ -13,6 +13,7 @@ import ru.sondar.documentmodel.objectmodel.SDEndln;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 import ru.sondar.documentmodel.objectmodel.SDSpinner;
 import ru.sondar.documentmodel.objectmodel.SDText;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -28,16 +29,16 @@ public class SDSequenceObjectTest {
         SDText text = new SDText();
         text.setText("test");
         text.setObjectName("text1");
-        sequence.AddXMLObject(text);
+        sequence.addXMLObject(text);
         SDCheckBox box = new SDCheckBox();
         box.setText("test");
         box.setChecked(true);
-        sequence.AddXMLObject(box);
+        sequence.addXMLObject(box);
         SDEditText edit = new SDEditText();
         edit.setText("test");
         edit.setObjectName("edit1");
         edit.setTextLength(10);
-        sequence.AddXMLObject(edit);
+        sequence.addXMLObject(edit);
         sequence.enumirateSequence(0);
     }
 
@@ -106,7 +107,7 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testAddXMLObject() {
-        sequence.AddXMLObject(new SDDate());
+        sequence.addXMLObject(new SDDate());
         sequence.enumirateSequence(0);
         assertEquals(4, sequence.getSequenceSize());
         assertEquals(SDText.class, sequence.getXMLObject(0).getClass());
@@ -122,9 +123,9 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testParseSequence() throws Exception {
-        this.sequence.parseSequence(TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
+        new XMLSerializer().parseSequence(sequence, TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\sequence_temp.txt", false);
-        this.sequence.printSequence(fileModule);
+        new XMLSerializer().printSequence(sequence, fileModule);
         fileModule.close();
     }
 
@@ -135,7 +136,7 @@ public class SDSequenceObjectTest {
      */
     @Test
     public void testParseCurrentObjectField() throws Exception {
-        this.sequence.parseObjectFromXML(TestVariables.getRootElementByFile("SequenceTest", "div_object_1.txt"));
+        new XMLSerializer().parseSequence(sequence, TestVariables.getRootElementByFile("SequenceTest", "div_object_1.txt"));
         assertEquals(2, sequence.getSequenceSize());
         assertEquals(0, sequence.getXMLObject(0).getID());
         assertEquals(1, sequence.getXMLObject(1).getID());
@@ -151,7 +152,7 @@ public class SDSequenceObjectTest {
         //Так надо//Почему?
         sequence.setID(-1);
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "SequenceTest\\div_object_temp.txt", false);
-        this.sequence.printObjectToXML(fileModule);
+        new XMLSerializer().printSequence(sequence, fileModule);
         fileModule.close();
     }
 

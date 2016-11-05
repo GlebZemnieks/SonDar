@@ -1,11 +1,5 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
-
 /**
  * SDText object
  *
@@ -47,21 +41,6 @@ public class SDText extends SDMainObject {
      */
     public SDText() {
         this.objectType = SDMainObjectType.Text;
-    }
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList list = element.getElementsByTagName(Text_textFieldTag);
-        if (list.item(0) != null) {
-            this.setText(list.item(0).getTextContent());
-        } else {
-            throw new NoFieldException("Missing \"text\" field");
-        }
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Text_textFieldTag + ">" + this.Text + "</" + Text_textFieldTag + ">\n");
     }
 
     @Override

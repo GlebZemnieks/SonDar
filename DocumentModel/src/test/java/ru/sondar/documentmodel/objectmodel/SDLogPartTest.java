@@ -1,6 +1,5 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +8,7 @@ import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -75,7 +75,7 @@ public class SDLogPartTest {
      */
     @Test
     public void testParseCurrentObjectField() throws Exception {
-        this.log.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "log_1.txt"));
+        new XMLSerializer().parseLogPart(log, TestVariables.getRootElementByFile("ObjectTest", "log_1.txt"));
         assertEquals(0, log.getLogList().size());
     }
 
@@ -86,7 +86,7 @@ public class SDLogPartTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        this.log.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "log_2.txt"));
+        new XMLSerializer().parseLogPart(log, TestVariables.getRootElementByFile("ObjectTest", "log_2.txt"));
         assertEquals(1, log.getLogList().size());
         assertEquals("test", log.getLogList().get(0));
     }
@@ -98,7 +98,7 @@ public class SDLogPartTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        this.log.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "log_3.txt"));
+        new XMLSerializer().parseLogPart(log, TestVariables.getRootElementByFile("ObjectTest", "log_3.txt"));
         assertEquals(10, log.getLogList().size());
         assertEquals("test", log.getLogList().get(0));
         assertEquals("test", log.getLogList().get(2));
@@ -113,9 +113,9 @@ public class SDLogPartTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\log_temp.txt", false);
-        this.log.printObjectToXML(fileModule);
+        new XMLSerializer().printLogPart(log, fileModule);
         fileModule.close();
-        this.log.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "log_temp.txt"));
+        new XMLSerializer().parseLogPart(log, TestVariables.getRootElementByFile("ObjectTest", "log_temp.txt"));
         ArrayList<String> test2 = log.getLogList();
         assertEquals(test.size(), test2.size());
         assertEquals(test.get(0), test2.get(0));

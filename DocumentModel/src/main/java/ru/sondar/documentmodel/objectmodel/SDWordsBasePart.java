@@ -1,13 +1,10 @@
 package ru.sondar.documentmodel.objectmodel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.core.exception.SonDarRuntimeException;
-import ru.sondar.core.logger.Logger;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.objectmodel.exception.BaseWithNameNotExistException;
 
 /**
@@ -38,6 +35,10 @@ public class SDWordsBasePart {
      */
     public SDWordsBasePart() {
         wordsBase = new HashMap<>();
+    }
+
+    public Collection<WordBase> getBases() {
+        return this.wordsBase.values();
     }
 
     /**
@@ -100,34 +101,4 @@ public class SDWordsBasePart {
             throw new RuntimeException("Base with name \"" + name + "\" already exist in list");
         }
     }
-
-    /**
-     * Public method for parser XML string
-     *
-     * @param element
-     */
-    public void parseObjectFromXML(Element element) {
-        NodeList list = element.getElementsByTagName(Tag_DataList);
-        for (int i = 0; i < list.getLength(); i++) {
-            WordBase temp = new WordBase();
-            temp.parseObjectFromXML((Element) list.item(i));
-            String name = ((Element) list.item(i)).getAttribute("name");
-            addNewBase(name, temp);
-        }
-    }
-
-    /**
-     * An class print XML string in file
-     *
-     * @param fileModule
-     */
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDWordsBasePart::printObjectToXML", "Write wordsBase : " + this.toString());
-        fileModule.write("<" + this.Tag_MainObject + ">\n");
-        for (WordBase base : this.wordsBase.values()) {
-            base.printObjectToXML(fileModule);
-        }
-        fileModule.write("</" + Tag_MainObject + ">\n");
-    }
-
 }

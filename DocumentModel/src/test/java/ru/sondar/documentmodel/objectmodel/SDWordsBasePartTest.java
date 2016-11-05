@@ -1,11 +1,11 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -102,7 +102,7 @@ public class SDWordsBasePartTest {
     @Test
     public void testParseObjectFromXML2() {
         WordBase temp = new WordBase();
-        temp.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "wordbase_2.txt"));
+        new XMLSerializer().parseWordsBase(temp, TestVariables.getRootElementByFile("ObjectTest", "wordbase_2.txt"));
         assertEquals(temp.size(), 6);
         assertEquals(temp.getList("one").size(), 3);
         assertEquals(temp.getList("one").get(0), "hello");
@@ -135,10 +135,10 @@ public class SDWordsBasePartTest {
         base.addNewBase("base3", list1);
 
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\wordsbase_list_temp.txt", false);
-        base.printObjectToXML(fileModule);
+        new XMLSerializer().printWordsBasePart(base, fileModule);
         fileModule.close();
         WordBase temp = new WordBase();
-        temp.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "wordsbase_list_temp.txt"));
+        new XMLSerializer().parseWordsBase(temp, TestVariables.getRootElementByFile("ObjectTest", "wordsbase_list_temp.txt"));
     }
 
 }

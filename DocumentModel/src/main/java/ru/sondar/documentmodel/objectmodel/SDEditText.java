@@ -1,11 +1,6 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * SDEditText object
@@ -37,14 +32,14 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
      * Length field
      */
     private int textLength = 0;
-    
+
     private String contentType = "text";
-    
-    public String getContentType(){
+
+    public String getContentType() {
         return this.contentType;
     }
-    
-    public void setContentType(String newType){
+
+    public void setContentType(String newType) {
         this.contentType = newType;
     }
 
@@ -102,38 +97,6 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
         this.Text = (String) object;
     }
     // End SupportDependency Interface
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList list = element.getElementsByTagName(EditText_textFieldTag);
-        if (list.item(0) != null) {
-            this.setText(list.item(0).getTextContent());
-            this.Text = this.Text.replaceAll("Zzz", "\n");
-        } else {
-            throw new NoFieldException("Missing \"text\" field");
-        }
-        list = element.getElementsByTagName(EditText_textLengthTag);
-        if (list.item(0) != null) {
-            this.setTextLength(Integer.valueOf(list.item(0).getTextContent()));
-        } else {
-            // Default value - Text.length()
-            this.setTextLength(this.Text.length());
-        }
-        list = element.getElementsByTagName(EditText_contentTypeTag);
-        if (list.item(0) != null) {
-            this.setContentType(list.item(0).getTextContent());
-        } else {
-            //Default value "text"
-        }
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        this.Text = this.Text.replaceAll("\n", "Zzz");
-        fileModule.write("<" + EditText_textFieldTag + ">" + this.Text + "</" + EditText_textFieldTag + ">\n");
-        fileModule.write("<" + EditText_textLengthTag + ">" + this.textLength + "</" + EditText_textLengthTag + ">\n");
-        fileModule.write("<" + EditText_contentTypeTag + ">" + this.contentType + "</" + EditText_contentTypeTag + ">\n");
-    }
 
     @Override
     public String toString() {

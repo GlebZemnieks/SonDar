@@ -1,14 +1,9 @@
 package ru.sondar.documentmodel.objectmodel;
 
 import java.util.ArrayList;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.core.logger.Logger;
 import ru.sondar.core.exception.SonDarRuntimeException;
 import ru.sondar.documentmodel.dependencymodel.SupportDependencyInterface;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoFieldException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * SDSpinner object
@@ -116,8 +111,8 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
      * Name of words base list
      */
     private String wordsBaseName;
-    
-    public void setWordsBaseName(String newName){
+
+    public void setWordsBaseName(String newName) {
         this.wordsBaseName = newName;
     }
 
@@ -153,37 +148,7 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     // End SupportDependency Interface
 
     @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList list = element.getElementsByTagName(Spinner_DataList);
-        if (list.item(0) == null) {
-            throw new NoFieldException("Missing \"dataList\" field");
-        }
-        if (((Element) list.item(0)).getAttribute("baseName").equals("")) {
-            throw new NoFieldException("Missing \"baseName\" attribute");
-        }
-        this.wordsBaseName = ((Element) list.item(0)).getAttribute("baseName");
-        this.setList(this.getSequence().document.getWordsBasePart().getList(((Element) list.item(0)).getAttribute("baseName")));
-        if (!((Element) list.item(0)).getAttribute("activeFilter").equals("")) {
-            this.activeFilter = ((Element) list.item(0)).getAttribute("activeFilter");
-        } else {
-            this.activeFilter = null;
-        }
-        list = element.getElementsByTagName(Spinner_defaultItemSelected);
-        if (list.item(0) != null) {
-            this.setDefaultItemSelected(Integer.valueOf(list.item(0).getTextContent()));
-        } else {
-            throw new NoFieldException("Missing \"ItemSelected\" field");
-        }
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Spinner_DataList + this.getWordsBaseNameAttribute() + getActiveFilterAttribute() + ">" + "</" + Spinner_DataList + ">\n");
-        fileModule.write("<" + Spinner_defaultItemSelected + ">" + this.defaultItemSelected + "</" + Spinner_defaultItemSelected + ">\n");
-    }
-    
-    @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " : wordsBaseName : " + this.wordsBaseName + " : activeFilter : " + this.activeFilter;
     }
 

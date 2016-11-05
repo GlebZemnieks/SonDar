@@ -1,13 +1,12 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDEditText;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDEditText;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -69,7 +68,7 @@ public class SDEditTextTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_1.txt"));
+            new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_1.txt"));
         } catch (ObjectStructureException error) {
             return;
         }
@@ -83,7 +82,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
+        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
     }
 
     /**
@@ -93,7 +92,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_3.txt"));
+        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_3.txt"));
     }
 
     /**
@@ -104,10 +103,10 @@ public class SDEditTextTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\editText_temp.txt", false);
-        this.text.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(text, fileModule);
         fileModule.close();
         SDEditText text2 = new SDEditText();
-        text2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "editText_temp.txt"));
+        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "editText_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
         assertEquals(this.text.getTextLength(), text2.getTextLength());

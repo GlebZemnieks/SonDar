@@ -11,6 +11,7 @@ import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -25,7 +26,7 @@ public class SDDocumentTest {
         document = new SDDocument();
         document.setHeadPart(new SDHeadPart());
         SDSequenceObject sequence = new SDSequenceObject();
-        sequence.parseSequence(TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
+        (new XMLSerializer()).parseSequence(sequence, TestVariables.getRootElementByFile("SequenceTest", "sequence_1.txt"));
         for (int i = 0; i < 6; i++) {
             SDMainObject obj = sequence.getXMLObject(i);
             assertEquals(i, obj.getID());

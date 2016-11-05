@@ -1,9 +1,5 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import org.w3c.dom.Element;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.NoAttributeException;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.exception.*;
 
@@ -23,7 +19,7 @@ public abstract class SDMainObject {
     /**
      * Main tag to writing all object of this type
      */
-    protected static String Object_MainTag = "object";
+    public static String Object_MainTag = "object";
 
     /**
      * Object ID. The sequentially numbering. Set in the XML parsing.
@@ -133,69 +129,6 @@ public abstract class SDMainObject {
         return "";
     }
 
-    /**
-     * Parse object attributes
-     *
-     * @param element
-     * @throws NoAttributeException throw when some of attribute missed
-     */
-    public void parseAttribute(Element element) throws ObjectStructureException {
-        if (!"".equals(element.getAttribute("id"))) {
-            this.setID(Integer.valueOf(element.getAttribute("id")));
-        } else {
-            throw new NoAttributeException("Attribute \"id\"");
-        }
-        if (!"".equals(element.getAttribute("name"))) {
-            this.setObjectName(element.getAttribute("name"));
-        }
-    }
-
-    /**
-     * Public method for parser XML string
-     *
-     * @param element
-     * @throws NoAttributeException throw when some of attribute missed
-     */
-    public void parseObjectFromXML(Element element) throws ObjectStructureException {
-        this.parseAttribute(element);
-        this.parseCurrentObjectField(element);
-    }
-
-    /**
-     * An abstract method for parsing internal field in object
-     *
-     * @param element
-     * @throws ObjectStructureException
-     */
-    public abstract void parseCurrentObjectField(Element element) throws ObjectStructureException;
-
-    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Object_MainTag + " type=\"" + this.objectType.toString() + "\" id=\"" + this.getID() + "\"" + this.getObjectNameTag() + ">\n");
-    }
-
-    /**
-     * An class print XML string in file
-     *
-     * @param fileModule
-     */
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        this.printAttrivute(fileModule);
-        this.printCurrentObjectField(fileModule);
-        fileModule.write("</" + Object_MainTag + ">\n");
-    }
-
-    /**
-     * An abstract method for print XML string of current object
-     *
-     * @param fileModule
-     */
-    public abstract void printCurrentObjectField(FileModuleWriteThreadInterface fileModule);
-
-    /**
-     * To string
-     *
-     * @return
-     */
     @Override
     public String toString() {
         return "ObjectType : " + this.objectType + " : id : " + this.ID

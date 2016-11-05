@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -40,7 +41,7 @@ public class SDDateTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            this.date.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "date_1.txt"));
+            new XMLSerializer().parseObjectFromXML(date, TestVariables.getRootElementByFile("ObjectTest", "date_1.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -54,7 +55,7 @@ public class SDDateTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        this.date.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "date_2.txt"));
+        new XMLSerializer().parseObjectFromXML(date, TestVariables.getRootElementByFile("ObjectTest", "date_2.txt"));
     }
 
     /**
@@ -68,10 +69,10 @@ public class SDDateTest {
         Date now = new Date();
         date.setCalendar(now);
         date.setID(11);
-        this.date.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(date, fileModule);
         fileModule.close();
         SDDate date2 = new SDDate();
-        date2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "date_temp.txt"));
+        new XMLSerializer().parseObjectFromXML(date2, TestVariables.getRootElementByFile("ObjectTest", "date_temp.txt"));
         assertEquals(now.getTime(), date2.getCalendar().getTime().getTime());
         assertEquals(11, date2.getID());
     }

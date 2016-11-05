@@ -1,16 +1,12 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDText;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.w3c.dom.Element;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDText;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
-import ru.sondar.core.parser.exception.NoFieldException;
 import ru.sondar.core.parser.exception.ObjectStructureException;
-
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -53,7 +49,7 @@ public class SDTextTest {
     @Test
     public void testParseCurrentObjectField() throws ObjectStructureException {
         try {
-            this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_1.txt"));
+            new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "text_1.txt"));
         } catch (ObjectStructureException error) {
             return;
         }
@@ -67,7 +63,7 @@ public class SDTextTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws ObjectStructureException {
-        this.text.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
+        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
     }
 
     /**
@@ -78,10 +74,10 @@ public class SDTextTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp.txt", false);
-        this.text.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(text, fileModule);
         fileModule.close();
         SDText text2 = new SDText();
-        text2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
 
@@ -95,10 +91,10 @@ public class SDTextTest {
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp2.txt", false);
-        this.text.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(text, fileModule);
         fileModule.close();
         SDText text2 = new SDText();
-        text2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
 

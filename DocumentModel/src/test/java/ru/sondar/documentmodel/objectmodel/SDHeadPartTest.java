@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import java.util.Date;
 import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -75,7 +69,7 @@ public class SDHeadPartTest {
      */
     @Test
     public void testParseCurrentObjectField() throws Exception {
-        this.head.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "head_1.txt"));
+        new XMLSerializer().parseHeadPart(head, TestVariables.getRootElementByFile("ObjectTest", "head_1.txt"));
     }
 
     /**
@@ -85,7 +79,7 @@ public class SDHeadPartTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        this.head.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "head_2.txt"));
+        new XMLSerializer().parseHeadPart(head, TestVariables.getRootElementByFile("ObjectTest", "head_2.txt"));
         assertEquals("00000000-0000-0000-0000-000000000001", head.getUUID().toString());
         assertEquals("00000000-0000-0000-0000-000000000002", head.getPluginUUID().toString());
         assertEquals(new Date(Long.parseLong("123456780")), head.getCreationTime());
@@ -103,9 +97,9 @@ public class SDHeadPartTest {
         head.setCreationTime(date);
         head.setLastModificationTime(date);
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\head_temp.txt", false);
-        this.head.printObjectToXML(fileModule);
+        new XMLSerializer().printHeadPart(head, fileModule);
         fileModule.close();
-        this.head.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "head_temp.txt"));
+        new XMLSerializer().parseHeadPart(head, TestVariables.getRootElementByFile("ObjectTest", "head_temp.txt"));
         assertEquals("00000000-0000-0000-0000-000000000000", head.getUUID().toString());
         assertEquals("00000000-0000-0000-0000-000000000000", head.getPluginUUID().toString());
         assertEquals(date, head.getCreationTime());

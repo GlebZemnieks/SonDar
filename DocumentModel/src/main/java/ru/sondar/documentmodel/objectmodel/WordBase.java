@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.core.exception.SonDarRuntimeException;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import static ru.sondar.documentmodel.objectmodel.SDWordsBasePart.Tag_DataList;
 
 /**
  *
@@ -35,6 +31,10 @@ public class WordBase {
 
     public void setBaseName(String name) {
         this.wordBaseName = name;
+    }
+
+    public String getBaseName() {
+        return this.wordBaseName;
     }
 
     public WordBase() {
@@ -113,39 +113,6 @@ public class WordBase {
 
     public ArrayList<String> getListRaw(String filter) {
         return base.get(filter);
-    }
-
-    public void parseObjectFromXML(Element element) {
-        this.parseObjectFromXML(element, null);
-    }
-
-    private void parseObjectFromXML(Element element, String filter) {
-        wordBaseName = element.getAttribute("name");
-        NodeList list = element.getChildNodes();
-        for (int i = 0; i < list.getLength(); i++) {
-            if (list.item(i).getNodeName().equals(Tag_Item)) {
-                add(filter, list.item(i).getTextContent());
-            }
-            if (filter == null && list.item(i).getNodeName().equals(Tag_Filter)) {
-                this.parseObjectFromXML((Element) list.item(i), ((Element) list.item(i)).getAttribute("name"));
-            }
-        }
-    }
-
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Tag_DataList + " name=\"" + wordBaseName + "\">\n");
-        for (String filter : this.base.keySet()) {
-            if (filter != null) {
-                fileModule.write("<" + Tag_Filter + " name=\"" + filter + "\">\n");
-            }
-            for (String item : base.get(filter)) {
-                fileModule.write("<" + Tag_Item + ">" + item + "</" + Tag_Item + ">\n");
-            }
-            if (filter != null) {
-                fileModule.write("</" + Tag_Filter + ">\n");
-            }
-        }
-        fileModule.write("</" + Tag_DataList + ">\n");
     }
 
     @Override

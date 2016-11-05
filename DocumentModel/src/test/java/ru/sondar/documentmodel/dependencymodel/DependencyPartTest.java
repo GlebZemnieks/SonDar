@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.dependencymodel;
 
-import ru.sondar.documentmodel.dependencymodel.DependencyPart;
-import ru.sondar.documentmodel.dependencymodel.DependencyItem;
 import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static ru.sondar.documentmodel.TestVariables.testFolder;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.dependencymodel.DependencyItem;
-import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.objectmodel.TestVariables;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -35,7 +27,7 @@ public class DependencyPartTest {
      */
     @Test
     public void testParseItemFromXML() {
-        dependency.parseItemFromXML(TestVariables.getRootElementByFile("DependencyTest", "dependency_1.txt"));
+        new XMLSerializer().parseDependencyPart(dependency, TestVariables.getRootElementByFile("DependencyTest", "dependency_1.txt"));
         Iterator<DependencyItem> items = dependency.iterator();
         String[] exString = new String[]{"test", "test2", "test3", "test4"};
         int[] exInteger = new int[]{5, 8, 12, 44};
@@ -53,11 +45,11 @@ public class DependencyPartTest {
      */
     @Test
     public void testPrintObjectToXML() {
-        dependency.parseItemFromXML(TestVariables.getRootElementByFile("DependencyTest", "dependency_1.txt"));
+        new XMLSerializer().parseDependencyPart(dependency, TestVariables.getRootElementByFile("DependencyTest", "dependency_1.txt"));
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "DependencyTest\\dependency_temp.txt", false);
-        dependency.printObjectToXML(fileModule);
+        new XMLSerializer().printDependencyPart(dependency, fileModule);
         fileModule.close();
-        dependency.parseItemFromXML(TestVariables.getRootElementByFile("DependencyTest", "dependency_temp.txt"));
+        new XMLSerializer().parseDependencyPart(dependency, TestVariables.getRootElementByFile("DependencyTest", "dependency_temp.txt"));
         Iterator<DependencyItem> items = dependency.iterator();
         String[] exString = new String[]{"test", "test2", "test3", "test4"};
         int[] exInteger = new int[]{5, 8, 12, 44};

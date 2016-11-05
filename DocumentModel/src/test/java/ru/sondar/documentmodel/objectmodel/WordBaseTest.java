@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
 import org.junit.Before;
@@ -10,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -42,7 +38,7 @@ public class WordBaseTest {
         assertEquals(base.get(3), "test4");
         assertEquals(base.get(4), "test5");
         assertEquals(base.get(5), "test6");
-        base.add("two","test7");
+        base.add("two", "test7");
         assertEquals(base.size(), 7);
         assertEquals(base.get(6), "test7");
     }
@@ -71,7 +67,7 @@ public class WordBaseTest {
     @Test
     public void testParseObjectFromXML() {
         WordBase temp = new WordBase();
-        temp.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "wordbase_1.txt"));
+        new XMLSerializer().parseWordsBase(temp, TestVariables.getRootElementByFile("ObjectTest", "wordbase_1.txt"));
         assertEquals(temp.size(), 3);
         assertEquals(temp.get(0), "hello");
         assertEquals(temp.get(1), "hello2");
@@ -84,7 +80,7 @@ public class WordBaseTest {
     @Test
     public void testParseObjectFromXML2() {
         WordBase temp = new WordBase();
-        temp.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "wordbase_2.txt"));
+        new XMLSerializer().parseWordsBase(temp, TestVariables.getRootElementByFile("ObjectTest", "wordbase_2.txt"));
         assertEquals(temp.size(), 6);
         assertEquals(temp.getList("one").size(), 3);
         assertEquals(temp.getList("one").get(0), "hello");
@@ -104,10 +100,10 @@ public class WordBaseTest {
     @Test
     public void testPrintObjectToXML() {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\wordbase_temp.txt", false);
-        base.printObjectToXML(fileModule);
+        new XMLSerializer().printWordsBase(base, fileModule);
         fileModule.close();
         WordBase temp = new WordBase();
-        temp.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "wordbase_temp.txt"));
+        new XMLSerializer().parseWordsBase(base, TestVariables.getRootElementByFile("ObjectTest", "wordbase_temp.txt"));
     }
 
 }

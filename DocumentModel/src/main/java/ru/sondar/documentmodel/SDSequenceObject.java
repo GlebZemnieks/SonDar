@@ -1,13 +1,9 @@
 package ru.sondar.documentmodel;
 
 import java.util.ArrayList;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import ru.sondar.documentmodel.objectmodel.*;
-import ru.sondar.core.logger.Logger;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.exception.ObjectNotFountException;
+
 /**
  * Objects sequence object
  *
@@ -87,8 +83,7 @@ public class SDSequenceObject extends SDMainObject {
         }
         return true;
     }
-    
-    
+
     public boolean isObjectWithIdExist(int id) {
         return !((id < 0) || (id >= this.sequenceArrayLength));
     }
@@ -125,7 +120,7 @@ public class SDSequenceObject extends SDMainObject {
             if (this.sequenceArray.get(cursor).getObjectType() == SDMainObjectType.DivContainer) {
                 return ((SDSequenceObject) this.sequenceArray.get(cursor)).getXMLObject(id);
             } else {
-                throw new IndexOutOfBoundsException("Try to get object '" + cursor + "' from sequence with max '" + this.sequenceArray.size() + "(" + this.sequenceArray.get(this.sequenceArray.size()-1).getObjectType() + ")");
+                throw new IndexOutOfBoundsException("Try to get object '" + cursor + "' from sequence with max '" + this.sequenceArray.size() + "(" + this.sequenceArray.get(this.sequenceArray.size() - 1).getObjectType() + ")");
             }
         }
         int max = cursor;
@@ -186,9 +181,9 @@ public class SDSequenceObject extends SDMainObject {
      *
      * @param newObject
      */
-    public void AddXMLObject(SDMainObject newObject) {
+    public void addXMLObject(SDMainObject newObject) {
         if (newObject.getObjectType() == SDMainObjectType.DivContainer) {
-            ((SDSequenceObject)newObject).document = this.document;
+            ((SDSequenceObject) newObject).document = this.document;
             this.sequenceArrayLength += ((SDSequenceObject) newObject).sequenceArrayLength;
         }
         this.sequenceArrayLength++;
@@ -196,60 +191,8 @@ public class SDSequenceObject extends SDMainObject {
         this.sequenceArray.add(newObject);
     }
 
-    /**
-     * Method for parse sequence.
-     *
-     * @param element
-     * @throws ObjectStructureException
-     */
-    public void parseSequence(Element element) throws ObjectStructureException {
-        Logger.Log("SDSequenceObject::parseSequence", "Parsing start");
-        this.sequenceArray = new ArrayList<>();
-        this.sequenceArrayLength = 0;
-        NodeList tempList = element.getChildNodes();
-        for (int count = 0; count < tempList.getLength(); count++) {
-            if (tempList.item(count).getNodeName().equals("object")) {
-                Element tempElement = (Element) tempList.item(count);
-                SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
-                SDMainObject tempObject = this.getObjectByType(newObjectType);
-                AddXMLObject(tempObject);
-                tempObject.parseObjectFromXML(tempElement);
-                Logger.Log("SDSequenceObject::parseSequence", "Parsed object : " + tempObject.toString());
-            }
-        }
-        Logger.Log("SDSequenceObject::parseSequence", "Enumirate sequence");
-        this.enumirateSequence(0);
-        Logger.Log("SDSequenceObject::parseSequence", "Parsing finish");
-        Logger.Log("SDSequenceObject::parseSequence", "Result : \n" + this.toString());
-    }
-
     public SDMainObject getObjectByType(SDMainObjectType type) {
         return type.getObjectByType();
-    }
-
-    /**
-     * Method for print sequence
-     *
-     * @param fileModule
-     */
-    public void printSequence(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Sequence_MainTag + ">\n");
-        for (SDMainObject sDMainObject : sequenceArray) {
-            sDMainObject.printObjectToXML(fileModule);
-        }
-        fileModule.write("</" + Sequence_MainTag + ">\n");
-    }
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        this.parseSequence(element);
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        for (int count = 0; count < this.sequenceArray.size(); count++) {
-            this.getXMLObject(this.ID + 1 + count).printObjectToXML(fileModule);
-        }
     }
 
     @Override

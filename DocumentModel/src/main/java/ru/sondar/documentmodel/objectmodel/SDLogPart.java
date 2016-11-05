@@ -1,11 +1,6 @@
 package ru.sondar.documentmodel.objectmodel;
 
 import java.util.ArrayList;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import ru.sondar.core.logger.Logger;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * Log file list object
@@ -13,7 +8,7 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDLogPart extends SDMainObject {
+public class SDLogPart {
 
     /**
      * Main tag to writing log object
@@ -46,42 +41,4 @@ public class SDLogPart extends SDMainObject {
     public void addLogFile(String fileName) {
         this.logFileName.add(fileName);
     }
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        NodeList tempList = element.getElementsByTagName("log");
-        logFileName = new ArrayList<>();
-        for (int i = 0; i < tempList.getLength(); i++) {
-            Element tempLog = ((Element) tempList.item(i));
-            this.addLogFile(tempLog.getTextContent());
-        }
-    }
-
-    @Override
-    public void parseObjectFromXML(Element element) throws ObjectStructureException {
-        this.parseCurrentObjectField(element);
-    }
-
-    @Override
-    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
-        fileModule.write("<" + Log_MainTag + ">\n");
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        if (this.logFileName != null) {
-            for (String log : this.logFileName) {
-                fileModule.write("<log>" + log + "</log>\n");
-            }
-        }
-    }
-
-    @Override
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDLogPart::printObjectToXML", "Write logPart : " + this.toString());
-        this.printAttrivute(fileModule);
-        this.printCurrentObjectField(fileModule);
-        fileModule.write("</" + Log_MainTag + ">\n");
-    }
-
 }

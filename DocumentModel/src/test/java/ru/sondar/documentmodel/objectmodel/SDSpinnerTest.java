@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sondar.documentmodel.objectmodel;
 
 import java.util.ArrayList;
@@ -15,6 +10,7 @@ import ru.sondar.documentmodel.SDSequenceObject;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.NoFieldException;
 import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -31,7 +27,7 @@ public class SDSpinnerTest {
         document.setSequence(sequence);
         document.setWordsBasePart(getBasePart());
         spinner = new SDSpinner();
-        sequence.AddXMLObject(spinner);
+        sequence.addXMLObject(spinner);
         spinner.setDefaultItemSelected(1);
     }
 
@@ -118,7 +114,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_1.txt"));
+            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_1.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -133,7 +129,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField2() throws Exception {
         try {
-            this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_2.txt"));
+            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_2.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -148,7 +144,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField3() throws Exception {
         try {
-            this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
+            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
         } catch (NoFieldException error) {
             return;
         }
@@ -172,7 +168,7 @@ public class SDSpinnerTest {
         SDSequenceObject sequence = new SDSequenceObject();
         spinner.setSequence(sequence);
         sequence.document = document;
-        this.spinner.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
+        new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
         assertEquals(spinner.getList().size(), 2);
         assertEquals(spinner.getList().get(0), "test1");
         assertEquals(spinner.getList().get(1), "test2");
@@ -181,24 +177,23 @@ public class SDSpinnerTest {
     /**
      * Test of printCurrentObjectField method, of class SDSpinner.
      *
-     * @throws
-     * ru.sondar.core.exception.parser.ObjectStructureException
+     * @throws ru.sondar.core.exception.parser.ObjectStructureException
      */
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\spinner_temp.txt", false);
-        this.spinner.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(spinner, fileModule);
         fileModule.close();
         SDSpinner spinner2 = new SDSpinner();
         try {
-            spinner2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
+            new XMLSerializer().parseObjectFromXML(spinner2, TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
         } catch (NoFieldException error) {
             return;
         }
         fail("No exception");
     }
-    
-    public SDWordsBasePart getBasePart(){
+
+    public SDWordsBasePart getBasePart() {
         SDWordsBasePart wordsBase = new SDWordsBasePart();
         WordBase base = new WordBase();
         wordsBase.addNewBase("test", base);
@@ -209,22 +204,22 @@ public class SDSpinnerTest {
         WordBase base3 = new WordBase();
         base3.add("test");
         base3.add("test2");
-        base3.add("a1","test3");
-        base3.add("a1","test4");
+        base3.add("a1", "test3");
+        base3.add("a1", "test4");
         wordsBase.addNewBase("test3", base3);
         WordBase base4 = new WordBase();
         base4.add("test");
         base4.add("test2");
-        base4.add("a1","test3");
-        base4.add("a1","test4");
-        base4.add("a2","test5");
-        base4.add("a2","test6");
-        base4.add("a2","test7");
-        base4.add("a2","test8");
+        base4.add("a1", "test3");
+        base4.add("a1", "test4");
+        base4.add("a2", "test5");
+        base4.add("a2", "test6");
+        base4.add("a2", "test7");
+        base4.add("a2", "test8");
         wordsBase.addNewBase("test4", base4);
         return wordsBase;
     }
-    
+
     /**
      * Test of getSelectedItem method, of class SDSpinner.
      */

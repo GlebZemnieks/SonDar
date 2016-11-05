@@ -1,9 +1,5 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import org.w3c.dom.Element;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
-import ru.sondar.core.parser.exception.ObjectStructureException;
-
 /**
  * End of line object decoration object
  *
@@ -18,13 +14,4 @@ public class SDEndln extends SDMainObject {
     public SDEndln() {
         this.objectType = SDMainObjectType.EndLn;
     }
-
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-    }
-
 }

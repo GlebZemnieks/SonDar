@@ -1,13 +1,12 @@
 package ru.sondar.documentmodel.objectmodel;
 
-import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.sondar.core.filemodule.pc.FileModuleWriteThread;
-import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import static ru.sondar.documentmodel.objectmodel.TestVariables.testFolder;
 import ru.sondar.core.parser.exception.ObjectStructureException;
+import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
  *
@@ -81,7 +80,7 @@ public class SDCheckBoxTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            this.box.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "check_1.txt"));
+            new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_1.txt"));
         } catch (ObjectStructureException errException) {
             return;
         }
@@ -96,7 +95,7 @@ public class SDCheckBoxTest {
     @Test
     public void testParseCurrentObjectField2() throws Exception {
         try {
-            this.box.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "check_2.txt"));
+            new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_2.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -110,7 +109,7 @@ public class SDCheckBoxTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        this.box.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "check_3.txt"));
+        new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_3.txt"));
         assertEquals(false, box.getChecked());
         assertEquals("testtest", box.getText());
         assertEquals(18, box.getID());
@@ -124,10 +123,10 @@ public class SDCheckBoxTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\check_temp.txt", false);
-        box.printObjectToXML(fileModule);
+        new XMLSerializer().printObjectToXML(box, fileModule);
         fileModule.close();
         SDCheckBox box2 = new SDCheckBox();
-        box2.parseObjectFromXML(TestVariables.getRootElementByFile("ObjectTest", "check_temp.txt"));
+        new XMLSerializer().parseObjectFromXML(box2, TestVariables.getRootElementByFile("ObjectTest", "check_temp.txt"));
         assertEquals(box.getChecked(), box2.getChecked());
         assertEquals(box.getText(), box2.getText());
         assertEquals(box.getID(), box2.getID());

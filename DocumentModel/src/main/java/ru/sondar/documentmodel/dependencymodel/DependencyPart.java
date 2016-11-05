@@ -2,11 +2,6 @@ package ru.sondar.documentmodel.dependencymodel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import ru.sondar.core.logger.Logger;
-import static ru.sondar.documentmodel.dependencymodel.DependencyItem.DependencyItem_xmlTag;
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.exception.ObjectNotFountException;
 
@@ -39,33 +34,12 @@ public class DependencyPart implements Iterable<DependencyItem> {
         addDependencyItem(name, cellId);
     }
 
-    /**
-     * Method for parse item from XML
-     *
-     * @param element
-     */
-    public void parseItemFromXML(Element element) {
-        this.dependencyList = new ArrayList<>();
-        NodeList list = element.getElementsByTagName(DependencyItem_xmlTag);
-        for (int i = 0; i < list.getLength(); i++) {
-            DependencyItem item = new DependencyItem();
-            item.parseItemFromXML((Element) list.item(i));
-            this.dependencyList.add(item);
-        }
+    public ArrayList<DependencyItem> getDependencyList() {
+        return this.dependencyList;
     }
 
-    /**
-     * Method for print item to XML
-     *
-     * @param fileModule
-     */
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("DependencyPart::printObjectToXML", "Write dependency : " + this.toString());
-        fileModule.write("<" + Dependency_MainTag + ">\n");
-        for (int i = 0; i < this.dependencyList.size(); i++) {
-            this.dependencyList.get(i).printObjectToXML(fileModule);
-        }
-        fileModule.write("</" + Dependency_MainTag + ">\n");
+    public void setDependencyList(ArrayList<DependencyItem> list) {
+        this.dependencyList = list;
     }
 
     @Override
