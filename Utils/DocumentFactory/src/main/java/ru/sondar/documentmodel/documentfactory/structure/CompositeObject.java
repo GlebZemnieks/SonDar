@@ -1,4 +1,4 @@
-package ru.sondar.documentmodel.documentfactory.structure;
+ package ru.sondar.documentmodel.documentfactory.structure;
 
 import java.util.ArrayList;
 import ru.sondar.documentmodel.SDSequenceObject;
@@ -22,7 +22,7 @@ public class CompositeObject {
 
     public void addObjectListToSequence(SDSequenceObject sequenceObject) {
         for (SDMainObject object : this.objects) {
-            sequenceObject.AddXMLObject(object);
+            sequenceObject.addXMLObject(object);
         }
     }
 }

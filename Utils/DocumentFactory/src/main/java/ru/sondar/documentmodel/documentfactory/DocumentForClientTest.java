@@ -43,23 +43,23 @@ public class DocumentForClientTest {
         document1.setWordsBasePart(basePart);
         
         SDSequenceObject sequence = new SDSequenceObject();
-        sequence.AddXMLObject(SDObjectFactory.getCheckBox("CheckTEST1", true));
-        sequence.AddXMLObject(SDObjectFactory.getDate());
-        sequence.AddXMLObject(SDObjectFactory.getEndln());     
+        sequence.addXMLObject(SDObjectFactory.getCheckBox("CheckTEST1", true));
+        sequence.addXMLObject(SDObjectFactory.getDate());
+        sequence.addXMLObject(SDObjectFactory.getEndln());     
         SDSequenceObject sequence1 = new SDSequenceObject();
-        sequence1.AddXMLObject(SDObjectFactory.getCheckBox("CheckTEST2", false));
-        sequence1.AddXMLObject(SDObjectFactory.getEditText("test text(20)", 20));
-        sequence.AddXMLObject(sequence1);     
-        sequence.AddXMLObject(SDObjectFactory.getText("textTEST1 : "));
+        sequence1.addXMLObject(SDObjectFactory.getCheckBox("CheckTEST2", false));
+        sequence1.addXMLObject(SDObjectFactory.getEditText("test text(20)", 20));
+        sequence.addXMLObject(sequence1);     
+        sequence.addXMLObject(SDObjectFactory.getText("textTEST1 : "));
         SDSequenceObject sequence2 = new SDSequenceObject();
-        sequence1.AddXMLObject(SDObjectFactory.getEditText("test", 10));
-        sequence2.AddXMLObject(SDObjectFactory.getSpinner(basePart, "test", 0));
-        sequence.AddXMLObject(sequence2);     
-        sequence.AddXMLObject(SDObjectFactory.getText("testTEST2 : "));
-        sequence.AddXMLObject(SDObjectFactory.getCheckBox("checkTEST2", false));
-        sequence.AddXMLObject(SDObjectFactory.getSpinner(basePart, "test", 1));
-        sequence.AddXMLObject(SDObjectFactory.getEndln()); 
-        sequence.AddXMLObject(SDObjectFactory.getDate());
+        sequence1.addXMLObject(SDObjectFactory.getEditText("test", 10));
+        sequence2.addXMLObject(SDObjectFactory.getSpinner(basePart, "test", 0));
+        sequence.addXMLObject(sequence2);     
+        sequence.addXMLObject(SDObjectFactory.getText("testTEST2 : "));
+        sequence.addXMLObject(SDObjectFactory.getCheckBox("checkTEST2", false));
+        sequence.addXMLObject(SDObjectFactory.getSpinner(basePart, "test", 1));
+        sequence.addXMLObject(SDObjectFactory.getEndln()); 
+        sequence.addXMLObject(SDObjectFactory.getDate());
         sequence.enumirateSequence(0);
         document1.setSequence(sequence);
         
@@ -92,8 +92,8 @@ public class DocumentForClientTest {
         
         SDSequenceObject sequence = new SDSequenceObject();
         for (int i = 0; i < 200; i++) {
-            sequence.AddXMLObject(SDObjectFactory.getText("Text : " + i));
-            sequence.AddXMLObject(SDObjectFactory.getEndln());
+            sequence.addXMLObject(SDObjectFactory.getText("Text : " + i));
+            sequence.addXMLObject(SDObjectFactory.getEndln());
         }
         sequence.enumirateSequence(0);
         document1.setSequence(sequence);

@@ -10,7 +10,7 @@ import ru.sondar.documentmodel.SDSequenceObject;
 public class SDStructureFactory {
 
     public static void enter(SDSequenceObject sequenceObject) {
-        sequenceObject.AddXMLObject(SDObjectFactory.getEndln());
+        sequenceObject.addXMLObject(SDObjectFactory.getEndln());
     }
 
     /**

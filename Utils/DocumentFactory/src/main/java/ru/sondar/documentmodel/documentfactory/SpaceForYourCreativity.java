@@ -10,11 +10,19 @@ import ru.sondar.core.logger.pc.PCLogging;
 import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDDocument;
 import ru.sondar.documentmodel.SDSequenceObject;
-import ru.sondar.documentmodel.documentfactory.structure.*;
-import ru.sondar.documentmodel.objectmodel.*;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
+import ru.sondar.documentmodel.documentfactory.structure.CompositeObject;
+import ru.sondar.documentmodel.documentfactory.structure.Enter;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.addCompositeObjectList;
 import static ru.sondar.documentmodel.documentfactory.structure.SDStructureFactory.enter;
+import ru.sondar.documentmodel.documentfactory.structure.Text;
+import ru.sondar.documentmodel.documentfactory.structure.TextAndCheckBoxtList;
+import ru.sondar.documentmodel.documentfactory.structure.TextAndEditTextList;
+import ru.sondar.documentmodel.documentfactory.structure.TextAndSpinnerList;
+import ru.sondar.documentmodel.objectmodel.SDHeadPart;
+import ru.sondar.documentmodel.objectmodel.SDLogPart;
+import ru.sondar.documentmodel.objectmodel.SDMainObject;
+import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
 
 /**
  *
@@ -65,26 +73,25 @@ public class SpaceForYourCreativity {
 
     public static SDSequenceObject getSequence(SDWordsBasePart baseList) {
         SDSequenceObject sequence = new SDSequenceObject();
-        String listValue = "test";
 
-        sequence.AddXMLObject(SDObjectFactory.getDate().setObjectName("DocumentCreationName")); //TODO 
-        sequence.AddXMLObject(SDObjectFactory.getText("произведена фискация технического состояния"));
-        sequence.AddXMLObject(SDObjectFactory.getText("многоквартирного дома по адресу:"));
-        sequence.AddXMLObject(SDObjectFactory.getText("Калужская область,"));
-        sequence.AddXMLObject(SDObjectFactory.getEditText("Октябрьского", 20).setObjectName("Район").setObjectName("region"));
-        sequence.AddXMLObject(SDObjectFactory.getText("района, гор., пос., дер."));
-        sequence.AddXMLObject(SDObjectFactory.getEditText("Калуга", 20).setObjectName("населенныйПункт").setObjectName("locality"));
-        sequence.AddXMLObject(SDObjectFactory.getText("ул."));
-        sequence.AddXMLObject(SDObjectFactory.getEditText("Чижевского", 20).setObjectName("улица").setObjectName("street"));
-        sequence.AddXMLObject(SDObjectFactory.getText("дом №"));
-        sequence.AddXMLObject(SDObjectFactory.getEditText("5", 5).setObjectName("дом").setObjectName("houseNumber"));
-        sequence.AddXMLObject(SDObjectFactory.getText("кор."));
-        sequence.AddXMLObject(SDObjectFactory.getEditText("50", 3).setObjectName("longPrimer"));
+        sequence.addXMLObject(SDObjectFactory.getDate().setObjectName("DocumentCreationName")); //TODO 
+        sequence.addXMLObject(SDObjectFactory.getText("произведена фискация технического состояния"));
+        sequence.addXMLObject(SDObjectFactory.getText("многоквартирного дома по адресу:"));
+        sequence.addXMLObject(SDObjectFactory.getText("Калужская область,"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Октябрьского", 20).setObjectName("Район").setObjectName("region"));
+        sequence.addXMLObject(SDObjectFactory.getText("района, гор., пос., дер."));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Калуга", 20).setObjectName("населенныйПункт").setObjectName("locality"));
+        sequence.addXMLObject(SDObjectFactory.getText("ул."));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Чижевского", 20).setObjectName("улица").setObjectName("street"));
+        sequence.addXMLObject(SDObjectFactory.getText("дом №"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("5", 5).setObjectName("дом").setObjectName("houseNumber"));
+        sequence.addXMLObject(SDObjectFactory.getText("кор."));
+        sequence.addXMLObject(SDObjectFactory.getEditText("50", 3).setObjectName("longPrimer"));
         enter(sequence);
         /*
         Part.2
          */
-        sequence.AddXMLObject(SDObjectFactory.getText("Общие данные:"));
+        sequence.addXMLObject(SDObjectFactory.getText("Общие данные:"));
         enter(sequence);
         //TODO Вынести словарные базы в конфигурацию.
         addCompositeObjectList(sequence, new CompositeObject[]{
@@ -240,71 +247,73 @@ public class SpaceForYourCreativity {
             // TODO ???
             new TextAndEditTextList("32. Наличие статуса памятника", "", 20, ""),
             new Enter()
-        });
+        }
+        );
 
-        sequence.AddXMLObject(SDObjectFactory.getText("33.Оборудованность МКД инженерными системами"));
+        sequence.addXMLObject(SDObjectFactory.getText("33.Оборудованность МКД инженерными системами"));
 
         //TODO переделать во внутренние функции с открытием нового экрана
-        addCompositeObjectList(sequence, new CompositeObject[]{
-            // TODO CheckBox ? 
-            new TextAndSpinnerList("a)Отопление", baseList,
-            "Отопление", 0, "Отопление"),
-            new TextAndSpinnerList("вид топлива", baseList,
-            "Отопление - вид топлива", 0, "Отопление - вид топлива"),
-            // TODO EditText(number) ? 
-            new TextAndSpinnerList("Кол-во вводов", baseList,
-            "Отопление - Кол-во вводов", 0, "Отопление - Кол-во вводов"),
-            // TODO EditText(number) ? 
-            new TextAndSpinnerList("объем посребления", baseList,
-            "Отопление - объем посребления", 0, "Отопление - объем посребления"),
-            new TextAndSpinnerList("расположение запорных устройств", baseList,
-            "Отопление - расположение запорных устройств", 0, "Отопление - расположение запорных устройств"),
-            new TextAndSpinnerList("схема теплоснабжения", baseList,
-            "Отопление - схема теплоснабжения", 0, "Отопление - схема теплоснабжения"),
-            // TODO CheckBox ? 
-            new TextAndSpinnerList("Наличие циркулярного насоса", baseList,
-            "Отопление - Наличие циркулярного насоса", 0, "Отопление - Наличие циркулярного насоса"),
-            new TextAndSpinnerList("Наличие/вид учета узла", baseList,
-            "Отопление - Наличие учета узла", 0, "Отопление - Наличие учета узла",
-            "Отопление - Вид учета узла", 0, "Отопление - Вид учета узла"),
-            new TextAndSpinnerList("расположение стояков", baseList,
-            "Отопление - расположение стояков", 0, "Отопление - расположение стояков"),
-            new TextAndSpinnerList("наличие элеваторов", baseList,
-            "Отопление - наличие элеваторов", 0, "Отопление - наличие элеваторов"),
-            new TextAndSpinnerList("Вид отопительных приборов", baseList,
-            "Отопление - Вид отопительных приборов", 0, "Отопление - Вид отопительных приборов"),
-            new TextAndSpinnerList("Вид розлива", baseList,
-            "Отопление - Вид розлива", 0, "Отопление - Вид розлива"),
-            new TextAndSpinnerList("Материал трубопроводов: розлива", baseList,
-            "Отопление - Материал трубопроводов - розлива", 0, "Отопление - Материал трубопроводов - розлива"),
-            new TextAndSpinnerList("стояков", baseList,
-            "Отопление - Материал трубопроводов - стояков", 0, "Отопление - Материал трубопроводов - стояков"),
-            // TODO CheckBox ? 
-            new TextAndSpinnerList("Отопление подъедов", baseList,
-            "Отопление - подъедов", 0, "Отопление - подъедов"),
-            // TODO CheckBox ? 
-            new TextAndSpinnerList("Подача теплоносителей в полотенцесушители", baseList,
-            "Отопление - Подача теплоносителей в полотенцесушители", 0, "Отопление - Подача теплоносителей в полотенцесушители"),
-            new ProsentWithText("Отопления", "износ Отопления", "определен для Отопления"),
-            new Enter()
-        });
-        
-        addCompositeObjectList(sequence, new CompositeObject[]{
-            // TODO CheckBox ? 
-            new Text("б)Водоснабжение"),
-            new Enter(),
-            new TextAndSpinnerList("ХВС", baseList,
-            "ХВС", 0, "ХВС"),
-            // TODO EditText(number) ? 
-            new TextAndSpinnerList("Кол-во вводов", baseList,
-            "Отопление - Кол-во вводов", 0, "Отопление - Кол-во вводов"),
-            // TODO EditText(number) ? 
+        addCompositeObjectList(sequence,
+                new CompositeObject[]{
+                    // TODO CheckBox ? 
+                    new TextAndSpinnerList("a)Отопление", baseList,
+                            "Отопление", 0, "Отопление"),
+                    new TextAndSpinnerList("вид топлива", baseList,
+                            "Отопление - вид топлива", 0, "Отопление - вид топлива"),
+                    // TODO EditText(number) ? 
+                    new TextAndSpinnerList("Кол-во вводов", baseList,
+                            "Отопление - Кол-во вводов", 0, "Отопление - Кол-во вводов"),
+                    // TODO EditText(number) ? 
+                    new TextAndSpinnerList("объем посребления", baseList,
+                            "Отопление - объем посребления", 0, "Отопление - объем посребления"),
+                    new TextAndSpinnerList("расположение запорных устройств", baseList,
+                            "Отопление - расположение запорных устройств", 0, "Отопление - расположение запорных устройств"),
+                    new TextAndSpinnerList("схема теплоснабжения", baseList,
+                            "Отопление - схема теплоснабжения", 0, "Отопление - схема теплоснабжения"),
+                    // TODO CheckBox ? 
+                    new TextAndSpinnerList("Наличие циркулярного насоса", baseList,
+                            "Отопление - Наличие циркулярного насоса", 0, "Отопление - Наличие циркулярного насоса"),
+                    new TextAndSpinnerList("Наличие/вид учета узла", baseList,
+                            "Отопление - Наличие учета узла", 0, "Отопление - Наличие учета узла",
+                            "Отопление - Вид учета узла", 0, "Отопление - Вид учета узла"),
+                    new TextAndSpinnerList("расположение стояков", baseList,
+                            "Отопление - расположение стояков", 0, "Отопление - расположение стояков"),
+                    new TextAndSpinnerList("наличие элеваторов", baseList,
+                            "Отопление - наличие элеваторов", 0, "Отопление - наличие элеваторов"),
+                    new TextAndSpinnerList("Вид отопительных приборов", baseList,
+                            "Отопление - Вид отопительных приборов", 0, "Отопление - Вид отопительных приборов"),
+                    new TextAndSpinnerList("Вид розлива", baseList,
+                            "Отопление - Вид розлива", 0, "Отопление - Вид розлива"),
+                    new TextAndSpinnerList("Материал трубопроводов: розлива", baseList,
+                            "Отопление - Материал трубопроводов - розлива", 0, "Отопление - Материал трубопроводов - розлива"),
+                    new TextAndSpinnerList("стояков", baseList,
+                            "Отопление - Материал трубопроводов - стояков", 0, "Отопление - Материал трубопроводов - стояков"),
+                    // TODO CheckBox ? 
+                    new TextAndSpinnerList("Отопление подъедов", baseList,
+                            "Отопление - подъедов", 0, "Отопление - подъедов"),
+                    // TODO CheckBox ? 
+                    new TextAndSpinnerList("Подача теплоносителей в полотенцесушители", baseList,
+                            "Отопление - Подача теплоносителей в полотенцесушители", 0, "Отопление - Подача теплоносителей в полотенцесушители"),
+                    new ProsentWithText("Отопления", "износ Отопления", "определен для Отопления"),
+                    new Enter()
+                }
+        );
 
-            new ProsentWithText("Отопления", "износ Отопления", "определен для Отопления"),
-            new Enter()
-        });
-
-        /*
+        addCompositeObjectList(sequence,
+                new CompositeObject[]{
+                    // TODO CheckBox ? 
+                    new Text("б)Водоснабжение"),
+                    new Enter(),
+                    new TextAndSpinnerList("ХВС", baseList,
+                            "ХВС", 0, "ХВС"),
+                    // TODO EditText(number) ? 
+                    new TextAndSpinnerList("Кол-во вводов", baseList,
+                            "Отопление - Кол-во вводов", 0, "Отопление - Кол-во вводов"),
+                    // TODO EditText(number) ? 
+                    new ProsentWithText("Отопления", "износ Отопления", "определен для Отопления"),
+                    new Enter()
+                }
+        );
         enter(sequence);
         sequence.enumirateSequence(0);
         return sequence;

@@ -11,17 +11,17 @@ import ru.sondar.documentmodel.objectmodel.*;
  * @author GlebZemnieks
  */
 public class SDObjectFactory {
-    
+
     private static SDMainObject returnObject(SDMainObject object) {
         return object;
     }
 
     public static SDHeadPart getHeadPart() {
-        return (SDHeadPart) returnObject(getHeadPart("00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000"));
+        return getHeadPart("00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000");
     }
 
     public static SDHeadPart getHeadPart(UUID PluginUuid) {
-        return (SDHeadPart) returnObject(getHeadPart(PluginUuid.toString()));
+        return getHeadPart(PluginUuid.toString());
     }
 
     public static SDHeadPart getHeadPart(String PluginUuid) {
@@ -31,11 +31,11 @@ public class SDObjectFactory {
         head.setLastModificationTime(date);
         head.setUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         head.setPluginUUID(UUID.fromString(PluginUuid));
-        return (SDHeadPart) returnObject(head);
+        return head;
     }
 
     public static SDHeadPart getHeadPart(UUID PluginUuid, UUID Uuid) {
-        return (SDHeadPart) returnObject(getHeadPart(PluginUuid.toString(), Uuid.toString()));
+        return getHeadPart(PluginUuid.toString(), Uuid.toString());
     }
 
     public static SDHeadPart getHeadPart(String PluginUuid, String Uuid) {
@@ -45,11 +45,11 @@ public class SDObjectFactory {
         head.setLastModificationTime(date);
         head.setUUID(UUID.fromString(Uuid));
         head.setPluginUUID(UUID.fromString(PluginUuid));
-        return (SDHeadPart) returnObject(head);
+        return head;
     }
 
     public static SDHeadPart getHeadPart(UUID PluginUuid, UUID Uuid, Date date) {
-        return (SDHeadPart) returnObject(getHeadPart(PluginUuid.toString(), Uuid.toString(), date));
+        return getHeadPart(PluginUuid.toString(), Uuid.toString(), date);
     }
 
     public static SDHeadPart getHeadPart(String PluginUuid, String Uuid, Date date) {
@@ -58,7 +58,7 @@ public class SDObjectFactory {
         head.setLastModificationTime(date);
         head.setUUID(UUID.fromString(Uuid));
         head.setPluginUUID(UUID.fromString(PluginUuid));
-        return (SDHeadPart) returnObject(head);
+        return head;
     }
 
     public static SDCheckBox getCheckBox() {
@@ -117,7 +117,7 @@ public class SDObjectFactory {
     public static SDLogPart getLogPart(ArrayList<String> logList) {
         SDLogPart log = new SDLogPart();
         log.setLogList(logList);
-        return (SDLogPart) returnObject(log);
+        return log;
     }
 
     public static SDSpinner getSpinner(SDWordsBasePart baseList, String baseName) {
