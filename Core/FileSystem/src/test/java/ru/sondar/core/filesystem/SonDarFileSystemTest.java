@@ -22,6 +22,43 @@ public class SonDarFileSystemTest extends TestCase {
     }
 
     /**
+     * <b>Case 0</b>
+     * <li> Create SonDarFileSystem object in current directory</li>
+     * <li> Create SonDarFolder object in current directory</li>
+     * <li> Start initialization</li>
+     * <li> Get folder by name and check status</li>
+     * <li> Check count of file on folder</li>
+     * <p>
+     * <b>Expected</b><br>SonDarFolderState.None</p>
+     */
+    public void testAddFolder0() {
+        SonDarFileSystem instance = new SonDarFileSystem(TESTDATAFOLDER);
+        instance.addFolder("");
+        instance.init(fileModule);
+        assertEquals(instance.getFolderByName("").getState(), SonDarFolderState.None);
+        assertEquals(instance.getFolderByName("").getFileList().size(), 1);
+    }
+
+    /**
+     * <b>Case 0_1</b>
+     * <li> Create SonDarFileSystem object in current directory</li>
+     * <li> Create SonDarFolder object in current directory</li>
+     * <li> Start initialization</li>
+     * <li> Get folder by name and check status</li>
+     * <li> Check content of file in folder</li>
+     * <p>
+     * <b>Expected</b><br>SonDarFolderState.None</p>
+     */
+    public void testAddFolder0_1() {
+        SonDarFileSystem instance = new SonDarFileSystem(TESTDATAFOLDER);
+        instance.addFolder("");
+        instance.init(fileModule);
+        assertEquals(instance.getFolderByName("").getState(), SonDarFolderState.None);
+        FileModuleReadThreadInterface readThreadInterface = instance.getFolderByName("").getFile(fileModule, "test.txt");
+        assertEquals(readThreadInterface.read(), "Hello bro!! I want to see you my friend!");
+    }
+
+    /**
      * <b>Case 1</b>
      * <li> Create SonDarFileSystem object</li>
      * <li> Create SonDarFolder object in empty folder with correct
