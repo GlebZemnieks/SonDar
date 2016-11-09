@@ -13,7 +13,6 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.objectmodel.SDCheckBox;
 import ru.sondar.documentmodel.objectmodel.SDDate;
 import ru.sondar.documentmodel.objectmodel.SDEditText;
-import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.serializer.XMLSerializer;
 
 /**
