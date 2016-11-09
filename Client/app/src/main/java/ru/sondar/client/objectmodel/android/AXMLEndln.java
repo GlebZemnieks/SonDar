@@ -15,7 +15,7 @@ public class AXMLEndln extends AXMLMainObject {
     }
 
     public AXMLEndln(SDMainObject sdmainobject) {
-        super((SDEndln)sdmainobject);
+        super((SDEndln) sdmainobject);
         this.objectType = SDMainObjectType.EndLn;
     }
 

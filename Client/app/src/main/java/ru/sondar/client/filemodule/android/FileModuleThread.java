@@ -9,10 +9,6 @@ import ru.sondar.core.filemodule.FileModuleThreadInterface;
 public class FileModuleThread implements FileModuleThreadInterface {
 
     /**
-     * Closed flag.
-     */
-    private boolean isClose = false;
-    /**
      * Context for access
      */
     protected Context context;
@@ -20,6 +16,14 @@ public class FileModuleThread implements FileModuleThreadInterface {
      * Name of file to this thread
      */
     protected String fileName;
+    /**
+     * Debugging log flag
+     */
+    protected boolean debugLogging = true;
+    /**
+     * Closed flag.
+     */
+    private boolean isClose = false;
 
     /**
      * Protected constructor

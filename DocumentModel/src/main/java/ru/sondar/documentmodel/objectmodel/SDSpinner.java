@@ -51,7 +51,6 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     }
 
     public String getActiveFilterAttribute() {
-        Logger.Log("SDSpinner::getActiveFilterAttribute", "Return value : '" + activeFilter + "'");
         if (activeFilter != null) {
             return " activeFilter=\"" + activeFilter + "\"";
         }
@@ -117,7 +116,6 @@ public class SDSpinner extends SDMainObject implements SupportDependencyInterfac
     }
 
     public String getWordsBaseNameAttribute() {
-        Logger.Log("SDSpinner::getWordsBaseNameAttribute", "Return value : '" + wordsBaseName + "'");
         if (wordsBaseName != null) {
             return " baseName=\"" + wordsBaseName + "\"";
         }

@@ -78,13 +78,13 @@ public class SpaceForYourCreativity {
         sequence.addXMLObject(SDObjectFactory.getText("произведена фискация технического состояния"));
         sequence.addXMLObject(SDObjectFactory.getText("многоквартирного дома по адресу:"));
         sequence.addXMLObject(SDObjectFactory.getText("Калужская область,"));
-        sequence.addXMLObject(SDObjectFactory.getEditText("Октябрьского", 20).setObjectName("Район").setObjectName("region"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Октябрьского", 20).setObjectName("Район"));
         sequence.addXMLObject(SDObjectFactory.getText("района, гор., пос., дер."));
-        sequence.addXMLObject(SDObjectFactory.getEditText("Калуга", 20).setObjectName("населенныйПункт").setObjectName("locality"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Калуга", 20).setObjectName("населенныйПункт"));
         sequence.addXMLObject(SDObjectFactory.getText("ул."));
-        sequence.addXMLObject(SDObjectFactory.getEditText("Чижевского", 20).setObjectName("улица").setObjectName("street"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("Чижевского", 20).setObjectName("улица"));
         sequence.addXMLObject(SDObjectFactory.getText("дом №"));
-        sequence.addXMLObject(SDObjectFactory.getEditText("5", 5).setObjectName("дом").setObjectName("houseNumber"));
+        sequence.addXMLObject(SDObjectFactory.getEditText("5", 5).setObjectName("дом"));
         sequence.addXMLObject(SDObjectFactory.getText("кор."));
         sequence.addXMLObject(SDObjectFactory.getEditText("50", 3).setObjectName("longPrimer"));
         enter(sequence);

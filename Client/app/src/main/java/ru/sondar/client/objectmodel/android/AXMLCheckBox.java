@@ -16,7 +16,7 @@ public class AXMLCheckBox extends AXMLMainObject {
     }
 
     public AXMLCheckBox(SDMainObject sdmainobject) {
-        super((SDCheckBox)sdmainobject);
+        super((SDCheckBox) sdmainobject);
         this.objectType = SDMainObjectType.CheckBox;
     }
 

@@ -42,13 +42,18 @@ import static ru.sondar.documentmodel.objectmodel.WordBase.Tag_Item;
  */
 public class XMLSerializer implements DocumentSerializer {
 
+    public String LOG_TAG = "XMLSerializer";
+
     @Override
     public void parseObjectAttribute(SDMainObject object, Object... params) throws ObjectStructureException {
         Element element = (Element) params[0];
         if (!"".equals(element.getAttribute("id"))) {
+            Logger.Log(LOG_TAG, "object id : " + element.getAttribute("id"));
             object.setID(Integer.valueOf(element.getAttribute("id")));
         } else {
-            throw new NoAttributeException("Attribute \"id\"");
+            NoAttributeException exception = new NoAttributeException("Attribute \"id\"");
+            Logger.Log(LOG_TAG, "Attribute \"id\" missing", exception);
+            throw exception;
         }
         if (!"".equals(element.getAttribute("name"))) {
             object.setObjectName(element.getAttribute("name"));
@@ -56,7 +61,8 @@ public class XMLSerializer implements DocumentSerializer {
     }
 
     @Override
-    public void parseObjectFromXML(SDMainObject object, Object... params) throws ObjectStructureException {
+    public void parseObject(SDMainObject object, Object... params) throws ObjectStructureException {
+        Logger.Log(LOG_TAG, "Parse object : ");
         this.parseObjectAttribute(object, params);
         this.parseCurrentObjectField(object, params);
     }
@@ -65,15 +71,20 @@ public class XMLSerializer implements DocumentSerializer {
     public void parseCurrentObjectField(SDMainObject object, Object... params) throws ObjectStructureException {
         NodeList list;
         Element element = (Element) params[0];
-        if (object instanceof SDText) {
+        if (object.getObjectType() == SDMainObjectType.Text) {
+            Logger.Log(LOG_TAG, "Current field for SDText");
             list = element.getElementsByTagName(Text_textFieldTag);
             if (list.item(0) != null) {
                 ((SDText) object).setText(list.item(0).getTextContent());
             } else {
-                throw new NoFieldException("Missing \"text\" field");
+                NoFieldException exception = new NoFieldException("Missing \"text\" field");
+                Logger.Log(LOG_TAG, "Attribute \"id\" missing", exception);
+                throw exception;
             }
+            return;
         }
-        if (object instanceof SDCheckBox) {
+        if (object.getObjectType() == SDMainObjectType.CheckBox) {
+            Logger.Log(LOG_TAG, "Current field for SDCheckBox");
             list = element.getElementsByTagName(CheckBox_textFieldTag);
             if (list.item(0) != null) {
                 ((SDCheckBox) object).setText(list.item(0).getTextContent());
@@ -86,8 +97,10 @@ public class XMLSerializer implements DocumentSerializer {
             } else {
                 throw new NoFieldException("Missing \"default\" field");
             }
+            return;
         }
-        if (object instanceof SDDate) {
+        if (object.getObjectType() == SDMainObjectType.Date) {
+            Logger.Log(LOG_TAG, "Current field for SDDate");
             list = element.getElementsByTagName(DATE_DATE_FIELD_TAG);
             if (list.item(0) != null) {
                 ((SDDate) object).setCalendar(new Date(Long.parseLong(list.item(0).getTextContent())));
@@ -101,9 +114,10 @@ public class XMLSerializer implements DocumentSerializer {
                 //Do nothing - default value ""(Empty string)
                 //throw new NoFieldException("Missing \"text\" field");
             }
-
+            return;
         }
-        if (object instanceof SDSpinner) {
+        if (object.getObjectType() == SDMainObjectType.Spinner) {
+            Logger.Log(LOG_TAG, "Current field for SDSpinner");
             list = element.getElementsByTagName(Spinner_DataList);
             if (list.item(0) == null) {
                 throw new NoFieldException("Missing \"dataList\" field");
@@ -124,8 +138,10 @@ public class XMLSerializer implements DocumentSerializer {
             } else {
                 throw new NoFieldException("Missing \"ItemSelected\" field");
             }
+            return;
         }
-        if (object instanceof SDEditText) {
+        if (object.getObjectType() == SDMainObjectType.EditText) {
+            Logger.Log(LOG_TAG, "Current field for SDEditText");
             list = element.getElementsByTagName(EditText_textFieldTag);
             if (list.item(0) != null) {
                 ((SDEditText) object).setText(list.item(0).getTextContent());
@@ -146,11 +162,15 @@ public class XMLSerializer implements DocumentSerializer {
             } else {
                 //Default value "text"
             }
+            return;
         }
-        if (object instanceof SDEndln) {
+        if (object.getObjectType() == SDMainObjectType.EndLn) {
+            Logger.Log(LOG_TAG, "Current field for SDEndln");
             //Empty
+            return;
         }
-        if (object instanceof SDSequenceObject) {
+        if (object.getObjectType() == SDMainObjectType.DivContainer) {
+            Logger.Log(LOG_TAG, "Current field for SDSequenceObject");
             this.parseSequence((SDSequenceObject) object, params);
         }
     }
@@ -161,7 +181,7 @@ public class XMLSerializer implements DocumentSerializer {
     }
 
     @Override
-    public void printObjectToXML(SDMainObject object, FileModuleWriteThreadInterface fileModule) {
+    public void printObject(SDMainObject object, FileModuleWriteThreadInterface fileModule) {
         this.printObjectAttrivute(object, fileModule);
         this.printCurrentObjectField(object, fileModule);
         fileModule.write("</" + Object_MainTag + ">\n");
@@ -169,33 +189,45 @@ public class XMLSerializer implements DocumentSerializer {
 
     @Override
     public void printCurrentObjectField(SDMainObject object, FileModuleWriteThreadInterface fileModule) {
-        if (object instanceof SDText) {
+        if (object.getObjectType() == SDMainObjectType.Text) {
+            Logger.Log(LOG_TAG, "Print current field for SDText");
             fileModule.write("<" + Text_textFieldTag + ">" + ((SDText) object).getText() + "</" + Text_textFieldTag + ">\n");
+            return;
         }
-        if (object instanceof SDCheckBox) {
+        if (object.getObjectType() == SDMainObjectType.CheckBox) {
+            Logger.Log(LOG_TAG, "Print current field for SDCheckBox");
             fileModule.write("<" + CheckBox_textFieldTag + ">" + ((SDCheckBox) object).getText() + "</" + CheckBox_textFieldTag + ">\n"
                     + "<" + CheckBox_defaultCheck + ">" + ((SDCheckBox) object).getChecked() + "</" + CheckBox_defaultCheck + ">\n");
+            return;
         }
-        if (object instanceof SDDate) {
+        if (object.getObjectType() == SDMainObjectType.Date) {
+            Logger.Log(LOG_TAG, "Print current field for SDDate");
             fileModule.write("<" + DATE_TEXT_FIELD_TAG + ">" + ((SDDate) object).getText() + "</" + DATE_TEXT_FIELD_TAG + ">\n");
             fileModule.write("<" + DATE_DATE_FIELD_TAG + ">" + ((SDDate) object).getCalendar().getTime().getTime() + "</" + DATE_DATE_FIELD_TAG + ">\n");
+            return;
         }
-        if (object instanceof SDSpinner) {
+        if (object.getObjectType() == SDMainObjectType.Spinner) {
+            Logger.Log(LOG_TAG, "Print current field for SDSpinner");
             fileModule.write("<" + Spinner_DataList + ((SDSpinner) object).getWordsBaseNameAttribute() + ((SDSpinner) object).getActiveFilterAttribute() + ">" + "</" + Spinner_DataList + ">\n");
-            fileModule.write("<" + Spinner_defaultItemSelected + ">" + ((SDSpinner) object).getSelectedItem() + "</" + Spinner_defaultItemSelected + ">\n");
+            fileModule.write("<" + Spinner_defaultItemSelected + ">" + ((SDSpinner) object).getDefaultItemSelected() + "</" + Spinner_defaultItemSelected + ">\n");
+            return;
         }
-        if (object instanceof SDEditText) {
+        if (object.getObjectType() == SDMainObjectType.EditText) {
+            Logger.Log(LOG_TAG, "Print current field for SDEditText");
             ((SDEditText) object).setText(((SDEditText) object).getText().replaceAll("\n", "Zzz"));
             fileModule.write("<" + EditText_textFieldTag + ">" + ((SDEditText) object).getText() + "</" + EditText_textFieldTag + ">\n");
             fileModule.write("<" + EditText_textLengthTag + ">" + ((SDEditText) object).getTextLength() + "</" + EditText_textLengthTag + ">\n");
             fileModule.write("<" + EditText_contentTypeTag + ">" + ((SDEditText) object).getContentType() + "</" + EditText_contentTypeTag + ">\n");
+            return;
         }
-        if (object instanceof SDEndln) {
+        if (object.getObjectType() == SDMainObjectType.EndLn) {
             //Empty
+            return;
         }
-        if (object instanceof SDSequenceObject) {
+        if (object.getObjectType() == SDMainObjectType.DivContainer) {
+            Logger.Log(LOG_TAG, "Print current field for SDSequenceObject");
             for (int count = 0; count < ((SDSequenceObject) object).sequenceArray.size(); count++) {
-                this.printObjectToXML(((SDSequenceObject) object).getXMLObject(((SDSequenceObject) object).getID() + 1 + count), fileModule);
+                this.printObject(((SDSequenceObject) object).getXMLObject(((SDSequenceObject) object).getID() + 1 + count), fileModule);
             }
         }
     }
@@ -212,21 +244,21 @@ public class XMLSerializer implements DocumentSerializer {
                 SDMainObjectType newObjectType = SDMainObject.chooseXMLType(tempElement.getAttribute("type"));
                 SDMainObject tempObject = sequence.getObjectByType(newObjectType);
                 sequence.addXMLObject(tempObject);
-                this.parseObjectFromXML(tempObject, tempElement);
+                this.parseObject(tempObject, tempElement);
                 Logger.Log("SDSequenceObject::parseSequence", "Parsed object : " + tempObject.toString());
             }
         }
         Logger.Log("SDSequenceObject::parseSequence", "Enumirate sequence");
         sequence.enumirateSequence(0);
         Logger.Log("SDSequenceObject::parseSequence", "Parsing finish");
-        Logger.Log("SDSequenceObject::parseSequence", "Result : \n" + this.toString());
+        Logger.Log("SDSequenceObject::parseSequence", "Result : \n" + sequence.toString());
     }
 
     @Override
     public void printSequence(SDSequenceObject sequence, FileModuleWriteThreadInterface fileModule) {
         fileModule.write("<" + Sequence_MainTag + ">\n");
         for (SDMainObject sDMainObject : sequence.sequenceArray) {
-            this.printObjectToXML(sDMainObject, fileModule);
+            this.printObject(sDMainObject, fileModule);
         }
         fileModule.write("</" + Sequence_MainTag + ">\n");
     }
@@ -316,7 +348,7 @@ public class XMLSerializer implements DocumentSerializer {
 
     @Override
     public void printWordsBasePart(SDWordsBasePart wordsBase, FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDWordsBasePart::printObjectToXML", "Write wordsBase : " + this.toString());
+        Logger.Log("SDWordsBasePart::printObjectToXML", "Write wordsBase : " + wordsBase.toString());
         fileModule.write("<" + wordsBase.Tag_MainObject + ">\n");
         for (WordBase base : wordsBase.getBases()) {
             this.printWordsBase(base, fileModule);
@@ -372,7 +404,7 @@ public class XMLSerializer implements DocumentSerializer {
 
     @Override
     public void printDependencyPart(DependencyPart dependency, FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("DependencyPart::printObjectToXML", "Write dependency : " + this.toString());
+        Logger.Log("DependencyPart::printObjectToXML", "Write dependency : " + dependency.toString());
         fileModule.write("<" + Dependency_MainTag + ">\n");
         for (int i = 0; i < dependency.getDependencyList().size(); i++) {
             this.printDependencyItem(dependency.getDependencyList().get(i), fileModule);

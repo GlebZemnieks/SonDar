@@ -18,7 +18,7 @@ public class AXMLEditText extends AXMLMainObject {
     }
 
     public AXMLEditText(SDMainObject sdmainObject) {
-        super((SDEditText)sdmainObject);
+        super((SDEditText) sdmainObject);
         this.objectType = SDMainObjectType.EditText;
     }
 
@@ -30,7 +30,7 @@ public class AXMLEditText extends AXMLMainObject {
             temp += " ";
         }
         ((EditText) view).setText(temp);
-        ((EditText) view).setInputType(getInputType(((SDEditText)sdMainObject).getContentType()));
+        ((EditText) view).setInputType(getInputType(((SDEditText) sdMainObject).getContentType()));
         return view;
     }
 
@@ -41,16 +41,16 @@ public class AXMLEditText extends AXMLMainObject {
         ((SDEditText) this.sdMainObject).setText(temp.trim());
     }
 
-    public int getInputType(String inputType){
+    public int getInputType(String inputType) {
         switch (inputType) {
             case "text":
-                Logger.Log("AXMLEditText::getInputType","Input type - " + inputType + "; Return TYPE_CLASS_TEXT");
+                Logger.Log("AXMLEditText::getInputType", "Input type - " + inputType + "; Return TYPE_CLASS_TEXT");
                 return InputType.TYPE_CLASS_TEXT;
             case "number":
-                Logger.Log("AXMLEditText::getInputType","Input type - " + inputType + "; Return TYPE_CLASS_NUMBER");
+                Logger.Log("AXMLEditText::getInputType", "Input type - " + inputType + "; Return TYPE_CLASS_NUMBER");
                 return InputType.TYPE_CLASS_NUMBER;
             default:
-                Logger.Log("AXMLEditText::getInputType","Unknown input type - " + inputType + "; Set default value");
+                Logger.Log("AXMLEditText::getInputType", "Unknown input type - " + inputType + "; Set default value");
                 return InputType.TYPE_CLASS_TEXT;
         }
     }

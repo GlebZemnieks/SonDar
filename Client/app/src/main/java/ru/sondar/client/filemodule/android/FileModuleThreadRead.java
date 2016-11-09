@@ -1,11 +1,12 @@
 package ru.sondar.client.filemodule.android;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import android.content.Context;
 import ru.sondar.core.filemodule.FileModuleReadThreadInterface;
 import ru.sondar.core.filemodule.exception.SonDarFileNotFoundException;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;

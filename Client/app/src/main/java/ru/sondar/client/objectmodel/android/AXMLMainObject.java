@@ -3,12 +3,9 @@ package ru.sondar.client.objectmodel.android;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
-import org.w3c.dom.Element;
 
-import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.core.parser.exception.ObjectStructureException;
 
 /**
  * Main class for association android parameter for object
@@ -18,9 +15,26 @@ import ru.sondar.core.parser.exception.ObjectStructureException;
 public abstract class AXMLMainObject extends SDMainObject {
 
     /**
+     * Parent main object
+     */
+    protected SDMainObject sdMainObject;
+    /**
      * Layout on which object placement
      */
     private LinearLayout domainLayout = null;
+    /**
+     * View object
+     */
+    private View view;
+
+    /**
+     * Constructor
+     *
+     * @param sdmainobject
+     */
+    public AXMLMainObject(SDMainObject sdmainobject) {
+        this.sdMainObject = sdmainobject;
+    }
 
     /**
      * Setter for layout
@@ -30,10 +44,6 @@ public abstract class AXMLMainObject extends SDMainObject {
     public void setLinearLayout(LinearLayout layout) {
         this.domainLayout = layout;
     }
-    /**
-     * View object
-     */
-    private View view;
 
     /**
      * Internal getter for view field
@@ -66,18 +76,8 @@ public abstract class AXMLMainObject extends SDMainObject {
         }
     }
 
-    /**
-     * Parent main object
-     */
-    protected SDMainObject sdMainObject;
-
-    /**
-     * Constructor
-     *
-     * @param sdmainobject
-     */
-    public AXMLMainObject(SDMainObject sdmainobject) {
-        this.sdMainObject = sdmainobject;
+    public SDMainObject getParentObject() {
+        return this.sdMainObject;
     }
 
     /**
@@ -117,35 +117,9 @@ public abstract class AXMLMainObject extends SDMainObject {
      */
     public abstract void updateState();
 
-    public void setSequence(SDSequenceObject sequence){
+    public void setSequence(SDSequenceObject sequence) {
         super.setSequence(sequence);
         this.sdMainObject.setSequence(sequence);
-    }
-
-    public void parseAttribute(Element element) throws ObjectStructureException {
-        this.sdMainObject.parseAttribute(element);
-    }
-
-    public void parseObjectFromXML(Element element) throws ObjectStructureException {
-        this.sdMainObject.parseObjectFromXML(element);
-    }
-    @Override
-    public void parseCurrentObjectField(Element element) throws ObjectStructureException {
-        this.sdMainObject.parseCurrentObjectField(element);
-    }
-
-    public void printAttrivute(FileModuleWriteThreadInterface fileModule) {
-        this.sdMainObject.printAttrivute(fileModule);
-    }
-
-    @Override
-    public void printObjectToXML(FileModuleWriteThreadInterface fileModule) {
-        this.sdMainObject.printObjectToXML(fileModule);
-    }
-
-    @Override
-    public void printCurrentObjectField(FileModuleWriteThreadInterface fileModule) {
-        this.sdMainObject.printCurrentObjectField(fileModule);
     }
 
     @Override

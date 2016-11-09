@@ -1,15 +1,16 @@
 package ru.sondar.client.filemodule.android;
 
+import android.content.Context;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import android.content.Context;
-import ru.sondar.core.logger.Logger;
 import ru.sondar.core.filemodule.FileModuleWriteThreadInterface;
 import ru.sondar.core.filemodule.exception.ThreadIsCloseException;
+import ru.sondar.core.logger.Logger;
 
 public class FileModuleThreadWrite extends FileModuleThread implements FileModuleWriteThreadInterface {
 
@@ -17,6 +18,7 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
      * Stream for writing
      */
     private PrintWriter streamToWrite;
+
 
     /**
      * Constructor without append mode
@@ -74,6 +76,9 @@ public class FileModuleThreadWrite extends FileModuleThread implements FileModul
     public int write(String textForWriting) {
         if (isClose()) {
             throw new ThreadIsCloseException();
+        }
+        if (debugLogging) {
+            Logger.Log("FileModuleLog", "Write text --> " + textForWriting);
         }
         streamToWrite.write(textForWriting);
         return 0;

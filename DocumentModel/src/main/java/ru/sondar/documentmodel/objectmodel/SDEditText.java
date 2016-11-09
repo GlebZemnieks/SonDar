@@ -26,7 +26,7 @@ public class SDEditText extends SDMainObject implements SupportDependencyInterfa
     /**
      * Text field
      */
-    private String Text;
+    private String Text = "";
 
     /**
      * Length field

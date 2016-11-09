@@ -98,7 +98,7 @@ public class SDMainObjectTest {
     @Test
     public void testParseCurrentObjectField() {
         try {
-            new XMLSerializer().parseObjectFromXML(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_1.txt"));
+            new XMLSerializer().parseObject(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_1.txt"));
         } catch (ObjectStructureException ex) {
             return;
         }
@@ -112,7 +112,7 @@ public class SDMainObjectTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws ObjectStructureException {
-        new XMLSerializer().parseObjectFromXML(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_2.txt"));
+        new XMLSerializer().parseObject(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_2.txt"));
         assertEquals(18, this.object.getID());
     }
 
@@ -124,10 +124,10 @@ public class SDMainObjectTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt", false);
-        new XMLSerializer().printObjectToXML(object, fileModule);
+        new XMLSerializer().printObject(object, fileModule);
         fileModule.delFile();
         fileModule.close();
-        new XMLSerializer().parseObjectFromXML(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
+        new XMLSerializer().parseObject(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
         assertEquals(0, this.object.getID());
     }
 
@@ -140,10 +140,10 @@ public class SDMainObjectTest {
     public void testPrintCurrentObjectField2() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\abstract_temp.txt", false);
         this.object.setID(15);
-        new XMLSerializer().printObjectToXML(object, fileModule);
+        new XMLSerializer().printObject(object, fileModule);
         fileModule.delFile();
         fileModule.close();
-        new XMLSerializer().parseObjectFromXML(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
+        new XMLSerializer().parseObject(object, TestVariables.getRootElementByFile("ObjectTest", "abstract_temp.txt"));
         assertEquals(15, this.object.getID());
     }
 }

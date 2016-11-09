@@ -33,7 +33,7 @@ public interface DocumentSerializer {
      * @param params
      * @throws ObjectStructureException
      */
-    void parseObjectFromXML(SDMainObject object, Object... params) throws ObjectStructureException;
+    void parseObject(SDMainObject object, Object... params) throws ObjectStructureException;
 
     /**
      * An abstract method for parsing internal field in object
@@ -58,7 +58,7 @@ public interface DocumentSerializer {
      * @param object
      * @param fileModule
      */
-    void printObjectToXML(SDMainObject object, FileModuleWriteThreadInterface fileModule);
+    void printObject(SDMainObject object, FileModuleWriteThreadInterface fileModule);
 
     /**
      * An abstract method for print XML string of current object

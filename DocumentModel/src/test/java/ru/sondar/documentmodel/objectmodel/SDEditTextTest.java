@@ -68,7 +68,7 @@ public class SDEditTextTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_1.txt"));
+            new XMLSerializer().parseObject(text, TestVariables.getRootElementByFile("ObjectTest", "editText_1.txt"));
         } catch (ObjectStructureException error) {
             return;
         }
@@ -82,7 +82,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
+        new XMLSerializer().parseObject(text, TestVariables.getRootElementByFile("ObjectTest", "editText_2.txt"));
     }
 
     /**
@@ -92,7 +92,7 @@ public class SDEditTextTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "editText_3.txt"));
+        new XMLSerializer().parseObject(text, TestVariables.getRootElementByFile("ObjectTest", "editText_3.txt"));
     }
 
     /**
@@ -103,10 +103,10 @@ public class SDEditTextTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\editText_temp.txt", false);
-        new XMLSerializer().printObjectToXML(text, fileModule);
+        new XMLSerializer().printObject(text, fileModule);
         fileModule.close();
         SDEditText text2 = new SDEditText();
-        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "editText_temp.txt"));
+        new XMLSerializer().parseObject(text2, TestVariables.getRootElementByFile("ObjectTest", "editText_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
         assertEquals(this.text.getTextLength(), text2.getTextLength());

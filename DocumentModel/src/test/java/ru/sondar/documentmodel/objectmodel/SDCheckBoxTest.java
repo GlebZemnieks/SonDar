@@ -80,7 +80,7 @@ public class SDCheckBoxTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_1.txt"));
+            new XMLSerializer().parseObject(box, TestVariables.getRootElementByFile("ObjectTest", "check_1.txt"));
         } catch (ObjectStructureException errException) {
             return;
         }
@@ -95,7 +95,7 @@ public class SDCheckBoxTest {
     @Test
     public void testParseCurrentObjectField2() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_2.txt"));
+            new XMLSerializer().parseObject(box, TestVariables.getRootElementByFile("ObjectTest", "check_2.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -109,7 +109,7 @@ public class SDCheckBoxTest {
      */
     @Test
     public void testParseCurrentObjectField3() throws Exception {
-        new XMLSerializer().parseObjectFromXML(box, TestVariables.getRootElementByFile("ObjectTest", "check_3.txt"));
+        new XMLSerializer().parseObject(box, TestVariables.getRootElementByFile("ObjectTest", "check_3.txt"));
         assertEquals(false, box.getChecked());
         assertEquals("testtest", box.getText());
         assertEquals(18, box.getID());
@@ -123,10 +123,10 @@ public class SDCheckBoxTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\check_temp.txt", false);
-        new XMLSerializer().printObjectToXML(box, fileModule);
+        new XMLSerializer().printObject(box, fileModule);
         fileModule.close();
         SDCheckBox box2 = new SDCheckBox();
-        new XMLSerializer().parseObjectFromXML(box2, TestVariables.getRootElementByFile("ObjectTest", "check_temp.txt"));
+        new XMLSerializer().parseObject(box2, TestVariables.getRootElementByFile("ObjectTest", "check_temp.txt"));
         assertEquals(box.getChecked(), box2.getChecked());
         assertEquals(box.getText(), box2.getText());
         assertEquals(box.getID(), box2.getID());

@@ -26,7 +26,7 @@ public class AXMLDate extends AXMLMainObject {
     }
 
     public AXMLDate(SDMainObject sdmainObject) {
-        super((SDDate)sdmainObject);
+        super((SDDate) sdmainObject);
         this.objectType = SDMainObjectType.Date;
     }
 
@@ -36,9 +36,9 @@ public class AXMLDate extends AXMLMainObject {
         viewTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.Log("AXMLDate::","OnClick on date object : " + sdMainObject.toString());
+                Logger.Log("AXMLDate::", "OnClick on date object : " + sdMainObject.toString());
                 DialogFragment dateDialog = (new CustomDatePickerFragment()).setDate((SDDate) sdMainObject).setTextView(viewTemp);
-                dateDialog.show(((ActionBarActivity)context).getSupportFragmentManager(), "datePicker");
+                dateDialog.show(((ActionBarActivity) context).getSupportFragmentManager(), "datePicker");
             }
         });
         viewTemp.setText(((SDDate) this.sdMainObject).getCalendar().get(Calendar.DAY_OF_MONTH)
@@ -54,7 +54,7 @@ public class AXMLDate extends AXMLMainObject {
 
 }
 
-class CustomDatePickerDialog extends DatePickerDialog{
+class CustomDatePickerDialog extends DatePickerDialog {
 
     private String title = "";
 
@@ -80,13 +80,13 @@ class CustomDatePickerFragment extends DialogFragment
     SDDate protectedDate;
     TextView protectedView;
 
-    public CustomDatePickerFragment setDate(SDDate date){
+    public CustomDatePickerFragment setDate(SDDate date) {
         this.protectedDate = date;
-        Logger.Log("AXMLDate::","Set date object : " + protectedDate.toString());
+        Logger.Log("AXMLDate::", "Set date object : " + protectedDate.toString());
         return this;
     }
 
-    public CustomDatePickerFragment setTextView(TextView view){
+    public CustomDatePickerFragment setTextView(TextView view) {
         this.protectedView = view;
         return this;
     }
@@ -97,7 +97,7 @@ class CustomDatePickerFragment extends DialogFragment
                 protectedDate.getCalendar().get(Calendar.YEAR),
                 protectedDate.getCalendar().get(Calendar.MONTH),
                 protectedDate.getCalendar().get(Calendar.DAY_OF_MONTH));
-        ((CustomDatePickerDialog)picker).setPermanentTitle(protectedDate.getText());
+        ((CustomDatePickerDialog) picker).setPermanentTitle(protectedDate.getText());
         Logger.Log("AXMLDate::", "Dialog created with date : " + protectedDate.toString());
         ((CustomDatePickerDialog) picker).getDatePicker().setCalendarViewShown(false);
         return picker;
@@ -111,7 +111,7 @@ class CustomDatePickerFragment extends DialogFragment
         protectedDate.getCalendar().set(Calendar.YEAR, year);
         protectedView.setText(((SDDate) this.protectedDate).getCalendar().get(Calendar.DAY_OF_MONTH)
                 + "-" + ((new DateFormatSymbols()).getMonths())[(((SDDate) this.protectedDate).getCalendar().get(Calendar.MONTH))]
-                    + "-" + ((SDDate) this.protectedDate).getCalendar().get(Calendar.YEAR));
-        Logger.Log("AXMLDate::","onDateSet work:: new value " + protectedDate.toString());
+                + "-" + ((SDDate) this.protectedDate).getCalendar().get(Calendar.YEAR));
+        Logger.Log("AXMLDate::", "onDateSet work:: new value " + protectedDate.toString());
     }
 }

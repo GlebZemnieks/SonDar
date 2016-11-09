@@ -14,8 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class Application {
 
     public static void main(String[] args) {
-        String globalPath = (new File("")).getAbsolutePath();
-        ServerController.server = new SonDarServer(globalPath);
+        ServerController.server = new SonDarServer((new File("")).getAbsolutePath());
         SpringApplication.run(Application.class, args);
     }
 }

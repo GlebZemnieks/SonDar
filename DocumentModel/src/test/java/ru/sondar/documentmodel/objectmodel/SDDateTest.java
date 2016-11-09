@@ -41,7 +41,7 @@ public class SDDateTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(date, TestVariables.getRootElementByFile("ObjectTest", "date_1.txt"));
+            new XMLSerializer().parseObject(date, TestVariables.getRootElementByFile("ObjectTest", "date_1.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -55,7 +55,7 @@ public class SDDateTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws Exception {
-        new XMLSerializer().parseObjectFromXML(date, TestVariables.getRootElementByFile("ObjectTest", "date_2.txt"));
+        new XMLSerializer().parseObject(date, TestVariables.getRootElementByFile("ObjectTest", "date_2.txt"));
     }
 
     /**
@@ -69,10 +69,10 @@ public class SDDateTest {
         Date now = new Date();
         date.setCalendar(now);
         date.setID(11);
-        new XMLSerializer().printObjectToXML(date, fileModule);
+        new XMLSerializer().printObject(date, fileModule);
         fileModule.close();
         SDDate date2 = new SDDate();
-        new XMLSerializer().parseObjectFromXML(date2, TestVariables.getRootElementByFile("ObjectTest", "date_temp.txt"));
+        new XMLSerializer().parseObject(date2, TestVariables.getRootElementByFile("ObjectTest", "date_temp.txt"));
         assertEquals(now.getTime(), date2.getCalendar().getTime().getTime());
         assertEquals(11, date2.getID());
     }

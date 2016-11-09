@@ -2,7 +2,6 @@ package ru.sondar.client.objectmodel.android;
 
 import ru.sondar.client.documentmodel.android.AXMLSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
-import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 
 /**
  * Created by GlebZemnieks on 8/19/2016.

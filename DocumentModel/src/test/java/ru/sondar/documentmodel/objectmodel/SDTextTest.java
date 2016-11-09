@@ -49,7 +49,7 @@ public class SDTextTest {
     @Test
     public void testParseCurrentObjectField() throws ObjectStructureException {
         try {
-            new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "text_1.txt"));
+            new XMLSerializer().parseObject(text, TestVariables.getRootElementByFile("ObjectTest", "text_1.txt"));
         } catch (ObjectStructureException error) {
             return;
         }
@@ -63,7 +63,7 @@ public class SDTextTest {
      */
     @Test
     public void testParseCurrentObjectField2() throws ObjectStructureException {
-        new XMLSerializer().parseObjectFromXML(text, TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
+        new XMLSerializer().parseObject(text, TestVariables.getRootElementByFile("ObjectTest", "text_2.txt"));
     }
 
     /**
@@ -74,10 +74,10 @@ public class SDTextTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp.txt", false);
-        new XMLSerializer().printObjectToXML(text, fileModule);
+        new XMLSerializer().printObject(text, fileModule);
         fileModule.close();
         SDText text2 = new SDText();
-        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        new XMLSerializer().parseObject(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
 
@@ -91,10 +91,10 @@ public class SDTextTest {
     @Test
     public void testPrintCurrentObjectField2() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\text_temp2.txt", false);
-        new XMLSerializer().printObjectToXML(text, fileModule);
+        new XMLSerializer().printObject(text, fileModule);
         fileModule.close();
         SDText text2 = new SDText();
-        new XMLSerializer().parseObjectFromXML(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
+        new XMLSerializer().parseObject(text2, TestVariables.getRootElementByFile("ObjectTest", "text_temp.txt"));
         assertEquals(this.text.getText(), text2.getText());
         assertEquals(this.text.getID(), text2.getID());
 

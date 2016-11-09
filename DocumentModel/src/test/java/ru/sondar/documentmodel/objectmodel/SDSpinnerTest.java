@@ -114,7 +114,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_1.txt"));
+            new XMLSerializer().parseObject(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_1.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -129,7 +129,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField2() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_2.txt"));
+            new XMLSerializer().parseObject(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_2.txt"));
         } catch (ObjectStructureException exception) {
             return;
         }
@@ -144,7 +144,7 @@ public class SDSpinnerTest {
     @Test
     public void testParseCurrentObjectField3() throws Exception {
         try {
-            new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
+            new XMLSerializer().parseObject(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_3.txt"));
         } catch (NoFieldException error) {
             return;
         }
@@ -168,7 +168,7 @@ public class SDSpinnerTest {
         SDSequenceObject sequence = new SDSequenceObject();
         spinner.setSequence(sequence);
         sequence.document = document;
-        new XMLSerializer().parseObjectFromXML(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
+        new XMLSerializer().parseObject(spinner, TestVariables.getRootElementByFile("ObjectTest", "spinner_4.txt"));
         assertEquals(spinner.getList().size(), 2);
         assertEquals(spinner.getList().get(0), "test1");
         assertEquals(spinner.getList().get(1), "test2");
@@ -182,11 +182,11 @@ public class SDSpinnerTest {
     @Test
     public void testPrintCurrentObjectField() throws ObjectStructureException {
         FileModuleWriteThread fileModule = new FileModuleWriteThread(testFolder + "ObjectTest\\spinner_temp.txt", false);
-        new XMLSerializer().printObjectToXML(spinner, fileModule);
+        new XMLSerializer().printObject(spinner, fileModule);
         fileModule.close();
         SDSpinner spinner2 = new SDSpinner();
         try {
-            new XMLSerializer().parseObjectFromXML(spinner2, TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
+            new XMLSerializer().parseObject(spinner2, TestVariables.getRootElementByFile("ObjectTest", "spinner_temp.txt"));
         } catch (NoFieldException error) {
             return;
         }

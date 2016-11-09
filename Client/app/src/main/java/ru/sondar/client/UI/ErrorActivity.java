@@ -14,7 +14,7 @@ public class ErrorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinearLayout layout = new LinearLayout(this);
-        Exception exception = (Exception)getIntent().getSerializableExtra("exception");
+        Exception exception = (Exception) getIntent().getSerializableExtra("exception");
 
         TextView className = new TextView(this);
         className.setText(exception.getClass().toString());

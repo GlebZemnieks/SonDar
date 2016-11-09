@@ -16,7 +16,7 @@ public class AXMLText extends AXMLMainObject {
     }
 
     public AXMLText(SDMainObject sdmainobject) {
-        super((SDText)sdmainobject);
+        super((SDText) sdmainobject);
         this.objectType = SDMainObjectType.Text;
     }
 

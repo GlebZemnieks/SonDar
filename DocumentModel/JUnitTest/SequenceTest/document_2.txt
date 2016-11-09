@@ -1,0 +1,33 @@
+<Document>
+	<head>
+		<documentUUID>00000000-0000-0000-0000-000000000000</documentUUID>
+		<pluginUUID>00000000-0000-0000-0000-000000000000</pluginUUID>
+		<documentName>00000000-0000-0000-0000-000000000000</documentName>
+		<creationTime>1465588035197</creationTime>
+		<lastModificationTime>1465588035197</lastModificationTime>
+	</head>
+	<WordsBase>
+	</WordsBase>
+	<XMLSequence>
+		<object type="Text" id="0">
+			<text>hello</text>
+		</object>
+		<object type="Date" id="1">
+			<date>123456789</date>
+		</object>
+		<object type="CheckBox" id="2">
+			<text>test</text>
+			<default>true</default>
+		</object>
+		<object type="EditText" id="3">
+			<textEdit>test</textEdit>
+			<textLength>10</textLength>
+		</object>
+	</XMLSequence>
+	<DependencyPart>
+		<link objectName="test" cellId="0"></link>
+		<link objectName="test2" cellId="1"></link>
+	</DependencyPart>
+	<Log>
+	</Log>
+</Document>

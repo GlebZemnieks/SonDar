@@ -5,9 +5,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import org.w3c.dom.Element;
-
-import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
 import ru.sondar.documentmodel.objectmodel.SDSpinner;
@@ -20,7 +17,7 @@ public class AXMLSpinner extends AXMLMainObject {
     }
 
     public AXMLSpinner(SDMainObject sdmainobject) {
-        super((SDSpinner)sdmainobject);
+        super((SDSpinner) sdmainobject);
         this.objectType = SDMainObjectType.Spinner;
     }
 

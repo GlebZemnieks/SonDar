@@ -1,6 +1,12 @@
 package ru.sondar.client.documentmodel.android;
 
-import ru.sondar.client.objectmodel.android.*;
+import ru.sondar.client.objectmodel.android.AXMLCheckBox;
+import ru.sondar.client.objectmodel.android.AXMLDate;
+import ru.sondar.client.objectmodel.android.AXMLEditText;
+import ru.sondar.client.objectmodel.android.AXMLEndln;
+import ru.sondar.client.objectmodel.android.AXMLMainObject;
+import ru.sondar.client.objectmodel.android.AXMLSpinner;
+import ru.sondar.client.objectmodel.android.AXMLText;
 import ru.sondar.documentmodel.SDSequenceObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObject;
 import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
@@ -10,18 +16,21 @@ import ru.sondar.documentmodel.objectmodel.SDMainObjectType;
  */
 public class AXMLSequenceObject extends SDSequenceObject {
 
-	private int lastIdInDomain = 0;
-	private int firstIdInDomain = 0;
+    private int lastIdInDomain = 0;
+    private int firstIdInDomain = 0;
 
-	public int getFirstIdInDomain() {
-		return firstIdInDomain;
-	}
-	public int getLastIdInDomain() {
-		return lastIdInDomain;
-	}
+    public int getFirstIdInDomain() {
+        return firstIdInDomain;
+    }
+
     public void setFirstIdInDomain(int firstIdInDomain) {
         this.firstIdInDomain = firstIdInDomain;
     }
+
+    public int getLastIdInDomain() {
+        return lastIdInDomain;
+    }
+
     public void setLastIdInDomain(int lastIdInDomain) {
         this.lastIdInDomain = lastIdInDomain;
     }
@@ -29,9 +38,9 @@ public class AXMLSequenceObject extends SDSequenceObject {
     /**
      * Remove view object from domain layout for all object in sequence
      */
-    public void resetView(){
-        for(int count=0;count<this.sequenceArrayLength;count++){
-            if(!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
+    public void resetView() {
+        for (int count = 0; count < this.sequenceArrayLength; count++) {
+            if (!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
                 ((AXMLMainObject) this.getXMLObject(count)).resetView();
             }
         }
@@ -40,16 +49,16 @@ public class AXMLSequenceObject extends SDSequenceObject {
     /**
      * Update fields from view for all objects
      */
-	public void updateState(){
-		for(int count=firstIdInDomain;count<lastIdInDomain+1;count++){
-            if(!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
+    public void updateState() {
+        for (int count = firstIdInDomain; count < lastIdInDomain + 1; count++) {
+            if (!(this.getXMLObject(count) instanceof AXMLSequenceObject)) {
                 ((AXMLMainObject) this.getXMLObject(count)).updateState();
             }
-		}
-	}
+        }
+    }
 
     public void AddXMLObject(SDMainObject newObject) {
-        super.AddXMLObject(newObject);
+        super.addXMLObject(newObject);
     }
 
     public SDMainObject getXMLObject(int id) {
@@ -58,6 +67,7 @@ public class AXMLSequenceObject extends SDSequenceObject {
 
     /**
      * Overwriting factory for android objects
+     *
      * @param type
      * @return
      */
