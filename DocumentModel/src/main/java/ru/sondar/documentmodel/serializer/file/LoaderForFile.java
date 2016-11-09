@@ -1,4 +1,4 @@
-package ru.sondar.documentmodel.loader;
+package ru.sondar.documentmodel.serializer.file;
 
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,23 +12,24 @@ import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
+import ru.sondar.documentmodel.serializer.DocumentLoader;
 import ru.sondar.documentmodel.serializer.DocumentSerializer;
 
 /**
- * Expansion for DOM parser object {@link ru.sondar.core.DOMParser } with
- * document partitions support
+ * Default realization for DocumentLoader. Read all part of document from one
+ * file. For read used DOMParser class as parent.
  *
  * @author GlebZemnieks
  * @since SonDar-1.0
  */
-public class SDDOMParser extends DOMParser
+public class LoaderForFile extends DOMParser
         implements DocumentLoader {
 
-    public SDDOMParser() {
+    public LoaderForFile() {
         super();
     }
 
-    public SDDOMParser(String fileName) throws SAXException, IOException, ParserConfigurationException {
+    public LoaderForFile(String fileName) throws SAXException, IOException, ParserConfigurationException {
         super(fileName);
     }
 

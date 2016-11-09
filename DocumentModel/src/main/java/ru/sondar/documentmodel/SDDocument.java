@@ -1,6 +1,6 @@
 package ru.sondar.documentmodel;
 
-import ru.sondar.documentmodel.loader.SDDOMParser;
+import ru.sondar.documentmodel.serializer.file.LoaderForFile;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -9,10 +9,12 @@ import ru.sondar.core.logger.Logger;
 import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.exception.*;
-import ru.sondar.documentmodel.loader.DocumentLoader;
+import ru.sondar.documentmodel.serializer.DocumentLoader;
 import ru.sondar.documentmodel.objectmodel.*;
+import ru.sondar.documentmodel.serializer.DocumentSaver;
 import ru.sondar.documentmodel.serializer.DocumentSerializer;
 import ru.sondar.documentmodel.serializer.XMLSerializer;
+import ru.sondar.documentmodel.serializer.file.SaverForFile;
 
 /**
  * Document model
@@ -170,7 +172,7 @@ public class SDDocument {
      */
     public void loadDocument(String fileName) throws SAXException, IOException,
             ParserConfigurationException, ObjectStructureException {
-        this.loadDocument(new SDDOMParser(fileName));
+        this.loadDocument(new LoaderForFile(fileName));
     }
 
     /**
@@ -182,7 +184,7 @@ public class SDDocument {
      * @throws DocumentAlreadyInitException Throw when some of part document
      * already initializing.
      */
-    public void loadDocument(SDDOMParser parser) throws ObjectStructureException {
+    public void loadDocument(LoaderForFile parser) throws ObjectStructureException {
         this.loadDocument(parser, new SDSequenceObject());
     }
 
@@ -196,12 +198,7 @@ public class SDDocument {
      * @throws DocumentAlreadyInitException Throw when some of part document
      * already initializing.
      */
-    public void loadDocument(SDDOMParser parser, SDSequenceObject sequence) throws ObjectStructureException {
-        if (this.sequence != null || this.headPart != null
-                || this.logPart != null || this.dependency != null
-                || this.wordsBase != null) {
-            throw new DocumentAlreadyInitException("Trying to reload document. Denied!");
-        }
+    public void loadDocument(LoaderForFile parser, SDSequenceObject sequence) throws ObjectStructureException {
         this.loadDocument(new XMLSerializer(), parser, sequence);
     }
 
@@ -209,14 +206,14 @@ public class SDDocument {
      * Load document from file by parser object with customer sequence format.
      *
      * @param serializer
-     * @param parser
+     * @param loader
      * @param sequence
      * @throws ObjectStructureException Throw when document structure cant be
      * read
      * @throws DocumentAlreadyInitException Throw when some of part document
      * already initializing.
      */
-    public void loadDocument(DocumentSerializer serializer, DocumentLoader parser, SDSequenceObject sequence) throws ObjectStructureException {
+    public void loadDocument(DocumentSerializer serializer, DocumentLoader loader, SDSequenceObject sequence) throws ObjectStructureException {
         if (this.sequence != null || this.headPart != null
                 || this.logPart != null || this.dependency != null
                 || this.wordsBase != null) {
@@ -224,16 +221,16 @@ public class SDDocument {
         }
         Logger.Log("SDDocument::loadDocument", "Start");
         headPart = new SDHeadPart();
-        parser.getHeadPart(serializer, headPart);
+        loader.getHeadPart(serializer, headPart);
         wordsBase = new SDWordsBasePart();
-        parser.getWordsBasePart(serializer, wordsBase);
+        loader.getWordsBasePart(serializer, wordsBase);
         this.sequence = sequence;
         this.sequence.document = this;
-        parser.getSequence(serializer, sequence);
+        loader.getSequence(serializer, sequence);
         dependency = new DependencyPart();
-        parser.getDependencyPart(serializer, dependency);
+        loader.getDependencyPart(serializer, dependency);
         logPart = new SDLogPart();
-        parser.getLogPart(serializer, logPart);
+        loader.getLogPart(serializer, logPart);
         Logger.Log("SDDocument::loadDocument", "Finish");
     }
 
@@ -246,30 +243,14 @@ public class SDDocument {
      * @param fileModule
      */
     public void saveDocument(FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDDocument::saveDocument", "Start");
-        if (this.sequence == null || this.headPart == null
-                || this.logPart == null || this.dependency == null
-                || this.wordsBase == null) {
-            throw new DocumentNotInitException("head : " + this.headPart
-                    + " : sequence : " + this.sequence
-                    + " : dependency : " + this.dependency
-                    + " : log : " + this.logPart
-                    + " : wordsBase : " + this.wordsBase + " ;");
-        }
-        this.saveDocument(new XMLSerializer(), fileModule);
+        this.saveDocument(new XMLSerializer(), new SaverForFile(fileModule));
     }
 
-    /**
-     * Save document to thread in format
-     * {@link ru.sondar.core.filemodule.FileModuleWriteThreadInterface}. Throw
-     * {@link ru.sondar.documentmodel.exception.DocumentNotInitException} if
-     * some part of document not initialized.
-     *
-     * @param serializer
-     * @param fileModule
-     */
     public void saveDocument(DocumentSerializer serializer, FileModuleWriteThreadInterface fileModule) {
-        Logger.Log("SDDocument::saveDocument", "Start");
+        this.saveDocument(serializer, new SaverForFile(fileModule));
+    }
+
+    public void saveDocument(DocumentSerializer serializer, DocumentSaver saver) {
         if (this.sequence == null || this.headPart == null
                 || this.logPart == null || this.dependency == null
                 || this.wordsBase == null) {
@@ -280,13 +261,13 @@ public class SDDocument {
                     + " : wordsBase : " + this.wordsBase + " ;");
         }
         Logger.Log("SDDocument::saveDocument", "Document ready to writing");
-        fileModule.write("<Document>\n");
-        serializer.printHeadPart(headPart, fileModule);
-        serializer.printWordsBasePart(wordsBase, fileModule);
-        serializer.printSequence(sequence, fileModule);
-        serializer.printDependencyPart(dependency, fileModule);
-        serializer.printLogPart(logPart, fileModule);
-        fileModule.write("</Document>\n");
+        saver.getThreadForComment().write("<Document>\n");
+        serializer.printHeadPart(headPart, saver.getThreadForHeadPart());
+        serializer.printWordsBasePart(wordsBase, saver.getThreadForWordsBasePart());
+        serializer.printSequence(sequence, saver.getThreadSequence());
+        serializer.printDependencyPart(dependency, saver.getThreadForDependencyPart());
+        serializer.printLogPart(logPart, saver.getThreadForLogPart());
+        saver.getThreadForComment().write("</Document>\n");
         Logger.Log("SDDocument::saveDocument", "Document writted");
     }
 

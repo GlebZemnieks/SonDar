@@ -17,4 +17,8 @@ public class ObjectStructureException extends SonDarException {
     public ObjectStructureException(String msg) {
         super(msg);
     }
+
+    public ObjectStructureException(String msg, Throwable ex) {
+        super(msg, ex);
+    }
 }

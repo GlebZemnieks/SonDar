@@ -1,4 +1,4 @@
-package ru.sondar.documentmodel.loader;
+package ru.sondar.documentmodel.serializer;
 
 import ru.sondar.core.parser.exception.ObjectStructureException;
 import ru.sondar.documentmodel.SDSequenceObject;
@@ -6,7 +6,6 @@ import ru.sondar.documentmodel.dependencymodel.DependencyPart;
 import ru.sondar.documentmodel.objectmodel.SDHeadPart;
 import ru.sondar.documentmodel.objectmodel.SDLogPart;
 import ru.sondar.documentmodel.objectmodel.SDWordsBasePart;
-import ru.sondar.documentmodel.serializer.DocumentSerializer;
 
 /**
  *
